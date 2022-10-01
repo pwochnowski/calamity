@@ -9,6 +9,9 @@ abstract class GameObject {
   /// their behaviour based on any object in the game
   ///
   /// e.g. an enemy that can shoot at a player but also the player's allies
+  ///
+  /// note: this should be the center of the object, to make targeting
+  /// and other AI systems easier to implement
   Vector2 get pos;
 
   /// the game object should have basic knowledge of how to update itself

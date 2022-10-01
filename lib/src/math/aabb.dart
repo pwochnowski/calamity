@@ -14,8 +14,10 @@ class AABB {
       bl = new Vector2(min.x, max.y),
       br = new Vector2(max.x, max.y);
 
+  /// note: loc is treated as the center
   factory AABB.fromLocAndSize(Vector2 loc, Vector2 size) {
-    return new AABB(loc, loc + size);
+    Vector2 halfSize = size * 0.5;
+    return new AABB(loc - halfSize, loc + halfSize);
   }
 
   List<Vector2> get corners => [tl, tr, bl, br];
