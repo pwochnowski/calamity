@@ -15,14 +15,14 @@ class MainCtx {
 
   MainCtx(this.canvas, this.inputState) :
     renderer = new Renderer(canvas),
-    model = new Model();
+    model = new Model(canvas.width!, canvas.height!);
 
 
 
   void doFrame() {
     inputState.beginNewFrame();
     PlayerInputState newInputState = inputState.derivePlayerInputState(lastInputState);
-    model.handleInputs(newInputState);
+    model.update(newInputState);
 
     renderer.beginRender();
     model.render(renderer);

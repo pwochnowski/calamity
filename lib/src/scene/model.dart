@@ -8,11 +8,13 @@ import 'game_arena.dart';
 
 class Model {
   final GameArena arena;
+  final num width;
+  final num height;
 
-  Model(): arena = new GameArena();
+  Model(this.width, this.height): arena = new GameArena(width, height);
 
-  void handleInputs(PlayerInputState input) {
-    arena.handleInputs(input);
+  void update(PlayerInputState input) {
+    arena.update(input);
   }
 
   void render(Renderer r) {

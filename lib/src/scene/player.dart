@@ -30,7 +30,7 @@ class Player {
     pos += new Vector2(x, y).normalized() * movementSpeed;
   }
 
-  void handleInput(PlayerInputState input) {
+  void update(PlayerInputState input) {
     move(input);
   }
 
