@@ -22,7 +22,7 @@ class Player extends GameObject {
   // used for hitbox of player
   final num radius = Constants.PLAYER_RADIUS;
 
-  double movementSpeed = 10.0;
+  final num movementSpeed = Constants.PLAYER_MOVE_SPEED;
   Vector2 pos;
   Vector2 size = new Vector2(50, 50);
 
@@ -32,13 +32,19 @@ class Player extends GameObject {
 
   void move(PlayerInputState input) {
     if (path != null) {
-      pos += path!.dir() * movementSpeed;
-      
-      if (path!.ratioOnSeg(pos) >= 0.99) {
+      Vector2 newPos = path!.dir() * movementSpeed;
+      num ratio = path!.ratioOnSeg(pos);
+      if (ratio < 1.0) {
+        pos += newPos;
+      } else {
+        print("Ratio $ratio");
+        print("Pos ${path!.end}");
+        pos = path!.end;
         path = null;
       }
       return;
     }
+
     double x = 0.0;
     double y = 0.0;
 
@@ -69,12 +75,14 @@ class Player extends GameObject {
 
   @override
   void update(PlayerInputState input, num deltaTime) {
-    if (input.mouse.right) {
+    if (input.mouse.right ) {
       path = new LineSeg(pos, input.mouse.pos!);
+      print("Set path ${path!.length()}");
     }
     move(input);
     limit();
   }
+
 
   int frame = 0;
   @override

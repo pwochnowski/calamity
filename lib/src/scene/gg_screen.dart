@@ -10,7 +10,7 @@ class GameOverScreen {
 
   GameOverScreen();
   void update(PlayerInputState ps) {
-    if (ps.mouse?.left ?? false) {
+    if (ps.mouse.left) {
       arena.playing = true;
     }
 

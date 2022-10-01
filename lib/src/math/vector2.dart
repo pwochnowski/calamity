@@ -70,4 +70,8 @@ class Vector2 {
   num dotProd(Vector2 v) {
     return v.x*x + v.y*y;
   }
+
+  Vector2 round() {
+    return new Vector2(x.round(), y.round());
+  }
 }

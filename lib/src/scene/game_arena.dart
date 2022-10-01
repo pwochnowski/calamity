@@ -16,7 +16,7 @@ class GameArena {
   List<Bullet> bullets = [];
 
   GameArena(this.width, this.height)
-      : player = new Player(new Vector2(50, 50)),
+      : player = new Player(new Vector2(100, 200)),
         bulletSpawner = new BulletSpawner(Constants.NUM_BULLETS) {
 
     player.arena = this;

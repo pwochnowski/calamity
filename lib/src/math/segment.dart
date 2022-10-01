@@ -13,8 +13,10 @@ class LineSeg {
   num length() => start.distanceTo(end);
 
   num ratioOnSeg(Vector2 v) {
-    num dotProd = (v - start).normalized().dotProd(dir());
-    return dotProd;
+    Vector2 seg = (v - start);
+    num dotProd = seg.dotProd(dir());
+    Vector2 proj = start + dir() * dotProd;
+    return (proj -start).length() / length();
   }
   
 }

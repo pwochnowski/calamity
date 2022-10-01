@@ -16,7 +16,7 @@ class InputState {
   Set<int> keysThisFrame = new Set();
 
   // current mouse
-  Mouse mouse = Mouse.NONE;
+  Mouse? mouse;
 
   bool getKeyState(int key) => heldDownKeys.contains(key);
 
@@ -27,7 +27,6 @@ class InputState {
   void registerListeners(CanvasElement canvas) {
 
     window.onKeyDown.listen((ev) {
-      mouse = Mouse.NONE;
       keysThisFrame.add(ev.keyCode);
 
       // track held keys
@@ -53,7 +52,6 @@ class InputState {
     });
 
     window.onMouseMove.listen((event) {
-      // mouse = Mouse(event);
     });
     window.onMouseDown.listen((event) {
       mouse = new Mouse(event);
@@ -73,7 +71,9 @@ class InputState {
     if (heldDownKeys.contains(KeyCode.UP)) { keys.add(PlayerKey.UP); }
     if (heldDownKeys.contains(KeyCode.DOWN)) { keys.add(PlayerKey.DOWN); }
 
-    return new PlayerInputState(mouse, keys);
+    PlayerInputState ps = new PlayerInputState(mouse ?? Mouse.NONE, keys);
+    mouse = null;
+    return ps;
   }
 }
 

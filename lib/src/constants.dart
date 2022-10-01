@@ -6,4 +6,5 @@ class Constants {
   static final num BULLET_SPEED = 1.0;
 
   static final num PLAYER_RADIUS = 40.0;
+  static final num PLAYER_MOVE_SPEED = 15.0;
 }
