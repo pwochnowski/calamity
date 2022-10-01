@@ -17,8 +17,6 @@ class MainCtx {
     renderer = new Renderer(canvas),
     model = new Model(canvas.width!, canvas.height!);
 
-
-
   void doFrame() {
     inputState.beginNewFrame();
     PlayerInputState newInputState = inputState.derivePlayerInputState(lastInputState);

@@ -18,9 +18,32 @@ class BulletSpawner {
   BulletSpawner(this.numBullets);
 
   Bullet spawnBulletAtEdge() {
-    Vector2 position = new Vector2(_enclosingArena!.width / 2, _enclosingArena!.height / 2);
-    num angle = 2 * pi * StaticData.random.nextDouble();
-    Vector2 vel = new Vector2(sin(angle), cos(angle)) * 15.0;
+    // Pick an arena edge to use
+    int edge = StaticData.random.nextInt(4);
+    // Pick a random point on it
+    double posOnEdge = StaticData.random.nextDouble();
+    num x, y;
+    switch (edge) {
+    case 0: // LEFT EDGE
+      x = 0;
+      y = _enclosingArena!.height * posOnEdge;
+      break;
+    case 1: // TOP EDGE
+      x = 0;
+      y = _enclosingArena!.height * posOnEdge;
+      break;
+    case 2: // RIGHT EDGE
+      x = _enclosingArena!.width;
+      y = _enclosingArena!.height * posOnEdge;
+      break;
+    default: // TOP EDGE
+      x = _enclosingArena!.width * posOnEdge;
+      y = _enclosingArena!.height;
+      break;
+    }
+    Vector2 position = new Vector2(x, y);
+    num angle = (0.5 * edge + 0.8 * (StaticData.random.nextDouble() - 0.5)) * pi;
+    Vector2 vel = new Vector2(cos(angle), sin(angle)) * 15.0;
     Bullet bullet = new Bullet(position, vel, bulletHitbox, _enclosingArena!);
     return bullet;
   }
