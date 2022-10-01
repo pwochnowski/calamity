@@ -10,15 +10,17 @@ import 'bullet_spawner.dart';
 class GameArena {
   final num width;
   final num height;
-  Player player;
+  final Player player;
 
   final BulletSpawner bulletSpawner;
   List<Bullet> bullets = [];
+
   GameArena(this.width, this.height)
       : player = new Player(new Vector2(50, 50)),
         bulletSpawner = new BulletSpawner(Constants.NUM_BULLETS) {
-    player.setArena(this);
-    bulletSpawner.setArena(this);
+
+    player.arena = this;
+    bulletSpawner.arena = this;
   }
 
   void update(PlayerInputState input) {

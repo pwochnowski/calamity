@@ -15,7 +15,7 @@ class Player extends GameObject {
   ImageResource? _playerImage;
   AnimationResource? _playerAnimation;
   // Effectively non-nullable
-  late GameArena _enclosingArena;
+  late GameArena arena;
 
   // used for hitbox of player
   final num radius = Constants.PLAYER_RADIUS;
@@ -26,7 +26,6 @@ class Player extends GameObject {
 
   Player(this.pos);
 
-  void setArena(GameArena arena) => this._enclosingArena = arena;
 
   void move(PlayerInputState input) {
     double x = 0.0;
