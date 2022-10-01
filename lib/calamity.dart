@@ -3,11 +3,28 @@
 /// More dartdocs go here.
 library calamity;
 
+import 'package:calamity/src/inputs/input_state.dart';
+import 'package:calamity/src/main_ctx.dart';
+import 'dart:html';
+
+
 export 'src/calamity_base.dart';
 
-// TODO: Export any libraries intended for clients of this package.
+Future<void> clientMain() async {
 
-void clientMain() {
-  print("Hi");
+  MainCtx mainctx = setupMainCtx();
+
+  while (true) {
+    mainctx.doFrame();
+    await window.animationFrame;
+  }
 }
 
+MainCtx setupMainCtx() {
+  CanvasElement canvas = document.getElementById('game-canvas')! as CanvasElement;
+  InputState inputs = new InputState();
+
+
+  MainCtx mainctx = new MainCtx(canvas, inputs);
+  return mainctx;
+}
