@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'dart:math';
 
+import 'package:calamity/src/resources/animation_resource.dart';
 import 'package:calamity/src/resources/image_resource.dart';
 
 import '../math/static.dart';
@@ -34,7 +35,10 @@ class Renderer {
   }
 
   void renderImage(Vector2 pos, Vector2 size, ImageResource image) {
-    // Hack: The actual JS function allows an ImageBitmap to be passed in
-    ctx.drawImageScaled(image.bitmap, pos.x, pos.y, size.x, size.y);
+    ctx.drawImageScaled(image.bitmap, pos.x - (size.x / 2), pos.y - (size.y / 2), size.x, size.y);
+  }
+
+  void renderAnimationFrame(Vector2 pos, Vector2 size, AnimationResource resource, int index) {
+    resource.renderFrame(ctx, index, pos - (size / 2), size);
   }
 }

@@ -8,10 +8,10 @@ import '../resources/resources.dart';
 
 class Boulder extends GameObject {
   Vector2 pos;
-  Vector2 halfSize = new Vector2(20, 20);
-  double radius = 20;
+  num radius;
+  Vector2 size;
 
-  Boulder(this.pos);
+  Boulder(this.pos, this.radius) : size = new Vector2(2 * radius, 2 * radius);
 
   @override
   void update(PlayerInputState input, num deltaTime) {
@@ -20,7 +20,7 @@ class Boulder extends GameObject {
 
   @override
   void render(Renderer r) {
-    r.renderImage(pos - halfSize, halfSize * 2, _image);
+    r.renderImage(pos, size, _image);
   }
 
   ImageResource get _image => Resources.GameResources.getResource(Resources.BOULDER);

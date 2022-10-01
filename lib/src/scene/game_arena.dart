@@ -41,7 +41,7 @@ class GameArena {
     for (int i = 0; i < Constants.NUM_BOULDERS; i++) {
       num x = r.nextDouble() * width;
       num y = r.nextDouble() * height;
-      boulders.add(new Boulder(new Vector2(x, y)));
+      boulders.add(new Boulder(new Vector2(x, y), Constants.BOULDER_RADIUS));
     }
     player.arena = this;
     bulletSpawner.arena = this;

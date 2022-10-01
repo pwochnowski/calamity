@@ -22,7 +22,6 @@ class Player extends GameObject {
   num movementSpeed = Constants.PLAYER_MOVE_SPEED;
   Vector2 pos;
   Vector2 size = new Vector2(50, 50);
-  Vector2 get halfSize => size * 0.5;
 
   LineSeg? path;
   Player(this.pos);
@@ -69,17 +68,17 @@ class Player extends GameObject {
 
   /// limit the player so they don't move outside the bounds
   void limit() {
-    if (pos.x < halfSize.x) {
-      pos = pos.setX(halfSize.x);
+    if (pos.x < size.x / 2) {
+      pos = pos.setX(size.x / 2);
     }
-    if (pos.y < halfSize.y) {
-      pos = pos.setY(halfSize.y);
+    if (pos.y < size.y / 2) {
+      pos = pos.setY(size.y / 2);
     }
-    if (pos.x + halfSize.x > arena.width) {
-      pos = pos.setX(arena.width - halfSize.x);
+    if (pos.x + size.x / 2 > arena.width) {
+      pos = pos.setX(arena.width - size.x / 2);
     }
-    if (pos.y + halfSize.y > arena.height) {
-      pos = pos.setY(arena.height - halfSize.y);
+    if (pos.y + size.y / 2 > arena.height) {
+      pos = pos.setY(arena.height - size.y / 2);
     }
   }
 
@@ -102,7 +101,7 @@ class Player extends GameObject {
     if (StaticData.random.nextDouble() < 0.1) {
       frame = StaticData.random.nextInt(animation.frameCount);
     }
-    animation.renderFrame(r.ctx, frame, pos - halfSize, size);
+    r.renderAnimationFrame(pos, size, animation, frame);
   }
 
   AnimationResource getPlayerAnimation() => _playerAnimation ??= Resources.GameResources.getResource(Resources.PLAYER_ANIMATION);

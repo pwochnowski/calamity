@@ -23,4 +23,5 @@ class Constants {
   static final int CHICK_SPAWN_SECONDS = 10;
 
   static final int NUM_BOULDERS = 3;
+  static final num BOULDER_RADIUS = 20;
 }
