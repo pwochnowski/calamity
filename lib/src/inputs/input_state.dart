@@ -4,6 +4,7 @@ import 'dart:html';
 import 'package:calamity/src/scene/player.dart';
 
 import '../math/vector2.dart';
+import 'mouse.dart';
 
 enum MouseButton {
   LEFT,
@@ -13,11 +14,11 @@ enum MouseButton {
 class InputState {
   final Set<int> heldDownKeys = new Set();
   Set<int> keysThisFrame = new Set();
-  MouseEvent? _lastMouseEvent;
+
+  // current mouse
+  late Mouse mouse;
 
   bool getKeyState(int key) => heldDownKeys.contains(key);
-
-  MouseEvent? getLastMouseEvent() => _lastMouseEvent;
 
   void beginNewFrame() {
     keysThisFrame.clear();
@@ -51,19 +52,22 @@ class InputState {
     });
 
     window.onMouseMove.listen((event) {
-      _lastMouseEvent = event;
+      mouse = Mouse(event);
+    });
+    window.onMouseDown.listen((event) {
+      mouse = Mouse(event);
     });
   }
 
 
-  PlayerInputState derivePlayerInputState(PlayerInputState? old) {
+  PlayerInputState derivePlayerInputState(PlayerInputState old) {
     Set<PlayerKey> keys = new Set();
     if (heldDownKeys.contains(KeyCode.LEFT)) { keys.add(PlayerKey.LEFT); }
     if (heldDownKeys.contains(KeyCode.RIGHT)) { keys.add(PlayerKey.RIGHT); }
     if (heldDownKeys.contains(KeyCode.UP)) { keys.add(PlayerKey.UP); }
     if (heldDownKeys.contains(KeyCode.DOWN)) { keys.add(PlayerKey.DOWN); }
 
-    return new PlayerInputState(getLastMouseEvent(), keys);
+    return new PlayerInputState(old.mouse, keys);
   }
 }
 
@@ -79,8 +83,9 @@ enum PlayerKey {
 
 class PlayerInputState {
   // Probably need this as is
-  final MouseEvent? lastMouseEvent;
+  final Mouse? mouse;
   final Set<PlayerKey> keys;
 
-  PlayerInputState(this.lastMouseEvent, this.keys);
+  PlayerInputState(this.mouse, this.keys);
+
 }

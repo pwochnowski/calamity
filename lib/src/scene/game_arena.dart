@@ -10,11 +10,12 @@ class GameArena {
   final num width;
   final num height;
   Player player;
+
   final BulletSpawner bulletSpawner;
   List<Bullet> bullets = [];
   GameArena(this.width, this.height)
       : player = new Player(new Vector2(50, 50)),
-        bulletSpawner = new BulletSpawner(10) {
+        bulletSpawner = new BulletSpawner(1) {
     player.setArena(this);
     bulletSpawner.setArena(this);
   }
@@ -24,6 +25,11 @@ class GameArena {
     bulletSpawner.update(input);
     for (Bullet bullet in bullets) {
       bullet.update(input);
+
+      if (bullet.collidesWithPlayer()) {
+        killPlayer();
+        break;
+      }
     }
   }
 
@@ -33,5 +39,13 @@ class GameArena {
     for (Bullet bullet in bullets) {
       bullet.render(r);
     }
+  }
+
+  // read by model
+  bool playing = true;
+
+  void killPlayer() {
+    playing = false;
+    print("Game over");
   }
 }

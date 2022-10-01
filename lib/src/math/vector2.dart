@@ -43,8 +43,19 @@ class Vector2 {
     return sqrt(x * x + y * y);
   }
 
+  num length2() {
+    return x*x + y*y;
+  }
+
   @override
   String toString() {
     return "${x.toStringAsFixed(3)}, ${y.toStringAsFixed(3)}";
+  }
+
+  num distanceTo(Vector2 v) {
+    return (this - v).length();
+  }
+  num distanceTo2(Vector2 v) {
+    return (this - v).length2();
   }
 }

@@ -11,6 +11,8 @@ class Player {
   ImageResource? _playerImage;
   // Effectively non-nullable
   GameArena? _enclosingArena;
+  // used for hitbox of player
+  double radius = 50.0;
 
   double movementSpeed = 10.0;
   Vector2 pos;
