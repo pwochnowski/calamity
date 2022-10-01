@@ -16,7 +16,7 @@ class Bullet extends GameObject {
 
   Bullet(this.pos, this.velocity, this._enclosingArena);
 
-  void update(PlayerInputState) {
+  void update(PlayerInputState, num deltaTime) {
     pos += velocity;
   }
 

@@ -17,9 +17,12 @@ Future<void> clientMain() async {
 
   MainCtx mainctx = setupMainCtx();
 
+  num lastTime = 0;
   while (true) {
-    mainctx.doFrame();
-    await window.animationFrame;
+    num nowTime = await window.animationFrame;
+    num deltaTime = nowTime - lastTime;
+    lastTime = nowTime;
+    mainctx.doFrame(deltaTime);
   }
 }
 

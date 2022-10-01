@@ -23,13 +23,12 @@ class GameArena {
     bulletSpawner.arena = this;
   }
 
-  void update(PlayerInputState input) {
+  void update(PlayerInputState input, num deltaTime) {
     // print("Update arena $playing");
-    player.update(input);
-    bulletSpawner.update(input);
-
+    player.update(input, deltaTime);
+    bulletSpawner.update(input, deltaTime);
     for (Bullet bullet in bullets) {
-      bullet.update(input);
+      bullet.update(input, deltaTime);
 
       if (bullet.collidesWithPlayer()) {
         killPlayer();

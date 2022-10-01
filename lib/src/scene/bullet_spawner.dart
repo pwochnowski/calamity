@@ -48,7 +48,7 @@ class BulletSpawner {
     return bullet;
   }
 
-  void update(PlayerInputState input) {
+  void update(PlayerInputState input, num deltaTime) {
     if (!arena.playing) {
       return;
     }

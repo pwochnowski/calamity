@@ -17,17 +17,15 @@ class MainCtx {
     renderer = new Renderer(canvas),
     model = new Model(canvas.width!, canvas.height!);
 
-  void doFrame() {
+  /// performs a single update-render loop cycle
+  /// [deltaTime] is the amount of time passed since the last frame
+  void doFrame(num deltaTime) {
     inputState.beginNewFrame();
     PlayerInputState newInputState = inputState.derivePlayerInputState(lastInputState);
-    model.update(newInputState);
+    model.update(newInputState, deltaTime);
 
     renderer.beginRender();
     model.render(renderer);
     lastInputState = newInputState;
   }
 }
-
-
-
-

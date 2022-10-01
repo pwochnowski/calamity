@@ -37,7 +37,7 @@ class Player extends GameObject {
     pos += new Vector2(x, y).normalized() * movementSpeed;
   }
 
-  void update(PlayerInputState input) {
+  void update(PlayerInputState input, num deltaTime) {
     move(input);
   }
 

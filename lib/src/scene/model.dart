@@ -20,11 +20,11 @@ class Model {
     ggScreen.arena = arena;
   }
 
-  void update(PlayerInputState input) {
+  void update(PlayerInputState input, num deltaTime) {
     // print("ARENA UPDATE: ${input.mouse?.event.button} ${arena.playing}");
     if (arena.playing) {
       // print("Areana update ${arena.hashCode}");
-      arena.update(input);
+      arena.update(input, deltaTime);
     }
     if (!arena.playing) {
       ggScreen.update(input);
