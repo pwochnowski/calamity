@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:calamity/src/constants.dart';
 import 'package:calamity/src/inputs/input_state.dart';
 import 'package:calamity/src/math/static.dart';
 import 'package:calamity/src/scene/game_arena.dart';
@@ -43,8 +44,8 @@ class BulletSpawner {
     }
     Vector2 position = new Vector2(x, y);
     num angle = (0.5 * edge + 0.8 * (StaticData.random.nextDouble() - 0.5)) * pi;
-    Vector2 vel = new Vector2(cos(angle), sin(angle)) * 15.0;
-    Bullet bullet = new Bullet(position, vel, bulletHitbox, _enclosingArena!);
+    Vector2 vel = new Vector2(cos(angle), sin(angle)) * Constants.BULLET_SPEED;
+    Bullet bullet = new Bullet(position, vel, _enclosingArena!);
     return bullet;
   }
 

@@ -3,16 +3,17 @@ import 'package:calamity/src/render/renderer.dart';
 import 'package:calamity/src/scene/game_arena.dart';
 import 'package:calamity/src/scene/player.dart';
 
+import '../constants.dart';
 import '../math/vector2.dart';
 
 class Bullet {
   Vector2 pos;
   Vector2 velocity;
   // AABB hitboxes
-  double radius;
+  num radius = Constants.BULLET_RADIUS;
   GameArena _enclosingArena;
 
-  Bullet(this.pos, this.velocity, this.radius, this._enclosingArena);
+  Bullet(this.pos, this.velocity, this._enclosingArena);
 
   void update(PlayerInputState) {
     pos += velocity;

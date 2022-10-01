@@ -1,5 +1,6 @@
 import 'package:calamity/src/scene/player.dart';
 
+import '../constants.dart';
 import '../inputs/input_state.dart';
 import '../math/vector2.dart';
 import '../render/renderer.dart';
@@ -15,7 +16,7 @@ class GameArena {
   List<Bullet> bullets = [];
   GameArena(this.width, this.height)
       : player = new Player(new Vector2(50, 50)),
-        bulletSpawner = new BulletSpawner(1) {
+        bulletSpawner = new BulletSpawner(Constants.NUM_BULLETS) {
     player.setArena(this);
     bulletSpawner.setArena(this);
   }

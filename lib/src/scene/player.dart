@@ -2,6 +2,7 @@
 import 'package:calamity/src/resources/image_resource.dart';
 import 'package:calamity/src/scene/game_arena.dart';
 
+import '../constants.dart';
 import '../inputs/input_state.dart';
 import '../math/vector2.dart';
 import '../render/renderer.dart';
@@ -9,10 +10,10 @@ import '../resources/resources.dart';
 
 class Player {
   ImageResource? _playerImage;
-  // Effectively non-nullable
-  GameArena? _enclosingArena;
+  late GameArena _enclosingArena;
+
   // used for hitbox of player
-  double radius = 50.0;
+  final num radius = Constants.PLAYER_RADIUS;
 
   double movementSpeed = 10.0;
   Vector2 pos;
