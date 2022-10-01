@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:calamity/src/math/collision_helper.dart';
 import 'package:calamity/src/math/static.dart';
 import 'package:calamity/src/scene/boulder.dart';
 import 'package:calamity/src/scene/player.dart';
@@ -44,6 +45,13 @@ class GameArena {
       if (bullet.collidesWithPlayer()) {
         killPlayer();
         break;
+      }
+    }
+
+    for (Boulder boulder in boulders) {
+      Vector2? shiftVector = CollisionHelper.shiftVectorCircleCircle(player.pos, player.radius, boulder.pos, boulder.radius);
+      if (shiftVector != null) {
+        player.pos += shiftVector;
       }
     }
   }
