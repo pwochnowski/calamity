@@ -63,6 +63,11 @@ class GameArena {
     }
     for (Enemy enemy in enemies) {
       enemy.update(input, deltaTime);
+
+      if (enemy.collidesWithPlayer()) {
+        killPlayer();
+        break;
+      }
     }
   }
 
@@ -86,6 +91,7 @@ class GameArena {
   void killPlayer() {
     playing = false;
     bullets.clear();
+    enemies.clear();
     print("Game over");
   }
 }
