@@ -10,7 +10,6 @@ class InputState {
   bool getKeyState(int key) => heldDownKeys.contains(key);
 
   void beginNewFrame() {
-    print("Pressed ${keysThisFrame} ${KeyCode.DOWN}");
     keysThisFrame.clear();
   }
 
@@ -25,10 +24,10 @@ class InputState {
           dirs.add(new Vector2(1, 0));
           break;
         case KeyCode.DOWN:
-          dirs.add(new Vector2(0, -1));
+          dirs.add(new Vector2(0, 1));
           break;
         case KeyCode.UP:
-          dirs.add(new Vector2(0, 1));
+          dirs.add(new Vector2(0, -1));
           break;
       }
     }
