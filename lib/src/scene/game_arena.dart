@@ -1,3 +1,7 @@
+import 'dart:math';
+
+import 'package:calamity/src/math/static.dart';
+import 'package:calamity/src/scene/boulder.dart';
 import 'package:calamity/src/scene/player.dart';
 
 import '../constants.dart';
@@ -13,12 +17,19 @@ class GameArena {
   final Player player;
 
   final BulletSpawner bulletSpawner;
-  List<Bullet> bullets = [];
+  final List<Bullet> bullets = [];
+  final List<Boulder> boulders = [];
 
   GameArena(this.width, this.height)
       : player = new Player(new Vector2(100, 200)),
         bulletSpawner = new BulletSpawner() {
 
+    Random r = StaticData.random;
+    for (int i = 0; i < 10; i++) {
+      num x = r.nextDouble() * width;
+      num y = r.nextDouble() * height;
+      boulders.add(new Boulder(new Vector2(x, y)));
+    }
     player.arena = this;
     bulletSpawner.arena = this;
   }
@@ -42,6 +53,9 @@ class GameArena {
     bulletSpawner.render(r);
     for (Bullet bullet in bullets) {
       bullet.render(r);
+    }
+    for (Boulder boulder in boulders) {
+      boulder.render(r);
     }
   }
 

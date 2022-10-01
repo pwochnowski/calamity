@@ -95,7 +95,7 @@ class Player extends GameObject {
     animation.renderFrame(r.ctx, frame, pos - halfSize, size);
   }
 
-  ImageResource getPlayerImage() => _playerImage ??= Resources.GameResources.getResource('player');
-  AnimationResource getPlayerAnimation() => _playerAnimation ??= Resources.GameResources.getResource('player_tilesheet');
+  ImageResource getPlayerImage() => _playerImage ??= Resources.GameResources.getResource(Resources.PLAYER);
+  AnimationResource getPlayerAnimation() => _playerAnimation ??= Resources.GameResources.getResource(Resources.PLAYER_ANIMATION);
 }
 
