@@ -16,10 +16,12 @@ class Bullet extends GameObject {
 
   Bullet(this.pos, this.velocity, this._enclosingArena);
 
+  @override
   void update(PlayerInputState, num deltaTime) {
     pos += velocity;
   }
 
+  @override
   void render(Renderer r) {
     // FIXME: Currently just a circle
     r.renderCircle(pos);

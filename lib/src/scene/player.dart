@@ -37,11 +37,13 @@ class Player extends GameObject {
     pos += new Vector2(x, y).normalized() * movementSpeed;
   }
 
+  @override
   void update(PlayerInputState input, num deltaTime) {
     move(input);
   }
 
   int frame = 0;
+  @override
   void render(Renderer r) {
     AnimationResource animation = getPlayerAnimation();
     if (StaticData.random.nextDouble() < 0.1) {
