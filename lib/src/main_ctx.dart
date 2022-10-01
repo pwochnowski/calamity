@@ -1,6 +1,7 @@
 
 import 'dart:html';
 
+import 'package:calamity/src/inputs/mouse.dart';
 import 'package:calamity/src/render/renderer.dart';
 import 'package:calamity/src/scene/model.dart';
 
@@ -11,7 +12,7 @@ class MainCtx {
   final Renderer renderer;
   final Model model;
   final InputState inputState;
-  PlayerInputState lastInputState = new PlayerInputState(null, new Set());
+  PlayerInputState lastInputState = new PlayerInputState(Mouse.NONE, new Set());
 
   MainCtx(this.canvas, this.inputState) :
     renderer = new Renderer(canvas),

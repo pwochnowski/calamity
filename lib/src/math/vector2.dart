@@ -66,4 +66,8 @@ class Vector2 {
   num distanceTo2(Vector2 v) {
     return (this - v).length2();
   }
+
+  num dotProd(Vector2 v) {
+    return v.x*x + v.y*y;
+  }
 }

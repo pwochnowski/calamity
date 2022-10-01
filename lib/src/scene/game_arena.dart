@@ -24,7 +24,6 @@ class GameArena {
   }
 
   void update(PlayerInputState input, num deltaTime) {
-    // print("Update arena $playing");
     player.update(input, deltaTime);
     bulletSpawner.update(input, deltaTime);
     for (Bullet bullet in bullets) {

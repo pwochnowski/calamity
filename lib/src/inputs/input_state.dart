@@ -16,7 +16,7 @@ class InputState {
   Set<int> keysThisFrame = new Set();
 
   // current mouse
-  Mouse? mouse;
+  Mouse mouse = Mouse.NONE;
 
   bool getKeyState(int key) => heldDownKeys.contains(key);
 
@@ -24,10 +24,10 @@ class InputState {
     keysThisFrame.clear();
   }
 
-  void registerListeners() {
+  void registerListeners(CanvasElement canvas) {
 
     window.onKeyDown.listen((ev) {
-      mouse = null;
+      mouse = Mouse.NONE;
       keysThisFrame.add(ev.keyCode);
 
       // track held keys
@@ -58,7 +58,10 @@ class InputState {
     window.onMouseDown.listen((event) {
       mouse = new Mouse(event);
       print("Mouse click ${mouse!.pos}");
+      event.preventDefault();
+
     });
+    window.onContextMenu.listen((event) {event.preventDefault();});
   }
 
 
@@ -86,7 +89,7 @@ enum PlayerKey {
 
 class PlayerInputState {
   // Probably need this as is
-  Mouse? mouse;
+  Mouse mouse;
   final Set<PlayerKey> keys;
 
   PlayerInputState(this.mouse, this.keys);
