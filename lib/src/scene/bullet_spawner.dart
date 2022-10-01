@@ -5,17 +5,17 @@ import 'package:calamity/src/inputs/input_state.dart';
 import 'package:calamity/src/math/static.dart';
 import 'package:calamity/src/scene/game_arena.dart';
 
+import '../globals.dart';
 import '../math/vector2.dart';
 import '../render/renderer.dart';
 import 'bullet.dart';
 
 class BulletSpawner {
   late final GameArena arena;
-  int numBullets = 10;
   static final Vector2 bulletHitbox = new Vector2(50, 50);
 
 
-  BulletSpawner(this.numBullets);
+  BulletSpawner();
 
   Bullet spawnBulletAtEdge() {
     // Pick an arena edge to use
@@ -48,14 +48,22 @@ class BulletSpawner {
     return bullet;
   }
 
-  void update(PlayerInputState input, num deltaTime) {
+  num remainingCd = 0;
+
+  void update(PlayerInputState input, num deltaTime) async {
     if (!arena.playing) {
       return;
     }
+
     arena.bullets.retainWhere((Bullet bullet) => bullet.isInBounds());
-    int numToSpawn = max(0, numBullets - arena.bullets.length);
-    for (int i = 0; i < numToSpawn; ++i) {
-      arena.bullets.add(spawnBulletAtEdge());
+
+    if (arena.bullets.length < Constants.NUM_BULLETS) {
+      if (remainingCd > 0) {
+        remainingCd -= deltaTime;
+      } else {
+        arena.bullets.add(spawnBulletAtEdge());
+        remainingCd = 500;
+      }
     }
   }
 

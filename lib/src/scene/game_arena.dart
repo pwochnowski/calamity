@@ -17,7 +17,7 @@ class GameArena {
 
   GameArena(this.width, this.height)
       : player = new Player(new Vector2(100, 200)),
-        bulletSpawner = new BulletSpawner(Constants.NUM_BULLETS) {
+        bulletSpawner = new BulletSpawner() {
 
     player.arena = this;
     bulletSpawner.arena = this;
@@ -26,6 +26,7 @@ class GameArena {
   void update(PlayerInputState input, num deltaTime) {
     player.update(input, deltaTime);
     bulletSpawner.update(input, deltaTime);
+
     for (Bullet bullet in bullets) {
       bullet.update(input, deltaTime);
 
