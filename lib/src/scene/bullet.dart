@@ -11,7 +11,7 @@ class Bullet extends GameObject {
   Vector2 pos;
   Vector2 velocity;
   // AABB hitboxes
-  num radius = Constants.BULLET_RADIUS;
+  final num radius = Constants.BULLET_RADIUS;
   GameArena _enclosingArena;
 
   Bullet(this.pos, this.velocity, this._enclosingArena);
@@ -33,8 +33,10 @@ class Bullet extends GameObject {
   bool collidesWithPlayer() {
     Player p = _enclosingArena.player;
     num dist = p.pos.distanceTo(pos);
-    print("Dist ${dist}");
-    return dist <  p.radius + radius;
+
+    bool collision = dist <  p.radius + radius;
+    // print("Dist ${dist}: $collision");
+    return collision;
   }
 
 }

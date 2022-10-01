@@ -16,7 +16,7 @@ class InputState {
   Set<int> keysThisFrame = new Set();
 
   // current mouse
-  late Mouse mouse;
+  Mouse? mouse;
 
   bool getKeyState(int key) => heldDownKeys.contains(key);
 
@@ -27,6 +27,7 @@ class InputState {
   void registerListeners() {
 
     window.onKeyDown.listen((ev) {
+      mouse = null;
       keysThisFrame.add(ev.keyCode);
 
       // track held keys
@@ -52,22 +53,24 @@ class InputState {
     });
 
     window.onMouseMove.listen((event) {
-      mouse = Mouse(event);
+      // mouse = Mouse(event);
     });
     window.onMouseDown.listen((event) {
-      mouse = Mouse(event);
+      mouse = new Mouse(event);
+      print("Mouse click ${mouse!.pos}");
     });
   }
 
 
   PlayerInputState derivePlayerInputState(PlayerInputState old) {
+
     Set<PlayerKey> keys = new Set();
     if (heldDownKeys.contains(KeyCode.LEFT)) { keys.add(PlayerKey.LEFT); }
     if (heldDownKeys.contains(KeyCode.RIGHT)) { keys.add(PlayerKey.RIGHT); }
     if (heldDownKeys.contains(KeyCode.UP)) { keys.add(PlayerKey.UP); }
     if (heldDownKeys.contains(KeyCode.DOWN)) { keys.add(PlayerKey.DOWN); }
 
-    return new PlayerInputState(old.mouse, keys);
+    return new PlayerInputState(mouse, keys);
   }
 }
 
@@ -83,7 +86,7 @@ enum PlayerKey {
 
 class PlayerInputState {
   // Probably need this as is
-  final Mouse? mouse;
+  Mouse? mouse;
   final Set<PlayerKey> keys;
 
   PlayerInputState(this.mouse, this.keys);

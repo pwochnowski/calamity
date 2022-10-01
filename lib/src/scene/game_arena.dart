@@ -22,8 +22,10 @@ class GameArena {
   }
 
   void update(PlayerInputState input) {
+    // print("Update arena $playing");
     player.update(input);
     bulletSpawner.update(input);
+
     for (Bullet bullet in bullets) {
       bullet.update(input);
 
@@ -47,6 +49,7 @@ class GameArena {
 
   void killPlayer() {
     playing = false;
+    bullets.clear();
     print("Game over");
   }
 }

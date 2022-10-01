@@ -11,14 +11,12 @@ class GameOverScreen {
   GameOverScreen();
   void update(PlayerInputState ps) {
     if (ps.mouse?.left ?? false) {
-      print("Retry");
       arena.playing = true;
     }
 
   }
 
   void render(Renderer r) {
-    print("Drawing gg");
     r.ctx.beginPath();
     r.ctx.setFillColorRgb(255, 0, 0);
     r.ctx.rect(0,0, r.width, r.height);
