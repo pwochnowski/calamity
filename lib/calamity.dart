@@ -9,6 +9,7 @@ import 'dart:html';
 
 import 'package:calamity/src/resources/image_resource.dart';
 import 'package:calamity/src/resources/resources.dart';
+import 'package:calamity/src/ui.dart';
 
 
 Future<void> clientMain() async {
@@ -27,9 +28,31 @@ Future<void> clientMain() async {
 }
 
 MainCtx setupMainCtx() {
-  CanvasElement canvas = document.getElementById('game-canvas')! as CanvasElement;
+  CanvasElement canvas;
+  late MainCtx mainctx;
+
+
+  DivElement div = Div([
+    // Div([
+    //   'Speed',
+    //   IntInput('Speed',  () => mainctx.model.arena.player.movementSpeed, ((num x) => mainctx.model.arena.player.movementSpeed = x))
+    // ]),
+    canvas = new CanvasElement(width: 800, height: 400)
+  ])
+    ..style.position = 'absolute'
+    ..style.left = '50%'
+    ..style.top = '50%'
+    ..style.transform = 'translate(-50%, -50%)'
+    ..style.border = '1px solid black'
+    ;
+  document.body?.nodes.add(div);
+
   InputState inputs = new InputState();
   inputs.registerListeners(canvas);
-  MainCtx mainctx = new MainCtx(canvas, inputs);
+  mainctx = new MainCtx(canvas, inputs);
+  
+  // addNumberInput("Speed",
   return mainctx;
 }
+
+

@@ -22,7 +22,7 @@ class Player extends GameObject {
   // used for hitbox of player
   final num radius = Constants.PLAYER_RADIUS;
 
-  final num movementSpeed = Constants.PLAYER_MOVE_SPEED;
+  num movementSpeed = Constants.PLAYER_MOVE_SPEED;
   Vector2 pos;
   Vector2 size = new Vector2(50, 50);
 
