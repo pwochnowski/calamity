@@ -7,10 +7,13 @@ import 'package:calamity/src/inputs/input_state.dart';
 import 'package:calamity/src/main_ctx.dart';
 import 'dart:html';
 
+import 'package:calamity/src/resources/image_resource.dart';
+import 'package:calamity/src/resources/resources.dart';
 
-export 'src/calamity_base.dart';
 
 Future<void> clientMain() async {
+
+  await Resources.GameResources.loadAll();
 
   MainCtx mainctx = setupMainCtx();
 
@@ -25,7 +28,7 @@ MainCtx setupMainCtx() {
   InputState inputs = new InputState();
   inputs.registerListeners();
 
-
+  inputs.registerListeners();
   MainCtx mainctx = new MainCtx(canvas, inputs);
   return mainctx;
 }

@@ -1,6 +1,8 @@
 import 'dart:html';
 import 'dart:math';
 
+import 'package:calamity/src/resources/image_resource.dart';
+
 import '../math/vector2.dart';
 
 class Renderer {
@@ -23,4 +25,8 @@ class Renderer {
     ctx.stroke();
   }
 
+  void renderImage(Vector2 pos, Vector2 size, ImageResource image) {
+    // Hack: The actual JS function allows an ImageBitmap to be passed in
+    ctx.drawImageScaled(image.bitmap, pos.x, pos.y, size.x, size.y);
+  }
 }
