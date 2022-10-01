@@ -37,9 +37,26 @@ class Player extends GameObject {
     pos += new Vector2(x, y).normalized() * movementSpeed;
   }
 
+  /// limit the player so they don't move outside the bounds
+  void limit() {
+    if (pos.x < 0) {
+      pos = pos.setX(0);
+    }
+    if (pos.y < 0) {
+      pos = pos.setY(0);
+    }
+    if (pos.x + imageBounds.x > _enclosingArena.width) {
+      pos = pos.setX(_enclosingArena.width - imageBounds.x);
+    }
+    if (pos.y + imageBounds.y > _enclosingArena.height) {
+      pos = pos.setY(_enclosingArena.height - imageBounds.y);
+    }
+  }
+
   @override
   void update(PlayerInputState input, num deltaTime) {
     move(input);
+    limit();
   }
 
   int frame = 0;

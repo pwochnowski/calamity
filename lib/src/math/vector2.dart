@@ -5,6 +5,14 @@ class Vector2 {
 
   Vector2(this.x, this.y);
 
+  Vector2 setX(num newX) {
+    return new Vector2(newX, y);
+  }
+
+  Vector2 setY(num newY) {
+    return new Vector2(x, newY);
+  }
+
   static Vector2 avg(List<Vector2> vs) {
 
     Vector2 u = new Vector2(0,0);
