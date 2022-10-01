@@ -11,6 +11,8 @@ import '../math/vector2.dart';
 import '../render/renderer.dart';
 import 'bullet.dart';
 import 'bullet_spawner.dart';
+import 'enemy.dart';
+import 'enemy_spawner.dart';
 
 class GameArena {
   final num width;
@@ -18,12 +20,16 @@ class GameArena {
   final Player player;
 
   final BulletSpawner bulletSpawner;
+  final EnemySpawner enemySpawner;
+  // TODO: Generalize this
   final List<Bullet> bullets = [];
   final List<Boulder> boulders = [];
+  final List<Enemy> enemies = [];
 
   GameArena(this.width, this.height)
       : player = new Player(new Vector2(100, 200)),
-        bulletSpawner = new BulletSpawner() {
+        bulletSpawner = new BulletSpawner(),
+        enemySpawner = new EnemySpawner(Constants.NUM_ENEMIES) {
 
     Random r = StaticData.random;
     for (int i = 0; i < 10; i++) {
@@ -33,11 +39,13 @@ class GameArena {
     }
     player.arena = this;
     bulletSpawner.arena = this;
+    enemySpawner.arena = this;
   }
 
   void update(PlayerInputState input, num deltaTime) {
     player.update(input, deltaTime);
     bulletSpawner.update(input, deltaTime);
+    enemySpawner.update(input, deltaTime);
 
     for (Bullet bullet in bullets) {
       bullet.update(input, deltaTime);
@@ -47,12 +55,14 @@ class GameArena {
         break;
       }
     }
-
     for (Boulder boulder in boulders) {
       Vector2? shiftVector = CollisionHelper.shiftVectorCircleCircle(player.pos, player.radius, boulder.pos, boulder.radius);
       if (shiftVector != null) {
         player.pos += shiftVector;
       }
+    }
+    for (Enemy enemy in enemies) {
+      enemy.update(input, deltaTime);
     }
   }
 
@@ -64,6 +74,9 @@ class GameArena {
     }
     for (Boulder boulder in boulders) {
       boulder.render(r);
+    }
+    for (Enemy enemy in enemies) {
+      enemy.render(r);
     }
   }
 

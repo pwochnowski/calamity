@@ -4,7 +4,7 @@ import 'package:calamity/src/resources/image_resource.dart';
 abstract class Resource {}
 
 class Resources {
-  static final String PLAYER = 'player';
+  static final String ENEMY = 'enemy';
   static final String PLAYER_ANIMATION = 'player_animation';
   static final String BOULDER = 'boulder';
   final Map<String, Resource> _resources;
@@ -20,7 +20,8 @@ class Resources {
 
   /// Monster function that loads all of the resources
   Future<Null> loadAll() async {
-    _resources[PLAYER] = await ImageResource.load('player.png');
+    // TODO: Maybe request all of these in parallel? Would require us to await them all simultaneously
+    _resources[ENEMY] = await ImageResource.load('enemy.png');
     _resources[PLAYER_ANIMATION] = await AnimationResource.load('player_animation.png', 80, 110, 24);
     _resources[BOULDER] = await ImageResource.load('boulder.png');
   }

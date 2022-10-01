@@ -13,10 +13,7 @@ import '../render/renderer.dart';
 import '../resources/resources.dart';
 
 class Player extends GameObject {
-  ImageResource? _playerImage;
   AnimationResource? _playerAnimation;
-
-  // Effectively non-nullable
   late GameArena arena;
 
   // used for hitbox of player
@@ -33,6 +30,7 @@ class Player extends GameObject {
 
   void move(PlayerInputState input) {
     if (path != null) {
+      // FIXME: This overshoots
       Vector2 newPos = path!.dir() * movementSpeed;
       num ratio = path!.ratioOnSeg(pos);
       if (ratio < 1.0) {
@@ -95,7 +93,6 @@ class Player extends GameObject {
     animation.renderFrame(r.ctx, frame, pos - halfSize, size);
   }
 
-  ImageResource getPlayerImage() => _playerImage ??= Resources.GameResources.getResource(Resources.PLAYER);
   AnimationResource getPlayerAnimation() => _playerAnimation ??= Resources.GameResources.getResource(Resources.PLAYER_ANIMATION);
 }
 
