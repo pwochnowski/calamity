@@ -45,11 +45,11 @@ class Player extends GameObject {
     if (pos.y < 0) {
       pos = pos.setY(0);
     }
-    if (pos.x + imageBounds.x > _enclosingArena.width) {
-      pos = pos.setX(_enclosingArena.width - imageBounds.x);
+    if (pos.x + imageBounds.x > arena.width) {
+      pos = pos.setX(arena.width - imageBounds.x);
     }
-    if (pos.y + imageBounds.y > _enclosingArena.height) {
-      pos = pos.setY(_enclosingArena.height - imageBounds.y);
+    if (pos.y + imageBounds.y > arena.height) {
+      pos = pos.setY(arena.height - imageBounds.y);
     }
   }
 
