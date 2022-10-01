@@ -1,6 +1,8 @@
 
 import 'dart:html';
 
+import 'package:calamity/src/scene/player.dart';
+
 import '../math/vector2.dart';
 
 enum MouseButton {
@@ -20,28 +22,6 @@ class InputState {
   void beginNewFrame() {
     keysThisFrame.clear();
   }
-
-  Vector2 getDirectionFromArrows() {
-    List<Vector2> dirs = [Vector2(0,0)];
-    for (int key in heldDownKeys) {
-      switch (key) {
-        case KeyCode.LEFT:
-          dirs.add(new Vector2(-1, 0));
-          break;
-        case KeyCode.RIGHT:
-          dirs.add(new Vector2(1, 0));
-          break;
-        case KeyCode.DOWN:
-          dirs.add(new Vector2(0, 1));
-          break;
-        case KeyCode.UP:
-          dirs.add(new Vector2(0, -1));
-          break;
-      }
-    }
-    return Vector2.avg(dirs);
-  }
-
 
   void registerListeners() {
 
@@ -76,17 +56,31 @@ class InputState {
   }
 
 
-  PlayerInputState derivePlayerInputState() {
-    return new PlayerInputState(getLastMouseEvent());
+  PlayerInputState derivePlayerInputState(PlayerInputState? old) {
+    Set<PlayerKey> keys = new Set();
+    if (heldDownKeys.contains(KeyCode.LEFT)) { keys.add(PlayerKey.LEFT); }
+    if (heldDownKeys.contains(KeyCode.RIGHT)) { keys.add(PlayerKey.RIGHT); }
+    if (heldDownKeys.contains(KeyCode.UP)) { keys.add(PlayerKey.UP); }
+    if (heldDownKeys.contains(KeyCode.DOWN)) { keys.add(PlayerKey.DOWN); }
+
+    return new PlayerInputState(getLastMouseEvent(), keys);
   }
 }
 
 typedef void EventHandler<E extends Event>(E);
 // EventHandler<E> evh<E extends Event>(E ev) {}
 
+enum PlayerKey {
+  LEFT,
+  RIGHT,
+  UP,
+  DOWN,
+}
+
 class PlayerInputState {
   // Probably need this as is
   final MouseEvent? lastMouseEvent;
+  final Set<PlayerKey> keys;
 
-  PlayerInputState(this.lastMouseEvent);
+  PlayerInputState(this.lastMouseEvent, this.keys);
 }

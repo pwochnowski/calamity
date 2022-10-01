@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class Vector2 {
   final num x, y;
 
@@ -30,6 +32,15 @@ class Vector2 {
 
   Vector2 operator /(num s) {
     return new Vector2(x / s, y / s);
+  }
+
+  Vector2 normalized() {
+    num l = length();
+    return l == 0 ? this : this / length();
+  }
+
+  num length() {
+    return sqrt(x * x + y * y);
   }
 
   @override

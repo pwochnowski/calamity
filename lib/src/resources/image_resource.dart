@@ -1,5 +1,4 @@
 import 'dart:html';
-import 'dart:typed_data';
 
 import 'package:calamity/src/resources/resources.dart';
 import 'package:js/js.dart';

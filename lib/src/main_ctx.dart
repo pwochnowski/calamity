@@ -11,6 +11,7 @@ class MainCtx {
   final Renderer renderer;
   final Model model;
   final InputState inputState;
+  PlayerInputState? lastInputState;
 
   MainCtx(this.canvas, this.inputState) :
     renderer = new Renderer(canvas),
@@ -20,10 +21,12 @@ class MainCtx {
 
   void doFrame() {
     inputState.beginNewFrame();
-    model.handleInputs(inputState);
+    PlayerInputState newInputState = inputState.derivePlayerInputState(lastInputState);
+    model.handleInputs(newInputState);
 
     renderer.beginRender();
     model.render(renderer);
+    lastInputState = newInputState;
   }
 }
 
