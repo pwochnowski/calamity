@@ -3,11 +3,19 @@ import 'dart:html';
 
 import '../math/vector2.dart';
 
+enum MouseButton {
+  LEFT,
+  RIGHT
+}
+
 class InputState {
   final Set<int> heldDownKeys = new Set();
   Set<int> keysThisFrame = new Set();
+  MouseEvent? _lastMouseEvent;
 
   bool getKeyState(int key) => heldDownKeys.contains(key);
+
+  MouseEvent? getLastMouseEvent() => _lastMouseEvent;
 
   void beginNewFrame() {
     keysThisFrame.clear();
@@ -61,14 +69,24 @@ class InputState {
           break;
       }
     });
+
+    window.onMouseMove.listen((event) {
+      _lastMouseEvent = event;
+    });
   }
 
 
+  PlayerInputState derivePlayerInputState() {
+    return new PlayerInputState(getLastMouseEvent());
+  }
 }
 
 typedef void EventHandler<E extends Event>(E);
 // EventHandler<E> evh<E extends Event>(E ev) {}
 
 class PlayerInputState {
+  // Probably need this as is
+  final MouseEvent? lastMouseEvent;
 
+  PlayerInputState(this.lastMouseEvent);
 }
