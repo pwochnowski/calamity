@@ -1,12 +1,13 @@
 import 'package:calamity/src/inputs/input_state.dart';
 import 'package:calamity/src/render/renderer.dart';
 import 'package:calamity/src/scene/game_arena.dart';
+import 'package:calamity/src/scene/game_object.dart';
 import 'package:calamity/src/scene/player.dart';
 
 import '../constants.dart';
 import '../math/vector2.dart';
 
-class Bullet {
+class Bullet extends GameObject {
   Vector2 pos;
   Vector2 velocity;
   // AABB hitboxes

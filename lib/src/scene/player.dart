@@ -3,6 +3,7 @@ import 'package:calamity/src/math/static.dart';
 import 'package:calamity/src/resources/animation_resource.dart';
 import 'package:calamity/src/resources/image_resource.dart';
 import 'package:calamity/src/scene/game_arena.dart';
+import 'package:calamity/src/scene/game_object.dart';
 
 import '../constants.dart';
 import '../inputs/input_state.dart';
@@ -10,7 +11,7 @@ import '../math/vector2.dart';
 import '../render/renderer.dart';
 import '../resources/resources.dart';
 
-class Player {
+class Player extends GameObject {
   ImageResource? _playerImage;
   AnimationResource? _playerAnimation;
   // Effectively non-nullable
