@@ -23,8 +23,8 @@ class AABB {
   bool isPointInside(Vector2 point) {
     return (
         (point.x >= min.x) &&
-        (point.x >= min.y) &&
-        (point.y <= max.x) &&
+        (point.y >= min.y) &&
+        (point.x <= max.x) &&
         (point.y <= max.y)
     );
   }

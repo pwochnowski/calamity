@@ -1,10 +1,12 @@
 import 'package:calamity/src/inputs/input_state.dart';
+import 'package:calamity/src/math/collision_helper.dart';
 import 'package:calamity/src/render/renderer.dart';
 import 'package:calamity/src/scene/game_arena.dart';
 import 'package:calamity/src/scene/game_object.dart';
 import 'package:calamity/src/scene/player.dart';
 
 import '../constants.dart';
+import '../math/aabb.dart';
 import '../math/vector2.dart';
 
 class Bullet extends GameObject {
@@ -34,11 +36,7 @@ class Bullet extends GameObject {
 
   bool collidesWithPlayer() {
     Player p = _enclosingArena.player;
-    num dist = p.pos.distanceTo(pos);
-
-    bool collision = dist <  p.radius + radius;
-    // print("Dist ${dist}: $collision");
-    return collision;
+    return CollisionHelper.collidesCircleAABB(pos, radius, AABB.fromLocAndSize(p.pos, p.size));
   }
 
 }
