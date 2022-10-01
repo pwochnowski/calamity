@@ -22,7 +22,7 @@ class Player extends GameObject {
 
   double movementSpeed = 10.0;
   Vector2 pos;
-  Vector2 imageBounds = new Vector2(50, 50);
+  Vector2 size = new Vector2(50, 50);
 
   Player(this.pos);
 
@@ -45,11 +45,11 @@ class Player extends GameObject {
     if (pos.y < 0) {
       pos = pos.setY(0);
     }
-    if (pos.x + imageBounds.x > arena.width) {
-      pos = pos.setX(arena.width - imageBounds.x);
+    if (pos.x + size.x > arena.width) {
+      pos = pos.setX(arena.width - size.x);
     }
-    if (pos.y + imageBounds.y > arena.height) {
-      pos = pos.setY(arena.height - imageBounds.y);
+    if (pos.y + size.y > arena.height) {
+      pos = pos.setY(arena.height - size.y);
     }
   }
 
@@ -66,7 +66,7 @@ class Player extends GameObject {
     if (StaticData.random.nextDouble() < 0.1) {
       frame = StaticData.random.nextInt(animation.frameCount);
     }
-    animation.renderFrame(r.ctx, frame, pos, imageBounds);
+    animation.renderFrame(r.ctx, frame, pos, size);
   }
 
   ImageResource getPlayerImage() => _playerImage ??= Resources.GameResources.getResource('player');
