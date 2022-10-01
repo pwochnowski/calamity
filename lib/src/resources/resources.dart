@@ -9,8 +9,9 @@ class Resources {
 
   static Resources GameResources = Resources._();
 
-  Resource? getResource(String name) {
-    return _resources[name];
+  T getResource<T extends Resource>(String name) {
+    assert(_resources.containsKey(name));
+    return _resources[name] as T;
   }
 
   /// Monster function that loads all of the resources

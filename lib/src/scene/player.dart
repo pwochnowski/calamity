@@ -40,5 +40,5 @@ class Player {
     r.renderImage(pos, imageBounds, getPlayerImage());
   }
 
-  ImageResource getPlayerImage() => _playerImage ??= Resources.GameResources.getResource('player') as ImageResource;
+  ImageResource getPlayerImage() => _playerImage ??= Resources.GameResources.getResource('player');
 }
