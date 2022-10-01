@@ -23,6 +23,7 @@ Future<void> clientMain() async {
 MainCtx setupMainCtx() {
   CanvasElement canvas = document.getElementById('game-canvas')! as CanvasElement;
   InputState inputs = new InputState();
+  inputs.registerListeners();
 
 
   MainCtx mainctx = new MainCtx(canvas, inputs);
