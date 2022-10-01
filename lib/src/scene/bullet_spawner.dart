@@ -21,8 +21,7 @@ class BulletSpawner {
     Vector2 position = new Vector2(_enclosingArena!.width / 2, _enclosingArena!.height / 2);
     num angle = 2 * pi * StaticData.random.nextDouble();
     Vector2 vel = new Vector2(sin(angle), cos(angle)) * 15.0;
-    Bullet bullet = new Bullet(position, vel, bulletHitbox);
-    bullet.setArena(_enclosingArena!);
+    Bullet bullet = new Bullet(position, vel, bulletHitbox, _enclosingArena!);
     return bullet;
   }
 

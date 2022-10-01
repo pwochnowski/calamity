@@ -9,9 +9,9 @@ class Bullet {
   Vector2 velocity;
   // AABB hitboxes
   Vector2 hitBox;
-  GameArena? _enclosingArena;
+  GameArena _enclosingArena;
 
-  Bullet(this.pos, this.velocity, this.hitBox);
+  Bullet(this.pos, this.velocity, this.hitBox, this._enclosingArena);
 
   void update(PlayerInputState) {
     pos += velocity;
@@ -24,5 +24,7 @@ class Bullet {
 
   void setArena(GameArena arena) => this._enclosingArena = arena;
 
-  bool isInBounds() => pos.x >= 0 && pos.y >= 0 && pos.x <= _enclosingArena!.width && pos.y <= _enclosingArena!.height;
+  bool isInBounds() => pos.x >= 0 && pos.y >= 0
+    && pos.x <= _enclosingArena.width && pos.y <= _enclosingArena.height;
+
 }
