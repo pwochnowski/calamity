@@ -21,12 +21,12 @@ class MainCtx {
   /// performs a single update-render loop cycle
   /// [deltaTime] is the amount of time passed since the last frame
   void doFrame(num deltaTime) {
-    inputState.beginNewFrame();
     PlayerInputState newInputState = inputState.derivePlayerInputState(lastInputState);
     model.update(newInputState, deltaTime);
 
     renderer.beginRender();
     model.render(renderer);
     lastInputState = newInputState;
+    inputState.beginNewFrame();
   }
 }

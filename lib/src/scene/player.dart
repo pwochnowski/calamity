@@ -27,11 +27,25 @@ class Player extends GameObject {
   LineSeg? path;
   Player(this.pos);
 
+  num boostCooldown = 0;
+  void resetCooldowns() {
+    boostCooldown = 0;
+  }
 
-  void move(PlayerInputState input) {
+  void move(PlayerInputState input, num deltaTime) {
+    num speed = movementSpeed;
+    if (input.keys.contains(PlayerKey.DASH)) {
+      if (boostCooldown < 0) {
+        speed += Constants.PLAYER_BOOST;
+        boostCooldown = Constants.PLAYER_BOOST_CD;
+        print("Boost ${speed}");
+      }
+    }
+    boostCooldown -= deltaTime;
+
     if (path != null) {
       // FIXME: This overshoots
-      Vector2 newPos = path!.dir() * movementSpeed;
+      Vector2 newPos = path!.dir() * speed;
       num ratio = path!.ratioOnSeg(pos);
       if (ratio < 1.0) {
         pos += newPos;
@@ -49,7 +63,7 @@ class Player extends GameObject {
     if (input.keys.contains(PlayerKey.RIGHT)) { x += 1; }
     if (input.keys.contains(PlayerKey.UP)) { y -= 1; }
     if (input.keys.contains(PlayerKey.DOWN)) { y += 1; }
-    pos += new Vector2(x, y).normalized() * movementSpeed;
+    pos += new Vector2(x, y).normalized() * speed;
 
   }
 
@@ -76,7 +90,7 @@ class Player extends GameObject {
       path = new LineSeg(pos, input.mouse.pos!);
       print("Set path ${path!.length()}");
     }
-    move(input);
+    move(input, deltaTime);
     limit();
   }
 

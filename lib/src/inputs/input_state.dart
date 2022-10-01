@@ -27,8 +27,6 @@ class InputState {
   void registerListeners(CanvasElement canvas) {
 
     window.onKeyDown.listen((ev) {
-      keysThisFrame.add(ev.keyCode);
-
       // track held keys
       switch (ev.keyCode) {
         case KeyCode.LEFT:
@@ -37,6 +35,9 @@ class InputState {
         case KeyCode.UP:
           heldDownKeys.add(ev.keyCode);
           break;
+      }
+      if (ev.code == 'KeyE') {
+        keysThisFrame.add(KeyCode.E);
       }
     });
 
@@ -69,6 +70,11 @@ class InputState {
     if (heldDownKeys.contains(KeyCode.RIGHT)) { keys.add(PlayerKey.RIGHT); }
     if (heldDownKeys.contains(KeyCode.UP)) { keys.add(PlayerKey.UP); }
     if (heldDownKeys.contains(KeyCode.DOWN)) { keys.add(PlayerKey.DOWN); }
+    if (heldDownKeys.contains(KeyCode.E)) { keys.add(PlayerKey.DASH); }
+
+    if (keysThisFrame.contains(KeyCode.E)) {
+      keys.add(PlayerKey.DASH);
+    }
 
     PlayerInputState ps = new PlayerInputState(mouse ?? Mouse.NONE, keys);
     mouse = null;
@@ -84,6 +90,7 @@ enum PlayerKey {
   RIGHT,
   UP,
   DOWN,
+  DASH,
 }
 
 class PlayerInputState {
