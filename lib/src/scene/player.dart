@@ -36,8 +36,6 @@ class Player extends GameObject {
       if (ratio < 1.0) {
         pos += newPos;
       } else {
-        print("Ratio $ratio");
-        print("Pos ${path!.end}");
         pos = path!.end;
         path = null;
       }

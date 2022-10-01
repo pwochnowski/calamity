@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:calamity/src/resources/image_resource.dart';
 
+import '../math/static.dart';
 import '../math/vector2.dart';
 
 class Renderer {
@@ -22,6 +23,13 @@ class Renderer {
   void renderCircle(Vector2 v) {
     ctx.beginPath();
     ctx.arc(v.x, v.y, 10.0, 0.0, 2 * pi);
+    ctx.stroke();
+  }
+
+  void renderSemiCircle(Vector2 v) {
+    ctx.beginPath();
+    double beginRadians = StaticData.random.nextDouble() * 2 * pi;
+    ctx.arc(v.x, v.y, 10.0, StaticData.random.nextDouble() * 2 * pi, beginRadians + pi);
     ctx.stroke();
   }
 

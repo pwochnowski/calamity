@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:calamity/src/math/collision_helper.dart';
 import 'package:calamity/src/math/static.dart';
 import 'package:calamity/src/scene/boulder.dart';
+import 'package:calamity/src/scene/chick_spawner.dart';
 import 'package:calamity/src/scene/player.dart';
 
 import '../constants.dart';
@@ -21,18 +22,26 @@ class GameArena {
 
   final BulletSpawner bulletSpawner;
   final EnemySpawner enemySpawner;
+  final ChickSpawner chickSpawner = new ChickSpawner();
+
   // TODO: Generalize this
   final List<Bullet> bullets = [];
   final List<Boulder> boulders = [];
+  final List<Chick> lostChicks = [];
   final List<Enemy> enemies = [];
+
+
+
+
 
   GameArena(this.width, this.height)
       : player = new Player(new Vector2(100, 200)),
         bulletSpawner = new BulletSpawner(),
         enemySpawner = new EnemySpawner(Constants.NUM_ENEMIES) {
 
+
     Random r = StaticData.random;
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < Constants.NUM_BOULDERS; i++) {
       num x = r.nextDouble() * width;
       num y = r.nextDouble() * height;
       boulders.add(new Boulder(new Vector2(x, y)));
@@ -40,6 +49,7 @@ class GameArena {
     player.arena = this;
     bulletSpawner.arena = this;
     enemySpawner.arena = this;
+    chickSpawner.arena = this;
   }
 
   void update(PlayerInputState input, num deltaTime) {
@@ -69,6 +79,11 @@ class GameArena {
         break;
       }
     }
+
+    chickSpawner.update(input, deltaTime);
+    for (Chick chick in lostChicks) {
+      chick.update(input, deltaTime);
+    }
   }
 
   void render(Renderer r) {
@@ -80,6 +95,12 @@ class GameArena {
     for (Boulder boulder in boulders) {
       boulder.render(r);
     }
+
+    chickSpawner.render(r);
+    for (Chick chick in lostChicks) {
+      chick.render(r);
+    }
+
     for (Enemy enemy in enemies) {
       enemy.render(r);
     }
@@ -87,11 +108,12 @@ class GameArena {
 
   // read by model
   bool playing = true;
-
   void killPlayer() {
     playing = false;
     bullets.clear();
     enemies.clear();
     print("Game over");
   }
+
+
 }

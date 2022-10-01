@@ -55,7 +55,6 @@ class InputState {
     });
     window.onMouseDown.listen((event) {
       mouse = new Mouse(event);
-      print("Mouse click ${mouse!.pos}");
       event.preventDefault();
 
     });

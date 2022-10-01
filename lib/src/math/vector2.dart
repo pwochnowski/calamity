@@ -1,9 +1,15 @@
 import 'dart:math';
 
+import 'package:calamity/src/math/static.dart';
+
 class Vector2 {
   final num x, y;
 
   Vector2(this.x, this.y);
+
+  Vector2.random(int width, int height) : this(
+    StaticData.random.nextInt(width), StaticData.random.nextInt(height),
+  );
 
   Vector2 setX(num newX) {
     return new Vector2(newX, y);
