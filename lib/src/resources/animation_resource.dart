@@ -11,15 +11,16 @@ class AnimationResource implements Resource {
   final int frameHeight;
   final int frameRows;
   final int frameCols;
+  final int frameCount;
 
-  AnimationResource(this.image, this.frameWidth, this.frameHeight, this.frameRows, this.frameCols);
+  AnimationResource(this.image, this.frameWidth, this.frameHeight, this.frameRows, this.frameCols, this.frameCount);
 
-  static Future<AnimationResource> load(String resourcePath, int frameWidth, int frameHeight) async {
+  static Future<AnimationResource> load(String resourcePath, int frameWidth, int frameHeight, int frameCount) async {
     ImageElement image = new ImageElement(src: resourcePath);
     await image.decode();
     int frameRows = (image.height ?? 0) ~/ frameHeight;
     int frameCols = (image.width ?? 0) ~/ frameWidth;
-    return new AnimationResource(image, frameWidth, frameHeight, frameRows, frameCols);
+    return new AnimationResource(image, frameWidth, frameHeight, frameRows, frameCols, frameCount);
   }
 
   /// invariant: render functions can change the ctx arbitrarily such as ctx.rotate
@@ -27,7 +28,7 @@ class AnimationResource implements Resource {
   void renderFrame(CanvasRenderingContext2D ctx, int index, Vector2 pos, Vector2 size,
       {double rotation: 0.0}) {
     int srcR = index ~/ frameCols;
-    int srcC = index & frameCols;
+    int srcC = index % frameCols;
     int srcX = srcC * frameWidth;
     int srcY = srcR * frameHeight;
     ctx.drawImageScaledFromSource(image, srcX, srcY, frameWidth, frameHeight, pos.x, pos.y, size.x, size.y);

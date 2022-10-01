@@ -1,4 +1,6 @@
 
+import 'package:calamity/src/math/static.dart';
+import 'package:calamity/src/resources/animation_resource.dart';
 import 'package:calamity/src/resources/image_resource.dart';
 import 'package:calamity/src/scene/game_arena.dart';
 
@@ -10,6 +12,8 @@ import '../resources/resources.dart';
 
 class Player {
   ImageResource? _playerImage;
+  AnimationResource? _playerAnimation;
+  // Effectively non-nullable
   late GameArena _enclosingArena;
 
   // used for hitbox of player
@@ -37,11 +41,15 @@ class Player {
     move(input);
   }
 
+  int frame = 0;
   void render(Renderer r) {
-    print("Render");
-    //r.renderCircle(pos);
-    r.renderImage(pos, imageBounds, getPlayerImage());
+    AnimationResource animation = getPlayerAnimation();
+    if (StaticData.random.nextDouble() < 0.1) {
+      frame = StaticData.random.nextInt(animation.frameCount);
+    }
+    animation.renderFrame(r.ctx, frame, pos, imageBounds);
   }
 
   ImageResource getPlayerImage() => _playerImage ??= Resources.GameResources.getResource('player');
+  AnimationResource getPlayerAnimation() => _playerAnimation ??= Resources.GameResources.getResource('player_tilesheet');
 }

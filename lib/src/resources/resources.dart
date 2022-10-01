@@ -1,3 +1,4 @@
+import 'package:calamity/src/resources/animation_resource.dart';
 import 'package:calamity/src/resources/image_resource.dart';
 
 abstract class Resource {}
@@ -17,5 +18,6 @@ class Resources {
   /// Monster function that loads all of the resources
   Future<Null> loadAll() async {
     _resources['player'] = await ImageResource.load('player.png');
+    _resources['player_tilesheet'] = await AnimationResource.load('player_tilesheet.png', 80, 110, 24);
   }
 }
