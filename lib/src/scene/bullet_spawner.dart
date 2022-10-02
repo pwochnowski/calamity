@@ -29,8 +29,8 @@ class BulletSpawner {
       y = arena.height * posOnEdge;
       break;
     case 1: // TOP EDGE
-      x = 0;
-      y = arena.height * posOnEdge;
+      x = arena.width * posOnEdge;
+      y = 0;
       break;
     case 2: // RIGHT EDGE
       x = arena.width;
