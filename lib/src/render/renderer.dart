@@ -67,7 +67,7 @@ class Renderer {
 
   void renderAnimation(AnimationInstance animation) {
     print("Rendering frame ${animation.currentFrame()}");
-    animation.animation.resourceGetter().renderFrame(ctx, animation.currentFrame(), animation.pos, animation.size);
+    animation.animation.resourceGetter().renderFrame(ctx, animation.currentFrame(), animation.pos - (animation.size / 2), animation.size);
   }
 
   void renderAnimationFrame(Vector2 pos, Vector2 size, AnimationResource resource, int index) {
