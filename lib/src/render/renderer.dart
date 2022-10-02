@@ -7,6 +7,12 @@ import 'package:calamity/src/resources/image_resource.dart';
 import '../math/static.dart';
 import '../math/vector2.dart';
 
+enum Justification {
+  LEFT,
+  CENTER,
+  RIGHT,
+}
+
 class Renderer {
   final CanvasRenderingContext2D ctx;
   final CanvasElement canvas;
@@ -19,6 +25,21 @@ class Renderer {
 
   void beginRender() {
     ctx.clearRect(0, 0, width, height);
+  }
+
+  void renderText(String text, Vector2 position, Justification justification) {
+    switch (justification) {
+      case Justification.LEFT:
+        ctx.textAlign = "left";
+        break;
+      case Justification.CENTER:
+        ctx.textAlign = "center";
+        break;
+      case Justification.RIGHT:
+        ctx.textAlign = "right";
+        break;
+    }
+    ctx.strokeText(text, position.x, position.y);
   }
 
   void renderCircle(Vector2 v) {
