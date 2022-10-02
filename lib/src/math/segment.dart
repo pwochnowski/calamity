@@ -2,8 +2,10 @@
 import 'package:calamity/src/math/vector2.dart';
 
 class LineSeg {
-  Vector2 start;
-  Vector2 end;
+  static final LineSeg ZERO = new LineSeg(Vector2.ZERO, Vector2.ZERO);
+
+  final Vector2 start;
+  final Vector2 end;
 
   LineSeg(this.start, this.end);
 

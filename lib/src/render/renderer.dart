@@ -5,6 +5,8 @@ import 'package:calamity/src/resources/animation_frame.dart';
 import 'package:calamity/src/resources/animation_resource.dart';
 import 'package:calamity/src/resources/image_resource.dart';
 
+import '../math/color.dart';
+import '../math/segment.dart';
 import '../math/static.dart';
 import '../math/vector2.dart';
 
@@ -58,6 +60,14 @@ class Renderer {
     ctx.beginPath();
     ctx.arc(v.x, v.y, 10.0, 0.0, 2 * pi);
     ctx.fill();
+    ctx.stroke();
+  }
+
+  void renderLine(LineSeg line, Color color) {
+    ctx.beginPath();
+    ctx.setStrokeColorRgb(color.r, color.g, color.b, color.a);
+    ctx.moveTo(line.start.x, line.start.y);
+    ctx.lineTo(line.end.x, line.end.y);
     ctx.stroke();
   }
 

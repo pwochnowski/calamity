@@ -6,6 +6,8 @@ import 'package:calamity/src/math/vector2.dart';
 import '../inputs/input_state.dart';
 import '../math/aabb.dart';
 import '../math/collision_helper.dart';
+import '../math/color.dart';
+import '../math/segment.dart';
 import '../render/renderer.dart';
 import '../resources/image_resource.dart';
 import '../resources/resources.dart';
@@ -25,14 +27,49 @@ class Enemy {
 
   Enemy(this.pos, this.arena);
 
+  /// debug segment for rendering the enemy's intent to target the players
+  LineSeg debugTargetPlayer = LineSeg.ZERO;
+  LineSeg debugAvoidOtherEnemies = LineSeg.ZERO;
+
   void update(PlayerInputState input, num deltaTime) {
-    Vector2 movementVec = getTargetPos() - pos;
-    num distToMove = min(Constants.ENEMY_SPEED * deltaTime * 0.001, movementVec.length());
-    Vector2 movementDir = movementVec.normalized();
-    pos += movementDir * distToMove;
+    // handles how much the enemies want to move apart from each other
+    Iterable<Enemy> otherEnemies = arena.enemies.where((Enemy e) => e != this);
+    Vector2 avoidDirection = Vector2.ZERO;
+
+    // at distance 100 or less, an enemy's intent to move away
+    // from other enemies is maximized
+    double distanceStandardUnit = 100.0;
+    for (Enemy enemy in otherEnemies) {
+      num distance = pos.distanceTo(enemy.pos);
+      if (distance != 0) {
+        Vector2 otherToThis = (pos - enemy.pos).normalized();
+        avoidDirection += otherToThis * min(1.0, distanceStandardUnit / distance); // o00
+      }
+    }
+    if (avoidDirection.length2() > 1.0) {
+      avoidDirection = avoidDirection.normalized();
+    }
+
+    Vector2 playerDirection = (getTargetPos() - pos).normalized();
+    Vector2 finalDirection = (playerDirection + avoidDirection * 0.3).normalized();
+
+    debugTargetPlayer = new LineSeg(
+      pos,
+      pos + (playerDirection * Constants.ENEMY_SPEED)
+    );
+
+    debugAvoidOtherEnemies = new LineSeg(
+      pos,
+      pos + (avoidDirection * Constants.ENEMY_SPEED)
+    );
+
+    num moveDistance = Constants.ENEMY_SPEED * deltaTime * Constants.MsToS;
+    pos += finalDirection * moveDistance;
   }
 
   void render(Renderer r) {
+    r.renderLine(debugTargetPlayer, Color.RED);
+    r.renderLine(debugAvoidOtherEnemies, Color.BLUE);
     r.renderImage(pos, bounds, getEnemyImage());
   }
 

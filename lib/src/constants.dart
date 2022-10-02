@@ -14,6 +14,9 @@ class Constants {
   static final num ENEMY_RADIUS = 25.0;
   static final num ENEMY_SPEED = 120.0;
 
+  /// milliseconds to seconds
+  static final num MsToS = 0.001;
+
   static final num PLAYER_RADIUS = 25.0;
   static final num PLAYER_MOVE_SPEED = 210;
   static final num PLAYER_BOOST_CD = 3 * 1000;
