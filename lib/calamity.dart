@@ -37,7 +37,7 @@ MainCtx setupMainCtx() {
     //   'Speed',
     //   IntInput('Speed',  () => mainctx.model.arena.player.movementSpeed, ((num x) => mainctx.model.arena.player.movementSpeed = x))
     // ]),
-    canvas = new CanvasElement(width: 800, height: 400)
+    canvas = new CanvasElement(width: 800, height: 600)
   ])
     ..style.position = 'absolute'
     ..style.left = '50%'
