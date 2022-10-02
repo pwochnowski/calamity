@@ -12,7 +12,7 @@ class MainCtx {
   final Renderer renderer;
   final Model model;
   final InputState inputState;
-  PlayerInputState lastInputState = new PlayerInputState(Mouse.NONE, new Set());
+  PlayerInputState lastInputState = new PlayerInputState(MouseState.NONE, new Set());
 
   MainCtx(this.canvas, this.inputState) :
     renderer = new Renderer(canvas),

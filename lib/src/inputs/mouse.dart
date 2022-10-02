@@ -2,16 +2,16 @@ import 'dart:html';
 
 import '../math/vector2.dart';
 
-class Mouse {
+class MouseState {
   final MouseEvent? event;
   final bool left;
   final bool middle;
   final bool right;
   final Vector2? pos;
 
-  static final NONE = Mouse(null);
+  static final NONE = MouseState(null);
 
-  Mouse(this.event) :
+  MouseState(this.event) :
     left = event?.button == 0,
         middle = event?.button == 1,
         right = event?.button == 2,

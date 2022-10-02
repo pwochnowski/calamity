@@ -16,7 +16,7 @@ class InputState {
   Set<int> keysThisFrame = new Set();
 
   // current mouse
-  Mouse? mouse;
+  MouseState? mouse;
 
   bool getKeyState(int key) => heldDownKeys.contains(key);
 
@@ -52,12 +52,12 @@ class InputState {
       }
     });
 
-    window.onMouseMove.listen((event) {
+    // FIXME: We should be updating whenever the hover position is changed.
+    canvas.onMouseMove.listen((event) {
     });
-    window.onMouseDown.listen((event) {
-      mouse = new Mouse(event);
+    canvas.onMouseDown.listen((event) {
+      mouse = new MouseState(event);
       event.preventDefault();
-
     });
     window.onContextMenu.listen((event) {event.preventDefault();});
   }
@@ -76,7 +76,7 @@ class InputState {
       keys.add(PlayerKey.DASH);
     }
 
-    PlayerInputState ps = new PlayerInputState(mouse ?? Mouse.NONE, keys);
+    PlayerInputState ps = new PlayerInputState(mouse ?? MouseState.NONE, keys);
     mouse = null;
     return ps;
   }
@@ -95,7 +95,7 @@ enum PlayerKey {
 
 class PlayerInputState {
   // Probably need this as is
-  Mouse mouse;
+  MouseState mouse;
   final Set<PlayerKey> keys;
 
   PlayerInputState(this.mouse, this.keys);
