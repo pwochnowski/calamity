@@ -74,6 +74,7 @@ class Chick extends GameObject {
 
     if (collides) {
       arena.lostChicks.remove(this);
+      arena.scoreWidget.add(Constants.CHICK_SCORE);
     }
 
     return collides;

@@ -5,6 +5,7 @@ import 'package:calamity/src/math/static.dart';
 import 'package:calamity/src/scene/boulder.dart';
 import 'package:calamity/src/scene/chick_spawner.dart';
 import 'package:calamity/src/scene/player.dart';
+import 'package:calamity/src/scene/score.dart';
 
 import '../constants.dart';
 import '../inputs/input_state.dart';
@@ -23,6 +24,7 @@ class GameArena {
   final BulletSpawner bulletSpawner;
   final EnemySpawner enemySpawner;
   final ChickSpawner chickSpawner = new ChickSpawner();
+  final ScoreWidget scoreWidget = new ScoreWidget();
 
   // TODO: Generalize this
   final List<Bullet> bullets = [];
@@ -47,6 +49,7 @@ class GameArena {
     bulletSpawner.arena = this;
     enemySpawner.arena = this;
     chickSpawner.arena = this;
+    scoreWidget.arena = this;
   }
 
   void update(PlayerInputState input, num deltaTime) {
@@ -81,6 +84,8 @@ class GameArena {
     for (Chick chick in lostChicks) {
       chick.update(input, deltaTime);
     }
+
+    scoreWidget.update(input, deltaTime);
   }
 
   void render(Renderer r) {
@@ -101,6 +106,7 @@ class GameArena {
     for (Enemy enemy in enemies) {
       enemy.render(r);
     }
+    scoreWidget.render(r);
   }
 
   // read by model
@@ -116,6 +122,7 @@ class GameArena {
     bullets.clear();
     enemies.clear();
     lostChicks.clear();
+    scoreWidget.reset();
   }
 
 }
