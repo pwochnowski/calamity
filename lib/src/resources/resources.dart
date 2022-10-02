@@ -2,6 +2,7 @@ import 'package:calamity/src/resources/animation_resource.dart';
 import 'package:calamity/src/resources/audio_resource.dart';
 import 'package:calamity/src/resources/image_resource.dart';
 
+import 'animation_frame.dart';
 import 'animation_manifests.dart';
 
 abstract class Resource {}
@@ -10,6 +11,7 @@ class Resources {
   static final String ENEMY = 'enemy';
   static final String PLAYER_ANIMATION = 'player_animation';
   static final String CHICK_ANIMATION = 'chick_animation';
+  static final String CHICK_SCORE_ANIMATION = 'chick_score_animation';
   static final String BULLET_ANIMATION = 'bullet_animation';
   static final String BOULDER = 'boulder';
   static final String BACKGROUND = 'background';
@@ -19,6 +21,7 @@ class Resources {
   late PlayerAnimationManifest playerAnimationManifest;
   late ChickAnimationManifest chickAnimationManifest;
   late BulletAnimationManifest bulletAnimationManifest;
+  late Animation chickScoreAnimation;
 
   Resources._() : this._resources = {} {
     playerAnimationManifest =
@@ -27,6 +30,8 @@ class Resources {
         new ChickAnimationManifest(() => getResource(CHICK_ANIMATION));
     bulletAnimationManifest =
         new BulletAnimationManifest(() => getResource(BULLET_ANIMATION));
+    chickScoreAnimation = new Animation(
+        () => getResource(CHICK_SCORE_ANIMATION), [0, 1, 2, 3, 4, 5, 6, 7, 8]);
   }
 
   static Resources GameResources = Resources._();
@@ -45,6 +50,8 @@ class Resources {
         await AnimationResource.load('player_animation.png', 100, 100, 44);
     _resources[CHICK_ANIMATION] =
         await AnimationResource.load('chick_animation.png', 20, 20, 15);
+    _resources[CHICK_SCORE_ANIMATION] =
+        await AnimationResource.load('chick_score_animation.png', 50, 50, 9);
     _resources[BULLET_ANIMATION] =
         await AnimationResource.load('bullet_animation.png', 50, 50, 4);
     _resources[BOULDER] = await ImageResource.load('boulder.png');

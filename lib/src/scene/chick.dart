@@ -51,6 +51,11 @@ class Chick extends GameObject {
     if (collides) {
       arena.lostChicks.remove(this);
       arena.scoreWidget.add(Constants.CHICK_SCORE);
+      arena.standaloneAnimations.add(new AnimationInstance(
+          Resources.GameResources.chickScoreAnimation,
+          pos,
+          new Vector2(50, 50),
+          50));
     }
 
     return collides;
