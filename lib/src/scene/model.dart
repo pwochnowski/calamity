@@ -31,7 +31,7 @@ class Model {
       arena.update(input, deltaTime);
     } else {
       // FIXME: There are many places this line of code could belong, this is not one of them
-      music.setVolume(0.3);
+      music.setVolume(0.06);
       ggScreen.setScore(arena.lastScore);
       ggScreen.update(input);
     }
@@ -48,6 +48,12 @@ class Model {
   void startAudioLoop() {
     AudioResource music = Resources.GameResources.getResource(Resources.MUSIC);
     music.setVolume(1);
+    // the section that should be looped is 211.90528 - 318.57194 (seconds)
+    music.audio.onTimeUpdate.listen((event) {
+      if (music.audio.currentTime > 318.57194) {
+        music.audio.currentTime = music.audio.currentTime - 318.57194 + 211.90528;
+      }
+    });
     music.play();
   }
 

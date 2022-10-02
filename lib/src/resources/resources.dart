@@ -35,6 +35,6 @@ class Resources {
     _resources[PLAYER_ANIMATION] = await AnimationResource.load('player_animation.png', 100, 100, 53);
     _resources[BOULDER] = await ImageResource.load('boulder.png');
     _resources[BACKGROUND] = await ImageResource.load('background.png');
-    _resources[MUSIC] = await AudioResource.load('music.mp3');
+    _resources[MUSIC] = await AudioResource.load('Repeat_mixdown 3_01.mp3');
   }
 }
