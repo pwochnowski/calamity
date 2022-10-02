@@ -45,17 +45,12 @@ class GameArena {
           new Vector2(width, height),
           Resources.GameResources.getResource(Resources.BACKGROUND),
         ) {
-    Random r = StaticData.random;
-    for (int i = 0; i < Constants.NUM_BOULDERS; i++) {
-      num x = r.nextDouble() * width;
-      num y = r.nextDouble() * height;
-      boulders.add(new Boulder(new Vector2(x, y), Constants.BOULDER_RADIUS));
-    }
     player.arena = this;
     bulletSpawner.arena = this;
     enemySpawner.arena = this;
     chickSpawner.arena = this;
     scoreWidget.arena = this;
+    reset();
   }
 
   void update(PlayerInputState input, num deltaTime) {
@@ -134,5 +129,12 @@ class GameArena {
     enemies.clear();
     lostChicks.clear();
     scoreWidget.reset();
+    boulders.clear();
+    Random r = StaticData.random;
+    for (int i = 0; i < Constants.NUM_BOULDERS; i++) {
+      num x = r.nextDouble() * width;
+      num y = r.nextDouble() * height;
+      boulders.add(new Boulder(new Vector2(x, y), Constants.BOULDER_RADIUS));
+    }
   }
 }
