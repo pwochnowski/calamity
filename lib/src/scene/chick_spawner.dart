@@ -99,7 +99,7 @@ class Chick extends GameObject {
     }
 
     if (path != null) {
-      Vector2 newPos = path!.dir() * speed;
+      Vector2 newPos = path!.dir() * speed * deltaTime * 0.001;
       num ratio = path!.ratioOnSeg(pos);
       if (ratio < 1.0) {
         _pos += newPos;

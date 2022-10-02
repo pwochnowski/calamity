@@ -50,7 +50,7 @@ class Player extends GameObject {
 
     if (path != null) {
       // FIXME: This overshoots
-      Vector2 newPos = path!.dir() * speed;
+      Vector2 newPos = path!.dir() * speed * deltaTime * 0.001;
       num ratio = path!.ratioOnSeg(pos);
       if (ratio < 1.0) {
         pos += newPos;
@@ -68,7 +68,7 @@ class Player extends GameObject {
     if (input.keys.contains(PlayerKey.RIGHT)) { x += 1; }
     if (input.keys.contains(PlayerKey.UP)) { y -= 1; }
     if (input.keys.contains(PlayerKey.DOWN)) { y += 1; }
-    pos += new Vector2(x, y).normalized() * speed;
+    pos += new Vector2(x, y).normalized() * speed * deltaTime * 0.001;
 
   }
 

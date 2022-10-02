@@ -27,7 +27,7 @@ class Enemy {
 
   void update(PlayerInputState input, num deltaTime) {
     Vector2 movementVec = getTargetPos() - pos;
-    num distToMove = min(Constants.ENEMY_SPEED, movementVec.length());
+    num distToMove = min(Constants.ENEMY_SPEED * deltaTime * 0.001, movementVec.length());
     Vector2 movementDir = movementVec.normalized();
     pos += movementDir * distToMove;
   }

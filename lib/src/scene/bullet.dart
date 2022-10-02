@@ -20,7 +20,7 @@ class Bullet extends GameObject {
 
   @override
   void update(PlayerInputState, num deltaTime) {
-    pos += velocity;
+    pos += velocity * (deltaTime * 0.001);
   }
 
   @override
