@@ -11,11 +11,17 @@ class Constants {
 
   static final num BULLET_RADIUS = 10.0;
   static final num BULLET_SPEED = 240.0;
+  static final num BULLET_COUNT_INCREASE_TIME = 10 * SToMs;
   static final num ENEMY_RADIUS = 25.0;
   static final num ENEMY_SPEED = 120.0;
+  static final num ENEMY_MAX_BORED_TIME = 8 * SToMs;
+  static final num ENEMY_BORED_P50_TIME = 15 * SToMs;
 
   /// milliseconds to seconds
   static final num MsToS = 0.001;
+
+  /// seconds to milliseconds
+  static final num SToMs = 1000;
 
   static final num PLAYER_RADIUS = 25.0;
   static final num PLAYER_MOVE_SPEED = 210;

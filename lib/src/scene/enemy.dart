@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:calamity/src/constants.dart';
+import 'package:calamity/src/math/static.dart';
 import 'package:calamity/src/math/vector2.dart';
 
 import '../inputs/input_state.dart';
@@ -16,14 +17,18 @@ import 'player.dart';
 
 class Enemy {
   ImageResource? _enemyImage;
-  static final Vector2 bounds = new Vector2(2 * Constants.ENEMY_RADIUS, 2 * Constants.ENEMY_RADIUS);
+  static final Vector2 bounds =
+      new Vector2(2 * Constants.ENEMY_RADIUS, 2 * Constants.ENEMY_RADIUS);
   GameArena arena;
 
   Vector2 pos;
   bool isAlive = true;
+  Vector2? boredTarget;
+  double boredTime = 0;
 
-  Vector2 getTargetPos() => arena.player.pos;
-  ImageResource getEnemyImage() => _enemyImage ??= Resources.GameResources.getResource('enemy');
+  Vector2 getTargetPos() => boredTarget ?? arena.player.pos;
+  ImageResource getEnemyImage() =>
+      _enemyImage ??= Resources.GameResources.getResource('enemy');
 
   Enemy(this.pos, this.arena);
 
@@ -31,7 +36,28 @@ class Enemy {
   LineSeg debugTargetPlayer = LineSeg.ZERO;
   LineSeg debugAvoidOtherEnemies = LineSeg.ZERO;
 
+  void updateBoredom(num deltaTime) {
+    if (boredTarget == null) {
+      num roll = StaticData.random.nextDouble();
+      num thres = pow(2.0, -(deltaTime / Constants.ENEMY_BORED_P50_TIME));
+      if (roll > thres) {
+        boredTime = 0;
+        boredTarget = new Vector2(
+          StaticData.random.nextDouble() * arena.width,
+          StaticData.random.nextDouble() * arena.height,
+        );
+      }
+    } else {
+      boredTime += deltaTime;
+      if (boredTime > Constants.ENEMY_MAX_BORED_TIME ||
+          pos.distanceTo(boredTarget!) < Constants.ENEMY_SPEED) {
+        boredTarget = null;
+      }
+    }
+  }
+
   void update(PlayerInputState input, num deltaTime) {
+    updateBoredom(deltaTime);
     // handles how much the enemies want to move apart from each other
     Iterable<Enemy> otherEnemies = arena.enemies.where((Enemy e) => e != this);
     Vector2 avoidDirection = Vector2.ZERO;
@@ -43,7 +69,8 @@ class Enemy {
       num distance = pos.distanceTo(enemy.pos);
       if (distance != 0) {
         Vector2 otherToThis = (pos - enemy.pos).normalized();
-        avoidDirection += otherToThis * min(1.0, distanceStandardUnit / distance); // o00
+        avoidDirection +=
+            otherToThis * min(1.0, distanceStandardUnit / distance); // o00
       }
     }
     if (avoidDirection.length2() > 1.0) {
@@ -51,17 +78,14 @@ class Enemy {
     }
 
     Vector2 playerDirection = (getTargetPos() - pos).normalized();
-    Vector2 finalDirection = (playerDirection + avoidDirection * 0.3).normalized();
+    Vector2 finalDirection =
+        (playerDirection + avoidDirection * 0.3).normalized();
 
-    debugTargetPlayer = new LineSeg(
-      pos,
-      pos + (playerDirection * Constants.ENEMY_SPEED)
-    );
+    debugTargetPlayer =
+        new LineSeg(pos, pos + (playerDirection * Constants.ENEMY_SPEED));
 
-    debugAvoidOtherEnemies = new LineSeg(
-      pos,
-      pos + (avoidDirection * Constants.ENEMY_SPEED)
-    );
+    debugAvoidOtherEnemies =
+        new LineSeg(pos, pos + (avoidDirection * Constants.ENEMY_SPEED));
 
     num moveDistance = Constants.ENEMY_SPEED * deltaTime * Constants.MsToS;
     pos += finalDirection * moveDistance;
@@ -75,6 +99,7 @@ class Enemy {
 
   bool collidesWithPlayer() {
     Player p = arena.player;
-    return CollisionHelper.collidesCircleAABB(pos, Constants.ENEMY_RADIUS, AABB.fromLocAndSize(p.pos, p.size));
+    return CollisionHelper.collidesCircleAABB(
+        pos, Constants.ENEMY_RADIUS, AABB.fromLocAndSize(p.pos, p.size));
   }
 }

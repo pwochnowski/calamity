@@ -13,8 +13,13 @@ import 'bullet.dart';
 class BulletSpawner {
   late final GameArena arena;
   static final Vector2 bulletHitbox = new Vector2(50, 50);
+  num _elapsed = 0;
 
   BulletSpawner();
+
+  void reset() {
+    _elapsed = 0;
+  }
 
   Bullet spawnBulletAtEdge() {
     // Pick an arena edge to use
@@ -51,18 +56,21 @@ class BulletSpawner {
   num remainingCd = 0;
 
   void update(PlayerInputState input, num deltaTime) async {
+    _elapsed += deltaTime;
     if (!arena.playing) {
       return;
     }
 
     arena.bullets.retainWhere((Bullet bullet) => bullet.isInBounds());
 
-    if (arena.bullets.length < Constants.NUM_BULLETS) {
+    if (arena.bullets.length <
+        Constants.NUM_BULLETS +
+            (_elapsed / Constants.BULLET_COUNT_INCREASE_TIME).floor()) {
       if (remainingCd > 0) {
         remainingCd -= deltaTime;
       } else {
         arena.bullets.add(spawnBulletAtEdge());
-        remainingCd = 500;
+        remainingCd = 500 / (1 + (_elapsed / 1000));
       }
     }
   }

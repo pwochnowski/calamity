@@ -77,10 +77,18 @@ class Player extends GameObject {
     double x = 0.0;
     double y = 0.0;
 
-    if (input.keys.contains(PlayerKey.LEFT)) { x -= 1; }
-    if (input.keys.contains(PlayerKey.RIGHT)) { x += 1; }
-    if (input.keys.contains(PlayerKey.UP)) { y -= 1; }
-    if (input.keys.contains(PlayerKey.DOWN)) { y += 1; }
+    if (input.keys.contains(PlayerKey.LEFT)) {
+      x -= 1;
+    }
+    if (input.keys.contains(PlayerKey.RIGHT)) {
+      x += 1;
+    }
+    if (input.keys.contains(PlayerKey.UP)) {
+      y -= 1;
+    }
+    if (input.keys.contains(PlayerKey.DOWN)) {
+      y += 1;
+    }
     Vector2 delta = new Vector2(x, y).normalized() * speed * deltaTime * 0.001;
     _updateDirection(delta);
     pos += delta;

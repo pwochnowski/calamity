@@ -32,22 +32,30 @@ class InputState {
     });
 
     // FIXME: We should be updating whenever the hover position is changed.
-    canvas.onMouseMove.listen((event) {
-    });
+    canvas.onMouseMove.listen((event) {});
     canvas.onMouseDown.listen((event) {
       mouse = new MouseState(event);
       event.preventDefault();
     });
-    window.onContextMenu.listen((event) {event.preventDefault();});
+    window.onContextMenu.listen((event) {
+      event.preventDefault();
+    });
   }
 
   PlayerInputState derivePlayerInputState(PlayerInputState old) {
     Set<PlayerKey> keys = new Set();
-    if (heldDownKeys.contains(KeyCode.LEFT)) { keys.add(PlayerKey.LEFT); }
-    if (heldDownKeys.contains(KeyCode.RIGHT)) { keys.add(PlayerKey.RIGHT); }
-    if (heldDownKeys.contains(KeyCode.UP)) { keys.add(PlayerKey.UP); }
-    if (heldDownKeys.contains(KeyCode.DOWN)) { keys.add(PlayerKey.DOWN); }
-    if (heldDownKeys.contains(KeyCode.E)) { keys.add(PlayerKey.DASH); }
+    if (heldDownKeys.contains(KeyCode.LEFT)) {
+      keys.add(PlayerKey.LEFT);
+    }
+    if (heldDownKeys.contains(KeyCode.RIGHT)) {
+      keys.add(PlayerKey.RIGHT);
+    }
+    if (heldDownKeys.contains(KeyCode.UP)) {
+      keys.add(PlayerKey.UP);
+    }
+    if (heldDownKeys.contains(KeyCode.DOWN)) {
+      keys.add(PlayerKey.DOWN);
+    }
 
     if (keysThisFrame.contains(KeyCode.E)) {
       keys.add(PlayerKey.DASH);
