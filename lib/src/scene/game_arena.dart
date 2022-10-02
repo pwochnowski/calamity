@@ -32,7 +32,7 @@ class GameArena {
 
 
   GameArena(this.width, this.height)
-      : player = new Player(new Vector2(100, 200)),
+      : player = new Player(Constants.PLAYER_SPAWN),
         bulletSpawner = new BulletSpawner(),
         enemySpawner = new EnemySpawner(Constants.NUM_ENEMIES) {
 
@@ -107,12 +107,15 @@ class GameArena {
   bool playing = true;
   void killPlayer() {
     playing = false;
-    player.resetCooldowns();
-    bullets.clear();
-    enemies.clear();
-    lostChicks.clear();
+    reset();
     print("Game over");
   }
 
+  void reset() {
+    player.reset();
+    bullets.clear();
+    enemies.clear();
+    lostChicks.clear();
+  }
 
 }

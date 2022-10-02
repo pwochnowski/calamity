@@ -1,4 +1,6 @@
 
+import 'package:calamity/src/math/vector2.dart';
+
 /// Actually a bunch of defaults used for initialising values
 class Constants {
   // Prevent class from being constructed
@@ -16,6 +18,7 @@ class Constants {
   static final num PLAYER_MOVE_SPEED = 3.5;
   static final num PLAYER_BOOST_CD = 3 * 1000;
   static final num PLAYER_BOOST = 50;
+  static final Vector2 PLAYER_SPAWN = new Vector2(100, 400);
 
   static final int NUM_CHICKS = 3;
   static final int CHICK_MOVE_SPEED = 1;

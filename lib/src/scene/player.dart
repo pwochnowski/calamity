@@ -26,6 +26,12 @@ class Player extends GameObject {
   LineSeg? path;
   Player(this.pos);
 
+  void reset() {
+    pos = Constants.PLAYER_SPAWN;
+    path = null;
+    resetCooldowns();
+  }
+
   num boostCooldown = 0;
   void resetCooldowns() {
     boostCooldown = 0;
