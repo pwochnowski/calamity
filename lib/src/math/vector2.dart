@@ -5,7 +5,6 @@ import 'package:calamity/src/math/static.dart';
 class Vector2 {
   static final ZERO = new Vector2(0, 0);
   final num x, y;
-  static final Vector2 ZERO = new Vector2(0, 0);
 
   Vector2(this.x, this.y);
 
