@@ -25,8 +25,9 @@ class Model {
     if (arena.playing) {
       // print("Areana update ${arena.hashCode}");
       arena.update(input, deltaTime);
-    }
-    if (!arena.playing) {
+    } else {
+      // FIXME: There are many places this line of code could belong, this is not one of them
+      ggScreen.setScore(arena.lastScore);
       ggScreen.update(input);
     }
   }

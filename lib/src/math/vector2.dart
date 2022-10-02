@@ -19,6 +19,14 @@ class Vector2 {
     return new Vector2(x, newY);
   }
 
+  Vector2 addX(num delta) {
+    return new Vector2(x + delta, y);
+  }
+
+  Vector2 addY(num delta) {
+    return new Vector2(x, y + delta);
+  }
+
   static Vector2 avg(List<Vector2> vs) {
 
     Vector2 u = new Vector2(0,0);

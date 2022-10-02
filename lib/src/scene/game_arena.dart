@@ -20,6 +20,7 @@ class GameArena {
   final num width;
   final num height;
   final Player player;
+  int lastScore = 0;
 
   final BulletSpawner bulletSpawner;
   final EnemySpawner enemySpawner;
@@ -118,6 +119,8 @@ class GameArena {
   }
 
   void reset() {
+    // HACK
+    lastScore = scoreWidget.score;
     player.reset();
     bullets.clear();
     chickSpawner.reset();
