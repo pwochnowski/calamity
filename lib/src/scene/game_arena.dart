@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:calamity/src/math/collision_helper.dart';
 import 'package:calamity/src/math/static.dart';
+import 'package:calamity/src/render/sprite.dart';
 import 'package:calamity/src/scene/boulder.dart';
 import 'package:calamity/src/scene/chick_spawner.dart';
 import 'package:calamity/src/scene/player.dart';
@@ -11,6 +12,7 @@ import '../constants.dart';
 import '../inputs/input_state.dart';
 import '../math/vector2.dart';
 import '../render/renderer.dart';
+import '../resources/resources.dart';
 import 'bullet.dart';
 import 'bullet_spawner.dart';
 import 'enemy.dart';
@@ -21,6 +23,7 @@ class GameArena {
   final num height;
   final Player player;
   int lastScore = 0;
+  final ImageSprite background;
 
   final BulletSpawner bulletSpawner;
   final EnemySpawner enemySpawner;
@@ -33,13 +36,15 @@ class GameArena {
   final List<Chick> lostChicks = [];
   final List<Enemy> enemies = [];
 
-
   GameArena(this.width, this.height)
       : player = new Player(Constants.PLAYER_SPAWN),
         bulletSpawner = new BulletSpawner(),
-        enemySpawner = new EnemySpawner(Constants.NUM_ENEMIES) {
-
-
+        enemySpawner = new EnemySpawner(Constants.NUM_ENEMIES),
+        background = new ImageSprite(
+          new Vector2(width / 2, height / 2),
+          new Vector2(width, height),
+          Resources.GameResources.getResource(Resources.BACKGROUND),
+        ) {
     Random r = StaticData.random;
     for (int i = 0; i < Constants.NUM_BOULDERS; i++) {
       num x = r.nextDouble() * width;
@@ -67,7 +72,8 @@ class GameArena {
       }
     }
     for (Boulder boulder in boulders) {
-      Vector2? shiftVector = CollisionHelper.shiftVectorCircleCircle(player.pos, player.radius, boulder.pos, boulder.radius);
+      Vector2? shiftVector = CollisionHelper.shiftVectorCircleCircle(
+          player.pos, player.radius, boulder.pos, boulder.radius);
       if (shiftVector != null) {
         player.pos += shiftVector;
       }
@@ -90,6 +96,7 @@ class GameArena {
   }
 
   void render(Renderer r) {
+    background.render(r);
     player.render(r);
     bulletSpawner.render(r);
     for (Bullet bullet in bullets) {
@@ -128,5 +135,4 @@ class GameArena {
     lostChicks.clear();
     scoreWidget.reset();
   }
-
 }

@@ -25,6 +25,17 @@ class Renderer {
 
   void beginRender() {
     ctx.clearRect(0, 0, width, height);
+    clearColor();
+  }
+
+  void setColor(int r, int g, int b) {
+    ctx.setFillColorRgb(r, g, b);
+    ctx.setStrokeColorRgb(r, g, b);
+  }
+
+  void clearColor() {
+    ctx.setFillColorRgb(0, 0, 0);
+    ctx.setStrokeColorRgb(0, 0, 0);
   }
 
   void renderText(String text, Vector2 position, Justification justification) {
@@ -45,13 +56,7 @@ class Renderer {
   void renderCircle(Vector2 v) {
     ctx.beginPath();
     ctx.arc(v.x, v.y, 10.0, 0.0, 2 * pi);
-    ctx.stroke();
-  }
-
-  void renderSemiCircle(Vector2 v) {
-    ctx.beginPath();
-    double beginRadians = StaticData.random.nextDouble() * 2 * pi;
-    ctx.arc(v.x, v.y, 10.0, StaticData.random.nextDouble() * 2 * pi, beginRadians + pi);
+    ctx.fill();
     ctx.stroke();
   }
 

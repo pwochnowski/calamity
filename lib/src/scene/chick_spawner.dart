@@ -86,9 +86,9 @@ class Chick extends GameObject {
 
   @override
   void render(Renderer r) {
-    r.ctx.setStrokeColorRgb(200, 200, 140);
-    r.renderSemiCircle(_pos);
-    r.ctx.setStrokeColorRgb(0, 0, 0);
+    r.setColor(200, 200, 140);
+    r.renderCircle(_pos);
+    r.clearColor();
   }
 
   @override

@@ -7,6 +7,7 @@ class Resources {
   static final String ENEMY = 'enemy';
   static final String PLAYER_ANIMATION = 'player_animation';
   static final String BOULDER = 'boulder';
+  static final String BACKGROUND = 'background';
   final Map<String, Resource> _resources;
 
   Resources._(): this._resources = {};
@@ -20,9 +21,11 @@ class Resources {
 
   /// Monster function that loads all of the resources
   Future<Null> loadAll() async {
-    // TODO: Maybe request all of these in parallel? Would require us to await them all simultaneously
+    // TODO: Maybe request all of these in parallel? Would be trivial, would just require us to
+    // await them all simultaneously
     _resources[ENEMY] = await ImageResource.load('enemy.png');
     _resources[PLAYER_ANIMATION] = await AnimationResource.load('player_animation.png', 80, 110, 24);
     _resources[BOULDER] = await ImageResource.load('boulder.png');
+    _resources[BACKGROUND] = await ImageResource.load('background.png');
   }
 }
