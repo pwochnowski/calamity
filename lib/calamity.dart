@@ -15,8 +15,19 @@ import 'package:calamity/src/ui.dart';
 Future<void> clientMain() async {
 
   await Resources.GameResources.loadAll();
-
   MainCtx mainctx = setupMainCtx();
+
+  bool interacted = false;
+  void onInteraction() {
+    print('interacted');
+    if (interacted) {
+      return;
+    }
+    mainctx.onFirstInteraction();
+    interacted = true;
+  }
+  document.addEventListener('mousedown', (event) => onInteraction());
+  document.addEventListener('keydown', (event) => onInteraction());
 
   num lastTime = 0;
   while (true) {

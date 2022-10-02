@@ -29,4 +29,12 @@ class MainCtx {
     lastInputState = newInputState;
     inputState.beginNewFrame();
   }
+
+  /// called when the user first performs an interaction with the game
+  /// e.g. clicking on the document or pressing a button on the keyboard
+  ///
+  /// this way, the audio can play without an exception
+  void onFirstInteraction() {
+    model.startAudioLoop();
+  }
 }

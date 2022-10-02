@@ -1,9 +1,11 @@
 
+import 'package:calamity/src/resources/audio_resource.dart';
 import 'package:calamity/src/scene/player.dart';
 
 import '../inputs/input_state.dart';
 import '../math/vector2.dart';
 import '../render/renderer.dart';
+import '../resources/resources.dart';
 import 'game_arena.dart';
 import 'gg_screen.dart';
 
@@ -22,11 +24,14 @@ class Model {
 
   void update(PlayerInputState input, num deltaTime) {
     // print("ARENA UPDATE: ${input.mouse?.event.button} ${arena.playing}");
+    AudioResource music = Resources.GameResources.getResource(Resources.MUSIC);
     if (arena.playing) {
+      music.setVolume(1);
       // print("Areana update ${arena.hashCode}");
       arena.update(input, deltaTime);
     } else {
       // FIXME: There are many places this line of code could belong, this is not one of them
+      music.setVolume(0.3);
       ggScreen.setScore(arena.lastScore);
       ggScreen.update(input);
     }
@@ -38,6 +43,12 @@ class Model {
     } else {
       ggScreen.render(r);
     }
+  }
+
+  void startAudioLoop() {
+    AudioResource music = Resources.GameResources.getResource(Resources.MUSIC);
+    music.setVolume(1);
+    music.play();
   }
 
 }
