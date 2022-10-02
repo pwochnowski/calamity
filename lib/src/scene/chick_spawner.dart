@@ -16,6 +16,8 @@ class ChickSpawner {
   late GameArena arena;
   num cooldown = Constants.CHICK_SPAWN_SECONDS * 1000; // millis
 
+  void reset() => cooldown = Constants.CHICK_SPAWN_SECONDS * 1000;
+
   void update(PlayerInputState input, num deltaTime) {
 
     if (cooldown > 0) {
@@ -43,7 +45,9 @@ class ChickSpawner {
   }
 
   void render(Renderer r) {
-    r.ctx.strokeText(cooldown.ceil().toString(), 400, 10);
+    Vector2 pos = new Vector2(arena.width / 2, 10);
+    String text = "Next egg wave: ${(cooldown / 1000).toStringAsFixed(2)} s";
+    r.renderText(text, pos, Justification.CENTER);
   }
 }
 

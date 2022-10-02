@@ -120,6 +120,7 @@ class GameArena {
   void reset() {
     player.reset();
     bullets.clear();
+    chickSpawner.reset();
     enemies.clear();
     lostChicks.clear();
     scoreWidget.reset();
