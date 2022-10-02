@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:calamity/src/math/static.dart';
 
 class Vector2 {
-  static final ZERO = new Vector2(0, 0);
+  static final Vector2 ZERO = new Vector2(0, 0);
   final num x, y;
 
   Vector2(this.x, this.y);
