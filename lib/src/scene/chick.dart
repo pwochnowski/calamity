@@ -31,7 +31,10 @@ class Chick extends GameObject {
 
   LineSeg? path;
 
-  Chick(this.arena, this.path) : _pos = path!.start;
+  Chick(this.arena, this.path) : _pos = path!.start {
+    currentAnimation =
+        animations.newAnimationFromDirection(null, pos, size, 400);
+  }
 
   @override
   // TODO: implement pos
