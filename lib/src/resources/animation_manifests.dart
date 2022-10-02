@@ -99,3 +99,12 @@ class ChickAnimationManifest {
     }
   }
 }
+
+class BulletAnimationManifest {
+  final GetterT<AnimationResource> _resourceGetter;
+  late final Animation travelling;
+
+  BulletAnimationManifest(this._resourceGetter) {
+    travelling = new Animation(_resourceGetter, [0, 1, 2, 3]);
+  }
+}

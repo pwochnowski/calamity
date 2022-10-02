@@ -17,6 +17,7 @@ class AnimationInstance {
   Vector2 size;
   final num timeStep;
   num elapsed = 0;
+  num rotation = 0;
 
   AnimationInstance(this.animation, this.pos, this.size, this.timeStep);
 

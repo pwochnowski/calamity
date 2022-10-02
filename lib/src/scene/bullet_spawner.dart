@@ -14,7 +14,6 @@ class BulletSpawner {
   late final GameArena arena;
   static final Vector2 bulletHitbox = new Vector2(50, 50);
 
-
   BulletSpawner();
 
   Bullet spawnBulletAtEdge() {
@@ -24,27 +23,28 @@ class BulletSpawner {
     double posOnEdge = StaticData.random.nextDouble();
     num x, y;
     switch (edge) {
-    case 0: // LEFT EDGE
-      x = 0;
-      y = arena.height * posOnEdge;
-      break;
-    case 1: // TOP EDGE
-      x = arena.width * posOnEdge;
-      y = 0;
-      break;
-    case 2: // RIGHT EDGE
-      x = arena.width;
-      y = arena.height * posOnEdge;
-      break;
-    default: // TOP EDGE
-      x = arena.width * posOnEdge;
-      y = arena.height;
-      break;
+      case 0: // LEFT EDGE
+        x = 0;
+        y = arena.height * posOnEdge;
+        break;
+      case 1: // TOP EDGE
+        x = arena.width * posOnEdge;
+        y = 0;
+        break;
+      case 2: // RIGHT EDGE
+        x = arena.width;
+        y = arena.height * posOnEdge;
+        break;
+      default: // TOP EDGE
+        x = arena.width * posOnEdge;
+        y = arena.height;
+        break;
     }
     Vector2 position = new Vector2(x, y);
-    num angle = (0.5 * edge + 0.8 * (StaticData.random.nextDouble() - 0.5)) * pi;
+    num angle =
+        (0.5 * edge + 0.8 * (StaticData.random.nextDouble() - 0.5)) * pi;
     Vector2 vel = new Vector2(cos(angle), sin(angle)) * Constants.BULLET_SPEED;
-    Bullet bullet = new Bullet(position, vel, arena);
+    Bullet bullet = new Bullet(position, angle, vel, arena);
     return bullet;
   }
 

@@ -23,8 +23,7 @@ class Renderer {
   num get width => canvas.width!;
   num get height => canvas.height!;
 
-  Renderer(this.canvas) : ctx = canvas.context2D {
-  }
+  Renderer(this.canvas) : ctx = canvas.context2D {}
 
   void beginRender() {
     ctx.clearRect(0, 0, width, height);
@@ -59,7 +58,6 @@ class Renderer {
   void renderCircle(Vector2 v) {
     ctx.beginPath();
     ctx.arc(v.x, v.y, 10.0, 0.0, 2 * pi);
-    ctx.fill();
     ctx.stroke();
   }
 
@@ -72,16 +70,21 @@ class Renderer {
   }
 
   void renderImage(Vector2 pos, Vector2 size, ImageResource image) {
-    ctx.drawImageScaled(image.bitmap, pos.x - (size.x / 2), pos.y - (size.y / 2), size.x, size.y);
+    ctx.drawImageScaled(image.bitmap, pos.x - (size.x / 2),
+        pos.y - (size.y / 2), size.x, size.y);
   }
 
   void renderAnimation(AnimationInstance animation) {
     AnimationResource resource = animation.animation.resourceGetter();
     int currentFrame = animation.currentFrame();
-    resource.renderFrame(ctx, animation.currentFrame(), animation.pos - (animation.size / 2), animation.size);
+    resource.renderFrame(
+        ctx, animation.currentFrame(), animation.pos, animation.size,
+        rotation: animation.rotation);
   }
 
-  void renderAnimationFrame(Vector2 pos, Vector2 size, AnimationResource resource, int index) {
-    resource.renderFrame(ctx, index, pos - (size / 2), size);
+  void renderAnimationFrame(
+      Vector2 pos, Vector2 size, AnimationResource resource, int index,
+      {num rotation: 0.0}) {
+    resource.renderFrame(ctx, index, pos, size, rotation: rotation);
   }
 }

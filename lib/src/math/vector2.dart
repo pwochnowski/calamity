@@ -91,4 +91,13 @@ class Vector2 {
   Vector2 round() {
     return new Vector2(x.round(), y.round());
   }
+
+  Vector2 rotated(num angle) {
+    double c0 = cos(angle);
+    double s0 = sin(angle);
+    return new Vector2(
+      x * c0 - y * s0,
+      y * c0 + x * s0,
+    );
+  }
 }
