@@ -5,6 +5,7 @@ library calamity;
 
 import 'package:calamity/src/inputs/input_state.dart';
 import 'package:calamity/src/main_ctx.dart';
+import 'package:calamity/src/math/direction.dart';
 import 'dart:html';
 
 import 'package:calamity/src/resources/image_resource.dart';
@@ -41,7 +42,6 @@ Future<void> clientMain() async {
 MainCtx setupMainCtx() {
   CanvasElement canvas;
   late MainCtx mainctx;
-
 
   DivElement div = Div([
     // Div([

@@ -1,3 +1,5 @@
+import 'package:calamity/src/math/vector2.dart';
+
 enum Direction {
   RIGHT,
   BOTTOMRIGHT,
@@ -7,6 +9,21 @@ enum Direction {
   TOPLEFT,
   TOP,
   TOPRIGHT,
+}
+
+Direction? directionFromVec(Vector2 dir) {
+  final double directionThres = 0.4;
+  if (dir.length2() == 0) {
+    return null;
+  }
+  dir = dir.normalized();
+
+  if (dir.x.abs() < directionThres) {
+    return dir.y > 0 ? Direction.BOTTOM : Direction.TOP;
+  }
+
+  int dirY = dir.y > directionThres ? 1 : dir.y > - directionThres ? 0 : -1;
+  return directionFromInt(dir.x > 0 ? 8 + dirY : 4 - dirY);
 }
 
 Direction directionFromInt(int dir) {
@@ -48,5 +65,14 @@ int intFromDirection(Direction dir) {
     return 6;
   case Direction.TOPRIGHT:
     return 7;
+  }
+}
+
+void testDirs() {
+  for (int dx = -1; dx < 2; ++dx) {
+    for (int dy = -1; dy < 2; ++dy) {
+      Vector2 v = new Vector2(dx, dy);
+      print("${v.x} ${v.y} ${directionFromVec(v)}");
+    }
   }
 }

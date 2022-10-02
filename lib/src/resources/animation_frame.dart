@@ -15,12 +15,10 @@ class AnimationInstance {
   Animation animation;
   Vector2 pos;
   Vector2 size;
-  bool flipX; 
-  bool flipY; 
   final num timeStep;
   num elapsed = 0;
 
-  AnimationInstance(this.animation, this.pos, this.size, this.flipX, this.flipY, this.timeStep);
+  AnimationInstance(this.animation, this.pos, this.size, this.timeStep);
 
   void updateElapsed(num delta) => elapsed += delta;
 

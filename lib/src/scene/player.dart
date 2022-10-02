@@ -9,6 +9,7 @@ import 'package:calamity/src/scene/game_object.dart';
 
 import '../constants.dart';
 import '../inputs/input_state.dart';
+import '../math/direction.dart';
 import '../math/segment.dart';
 import '../math/vector2.dart';
 import '../render/renderer.dart';
@@ -25,6 +26,8 @@ class Player extends GameObject {
   num movementSpeed = Constants.PLAYER_MOVE_SPEED;
   Vector2 pos;
   Vector2 size = new Vector2(50, 50);
+  Direction? oldDirection;
+  Direction? currentDirection;
 
   LineSeg? path;
   Player(this.pos) {
@@ -32,7 +35,7 @@ class Player extends GameObject {
   }
 
   void reset() {
-    currentAnimation = new AnimationInstance(animations.idle, pos, size, false, false, 100.0);
+    currentAnimation = new AnimationInstance(animations.idle, pos, size, Constants.PLAYER_ANIM_TIMESTEP);
     pos = Constants.PLAYER_SPAWN;
     path = null;
     resetCooldowns();
@@ -56,6 +59,7 @@ class Player extends GameObject {
 
     if (path != null) {
       Vector2 newPos = path!.dir() * speed * deltaTime * 0.001;
+      _updateDirection(newPos);
       num ratio = path!.ratioOnSeg(pos);
       if (ratio < 1.0) {
         pos += newPos;
@@ -73,8 +77,9 @@ class Player extends GameObject {
     if (input.keys.contains(PlayerKey.RIGHT)) { x += 1; }
     if (input.keys.contains(PlayerKey.UP)) { y -= 1; }
     if (input.keys.contains(PlayerKey.DOWN)) { y += 1; }
-    pos += new Vector2(x, y).normalized() * speed * deltaTime * 0.001;
-
+    Vector2 delta = new Vector2(x, y).normalized() * speed * deltaTime * 0.001;
+    _updateDirection(delta);
+    pos += delta;
   }
 
   /// limit the player so they don't move outside the bounds
@@ -93,6 +98,10 @@ class Player extends GameObject {
     }
   }
 
+  void _updateDirection(Vector2 dir) {
+    oldDirection = currentDirection;
+    currentDirection = directionFromVec(dir);
+  }
 
   @override
   void update(PlayerInputState input, num deltaTime) {
@@ -108,7 +117,9 @@ class Player extends GameObject {
 
   @override
   void render(Renderer r) {
-    print("${currentAnimation.animation.frames}");
+    if (currentDirection != oldDirection) {
+      currentAnimation = animations.newAnimationFromDirection(currentDirection, pos, size, Constants.PLAYER_ANIM_TIMESTEP);
+    }
     currentAnimation.pos = pos;
     r.renderAnimation(currentAnimation);
   }

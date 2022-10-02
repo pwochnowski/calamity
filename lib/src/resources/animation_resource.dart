@@ -26,7 +26,7 @@ class AnimationResource implements Resource {
   /// invariant: render functions can change the ctx arbitrarily such as ctx.rotate
   /// but must restore the ctx back to the initial state at the end
   void renderFrame(CanvasRenderingContext2D ctx, int index, Vector2 pos, Vector2 size,
-      {double rotation: 0.0}) {
+      {double rotation: 0.0, bool flipX: false, bool flipY: false}) {
     int srcR = index ~/ frameCols;
     int srcC = index % frameCols;
     int srcX = srcC * frameWidth;
