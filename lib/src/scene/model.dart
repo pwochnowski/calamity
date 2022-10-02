@@ -1,4 +1,3 @@
-
 import 'package:calamity/src/resources/audio_resource.dart';
 import 'package:calamity/src/scene/player.dart';
 
@@ -15,10 +14,9 @@ class Model {
   final num width;
   final num height;
 
-  Model(this.width, this.height)  :
-    arena = new GameArena(width, height),
-    ggScreen = new GameOverScreen() {
-
+  Model(this.width, this.height)
+      : arena = new GameArena(width, height),
+        ggScreen = new GameOverScreen() {
     ggScreen.arena = arena;
   }
 

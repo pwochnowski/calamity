@@ -10,8 +10,12 @@ import 'chick.dart';
 class ChickSpawner {
   late GameArena arena;
   num cooldown = Constants.CHICK_SPAWN_SECONDS * 1000; // millis
+  int additionalChicksPerRound = 0;
 
-  void reset() => cooldown = Constants.CHICK_SPAWN_SECONDS * 1000;
+  void reset() {
+    cooldown = Constants.CHICK_SPAWN_SECONDS * 1000;
+    additionalChicksPerRound = 0;
+  }
 
   void update(PlayerInputState input, num deltaTime) {
     if (cooldown > 0) {
@@ -23,7 +27,7 @@ class ChickSpawner {
   }
 
   void spawnChicks() {
-    for (int i = 0; i < Constants.NUM_CHICKS; i++) {
+    for (int i = 0; i < Constants.NUM_CHICKS + additionalChicksPerRound; i++) {
       Chick chick = Chick(
           arena,
           new LineSeg(
@@ -33,6 +37,7 @@ class ChickSpawner {
 
       arena.lostChicks.add(chick);
     }
+    additionalChicksPerRound += 1;
   }
 
   void render(Renderer r) {

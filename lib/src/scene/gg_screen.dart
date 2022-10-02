@@ -1,4 +1,3 @@
-
 import 'package:calamity/src/inputs/input_state.dart';
 import 'package:calamity/src/math/vector2.dart';
 
@@ -11,15 +10,14 @@ class GameOverScreen {
 
   GameOverScreen();
   void update(PlayerInputState ps) {
-    if (ps.mouse.left) {
+    if (ps.mouse.left || ps.keys.contains(PlayerKey.SPACE)) {
       arena.playing = true;
     }
-
   }
 
   void render(Renderer r) {
     String message1 = "GAME OVER. Your score was $score.";
-    String message2 = "Click to try again";
+    String message2 = "Click or press spacebar to try again";
     Vector2 pos = new Vector2(r.width / 2, r.height / 2);
     r.renderText(message1, pos.addY(-30), Justification.CENTER);
     r.renderText(message2, pos.addY(30), Justification.CENTER);

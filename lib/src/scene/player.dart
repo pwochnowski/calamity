@@ -57,7 +57,7 @@ class Player extends GameObject {
       }
     }
     if (boostCooldown > Constants.PLAYER_BOOST_CD) {
-      speed += Constants.PLAYER_BOOST;
+      speed *= Constants.PLAYER_BOOST_FACTOR;
     }
     boostCooldown -= deltaTime;
 
@@ -114,7 +114,8 @@ class Player extends GameObject {
       print("Set path ${path!.length()}");
     }
     move(input, deltaTime);
-    currentAnimation.updateElapsed(deltaTime);
+    currentAnimation.updateElapsed(
+        boostCooldown > Constants.PLAYER_BOOST_CD ? 2 * deltaTime : deltaTime);
     limit();
   }
 

@@ -71,9 +71,12 @@ class Chick extends GameObject {
     lastDirection = currentDirection;
     currentDirection = directionFromVec(path?.dir() ?? Vector2.ZERO);
     if (lastDirection != currentDirection) {
+      num lastElapsed = currentAnimation.elapsed;
       double timeStep = currentDirection == null ? 400 : 100;
       currentAnimation = animations.newAnimationFromDirection(
           currentDirection, pos, size, timeStep);
+      // Synchronise animation to other chicks in wave
+      currentAnimation.updateElapsed(lastElapsed + deltaTime);
     } else {
       currentAnimation.updateElapsed(deltaTime);
     }

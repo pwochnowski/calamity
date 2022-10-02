@@ -1,4 +1,3 @@
-
 import 'dart:html';
 
 import 'package:calamity/src/scene/player.dart';
@@ -6,10 +5,7 @@ import 'package:calamity/src/scene/player.dart';
 import '../math/vector2.dart';
 import 'mouse.dart';
 
-enum MouseButton {
-  LEFT,
-  RIGHT
-}
+enum MouseButton { LEFT, RIGHT }
 
 class InputState {
   final Set<int> heldDownKeys = new Set();
@@ -25,31 +21,14 @@ class InputState {
   }
 
   void registerListeners(CanvasElement canvas) {
-
     window.onKeyDown.listen((ev) {
       // track held keys
-      switch (ev.keyCode) {
-        case KeyCode.LEFT:
-        case KeyCode.RIGHT:
-        case KeyCode.DOWN:
-        case KeyCode.UP:
-          heldDownKeys.add(ev.keyCode);
-          break;
-      }
-      if (ev.code == 'KeyE') {
-        keysThisFrame.add(KeyCode.E);
-      }
+      heldDownKeys.add(ev.keyCode);
+      keysThisFrame.add(ev.keyCode);
     });
 
     window.onKeyUp.listen((ev) {
-      switch (ev.keyCode) {
-        case KeyCode.LEFT:
-        case KeyCode.RIGHT:
-        case KeyCode.DOWN:
-        case KeyCode.UP:
-          heldDownKeys.remove(ev.keyCode);
-          break;
-      }
+      heldDownKeys.remove(ev.keyCode);
     });
 
     // FIXME: We should be updating whenever the hover position is changed.
@@ -62,9 +41,7 @@ class InputState {
     window.onContextMenu.listen((event) {event.preventDefault();});
   }
 
-
   PlayerInputState derivePlayerInputState(PlayerInputState old) {
-
     Set<PlayerKey> keys = new Set();
     if (heldDownKeys.contains(KeyCode.LEFT)) { keys.add(PlayerKey.LEFT); }
     if (heldDownKeys.contains(KeyCode.RIGHT)) { keys.add(PlayerKey.RIGHT); }
@@ -74,6 +51,10 @@ class InputState {
 
     if (keysThisFrame.contains(KeyCode.E)) {
       keys.add(PlayerKey.DASH);
+    }
+
+    if (keysThisFrame.contains(KeyCode.SPACE)) {
+      keys.add(PlayerKey.SPACE);
     }
 
     PlayerInputState ps = new PlayerInputState(mouse ?? MouseState.NONE, keys);
@@ -91,6 +72,7 @@ enum PlayerKey {
   UP,
   DOWN,
   DASH,
+  SPACE,
 }
 
 class PlayerInputState {
@@ -99,5 +81,4 @@ class PlayerInputState {
   final Set<PlayerKey> keys;
 
   PlayerInputState(this.mouse, this.keys);
-
 }
