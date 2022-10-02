@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:calamity/src/math/collision_helper.dart';
 import 'package:calamity/src/math/static.dart';
 import 'package:calamity/src/render/sprite.dart';
+import 'package:calamity/src/resources/animation_frame.dart';
 import 'package:calamity/src/scene/boulder.dart';
 import 'package:calamity/src/scene/chick_spawner.dart';
 import 'package:calamity/src/scene/player.dart';
@@ -36,6 +37,7 @@ class GameArena {
   final List<Boulder> boulders = [];
   final List<Chick> lostChicks = [];
   final List<Enemy> enemies = [];
+  final List<AnimationInstance> standaloneAnimations = [];
 
   GameArena(this.width, this.height)
       : player = new Player(Constants.PLAYER_SPAWN),
@@ -89,6 +91,10 @@ class GameArena {
     }
 
     scoreWidget.update(input, deltaTime);
+    for (AnimationInstance animation in standaloneAnimations) {
+      animation.updateElapsed(deltaTime);
+    }
+    standaloneAnimations.removeWhere((animation) => animation.hasEnded());
   }
 
   void render(Renderer r) {
@@ -109,6 +115,9 @@ class GameArena {
 
     for (Enemy enemy in enemies) {
       enemy.render(r);
+    }
+    for (AnimationInstance animation in standaloneAnimations) {
+      r.renderAnimation(animation);
     }
     scoreWidget.render(r);
   }
@@ -131,6 +140,7 @@ class GameArena {
     lostChicks.clear();
     scoreWidget.reset();
     boulders.clear();
+    standaloneAnimations.clear();
     Random r = StaticData.random;
     for (int i = 0; i < Constants.NUM_BOULDERS; i++) {
       num x = r.nextDouble() * width;

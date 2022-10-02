@@ -28,7 +28,8 @@ class PlayerAnimationManifest {
     moveLeft = new Animation(_resourceGetter, [24, 25, 26, 27]);
     moveRight = new Animation(_resourceGetter, [28, 29, 30, 31]);
     idle = new Animation(_resourceGetter, [32, 33, 34, 35]);
-    featherFall = new Animation(_resourceGetter, [36, 37, 38, 39, 40, 41, 42]);
+    featherFall =
+        new Animation(_resourceGetter, [36, 37, 38, 39, 40, 41, 42, 43]);
   }
 
   AnimationInstance newAnimationFromDirection(

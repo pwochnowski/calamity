@@ -8,7 +8,7 @@ class Animation {
   final GetterT<AnimationResource> resourceGetter;
   final List<int> frames;
 
-  Animation( this.resourceGetter, this.frames);
+  Animation(this.resourceGetter, this.frames);
 }
 
 class AnimationInstance {
@@ -23,7 +23,7 @@ class AnimationInstance {
   void updateElapsed(num delta) => elapsed += delta;
 
   int _frameNumber() => (elapsed / timeStep).ceil();
-  bool hasEnded() => frameNumber() >= animation.frames.length;
+  bool hasEnded() => _frameNumber() >= animation.frames.length;
   int frameNumber() => _frameNumber() % animation.frames.length;
   int currentFrame() => animation.frames[frameNumber()];
 }

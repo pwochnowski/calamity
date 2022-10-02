@@ -1,4 +1,3 @@
-
 import 'package:calamity/src/math/static.dart';
 import 'package:calamity/src/resources/animation_frame.dart';
 import 'package:calamity/src/resources/animation_manifests.dart';
@@ -17,7 +16,8 @@ import '../resources/resources.dart';
 
 class Player extends GameObject {
   late GameArena arena;
-  PlayerAnimationManifest animations = Resources.GameResources.playerAnimationManifest;
+  PlayerAnimationManifest animations =
+      Resources.GameResources.playerAnimationManifest;
   late AnimationInstance currentAnimation;
 
   // used for hitbox of player
@@ -35,7 +35,8 @@ class Player extends GameObject {
   }
 
   void reset() {
-    currentAnimation = new AnimationInstance(animations.idle, pos, size, Constants.PLAYER_ANIM_TIMESTEP);
+    currentAnimation = new AnimationInstance(
+        animations.idle, pos, size, Constants.PLAYER_ANIM_TIMESTEP);
     pos = Constants.PLAYER_SPAWN;
     path = null;
     resetCooldowns();
@@ -50,10 +51,13 @@ class Player extends GameObject {
     num speed = movementSpeed;
     if (input.keys.contains(PlayerKey.DASH)) {
       if (boostCooldown < 0) {
-        speed += Constants.PLAYER_BOOST;
-        boostCooldown = Constants.PLAYER_BOOST_CD;
-        print("Boost ${speed}");
+        boostCooldown = Constants.PLAYER_BOOST_CD + Constants.PLAYER_DURATION;
+        arena.standaloneAnimations
+            .add(new AnimationInstance(animations.featherFall, pos, size, 150));
       }
+    }
+    if (boostCooldown > Constants.PLAYER_BOOST_CD) {
+      speed += Constants.PLAYER_BOOST;
     }
     boostCooldown -= deltaTime;
 
@@ -114,14 +118,13 @@ class Player extends GameObject {
     limit();
   }
 
-
   @override
   void render(Renderer r) {
     if (currentDirection != oldDirection) {
-      currentAnimation = animations.newAnimationFromDirection(currentDirection, pos, size, Constants.PLAYER_ANIM_TIMESTEP);
+      currentAnimation = animations.newAnimationFromDirection(
+          currentDirection, pos, size, Constants.PLAYER_ANIM_TIMESTEP);
     }
     currentAnimation.pos = pos;
     r.renderAnimation(currentAnimation);
   }
 }
-
