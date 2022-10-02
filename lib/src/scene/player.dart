@@ -1,5 +1,7 @@
 
 import 'package:calamity/src/math/static.dart';
+import 'package:calamity/src/resources/animation_frame.dart';
+import 'package:calamity/src/resources/animation_manifests.dart';
 import 'package:calamity/src/resources/animation_resource.dart';
 import 'package:calamity/src/resources/image_resource.dart';
 import 'package:calamity/src/scene/game_arena.dart';
@@ -13,8 +15,9 @@ import '../render/renderer.dart';
 import '../resources/resources.dart';
 
 class Player extends GameObject {
-  AnimationResource? _playerAnimation;
   late GameArena arena;
+  PlayerAnimationManifest animations = Resources.GameResources.playerAnimationManifest;
+  late AnimationInstance currentAnimation;
 
   // used for hitbox of player
   final num radius = Constants.PLAYER_RADIUS;
@@ -24,9 +27,12 @@ class Player extends GameObject {
   Vector2 size = new Vector2(50, 50);
 
   LineSeg? path;
-  Player(this.pos);
+  Player(this.pos) {
+    reset();
+  }
 
   void reset() {
+    currentAnimation = new AnimationInstance(animations.idle, pos, size, false, false, 100.0);
     pos = Constants.PLAYER_SPAWN;
     path = null;
     resetCooldowns();
@@ -49,7 +55,6 @@ class Player extends GameObject {
     boostCooldown -= deltaTime;
 
     if (path != null) {
-      // FIXME: This overshoots
       Vector2 newPos = path!.dir() * speed * deltaTime * 0.001;
       num ratio = path!.ratioOnSeg(pos);
       if (ratio < 1.0) {
@@ -91,25 +96,21 @@ class Player extends GameObject {
 
   @override
   void update(PlayerInputState input, num deltaTime) {
-    if (input.mouse.right ) {
+    if (input.mouse.right) {
       path = new LineSeg(pos, input.mouse.pos!);
       print("Set path ${path!.length()}");
     }
     move(input, deltaTime);
+    currentAnimation.updateElapsed(deltaTime);
     limit();
   }
 
 
-  int frame = 0;
   @override
   void render(Renderer r) {
-    AnimationResource animation = getPlayerAnimation();
-    if (StaticData.random.nextDouble() < 0.1) {
-      frame = StaticData.random.nextInt(animation.frameCount);
-    }
-    r.renderAnimationFrame(pos, size, animation, frame);
+    print("${currentAnimation.animation.frames}");
+    currentAnimation.pos = pos;
+    r.renderAnimation(currentAnimation);
   }
-
-  AnimationResource getPlayerAnimation() => _playerAnimation ??= Resources.GameResources.getResource(Resources.PLAYER_ANIMATION);
 }
 

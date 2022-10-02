@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'dart:math';
 
+import 'package:calamity/src/resources/animation_frame.dart';
 import 'package:calamity/src/resources/animation_resource.dart';
 import 'package:calamity/src/resources/image_resource.dart';
 
@@ -62,6 +63,11 @@ class Renderer {
 
   void renderImage(Vector2 pos, Vector2 size, ImageResource image) {
     ctx.drawImageScaled(image.bitmap, pos.x - (size.x / 2), pos.y - (size.y / 2), size.x, size.y);
+  }
+
+  void renderAnimation(AnimationInstance animation) {
+    print("Rendering frame ${animation.currentFrame()}");
+    animation.animation.resourceGetter().renderFrame(ctx, animation.currentFrame(), animation.pos, animation.size);
   }
 
   void renderAnimationFrame(Vector2 pos, Vector2 size, AnimationResource resource, int index) {
