@@ -31,37 +31,70 @@ class PlayerAnimationManifest {
     featherFall = new Animation(_resourceGetter, [36, 37, 38, 39, 40, 41, 42]);
   }
 
-  AnimationInstance newAnimationFromDirection(Direction? dir, Vector2 pos, Vector2 size, num timeStep) {
-    Animation animation;
+  AnimationInstance newAnimationFromDirection(
+      Direction? dir, Vector2 pos, Vector2 size, num timeStep) {
     switch (dir) {
       case Direction.RIGHT:
-        animation = moveRight;
-        break;
+        return new AnimationInstance(moveRight, pos, size, timeStep);
       case Direction.BOTTOMRIGHT:
-        animation = moveBottomRight;
-        break;
+        return new AnimationInstance(moveBottomRight, pos, size, timeStep);
       case Direction.BOTTOM:
-        animation = moveBottom;
-        break;
+        return new AnimationInstance(moveBottom, pos, size, timeStep);
       case Direction.BOTTOMLEFT:
-        animation = moveBottomLeft;
-        break;
+        return new AnimationInstance(moveBottomLeft, pos, size, timeStep);
       case Direction.LEFT:
-        animation = moveLeft;
-        break;
+        return new AnimationInstance(moveLeft, pos, size, timeStep);
       case Direction.TOPLEFT:
-        animation = moveTopLeft;
-        break;
+        return new AnimationInstance(moveTopLeft, pos, size, timeStep);
       case Direction.TOP:
-        animation = moveTop;
-        break;
+        return new AnimationInstance(moveTop, pos, size, timeStep);
       case Direction.TOPRIGHT:
-        animation = moveTopRight;
-        break;
+        return new AnimationInstance(moveTopRight, pos, size, timeStep);
       case null:
-        animation = idle;
-        break;
+        return new AnimationInstance(idle, pos, size, timeStep);
     }
-    return new AnimationInstance(animation, pos, size, timeStep);
+  }
+}
+
+class ChickAnimationManifest {
+  final GetterT<AnimationResource> _resourceGetter;
+  late final Animation moveBottomLeft;
+  late final Animation moveBottomRight;
+  late final Animation moveBottom;
+  late final Animation moveLeft;
+  late final Animation moveRight;
+  late final Animation idle;
+
+  ChickAnimationManifest(this._resourceGetter) {
+    moveBottomLeft = new Animation(_resourceGetter, [8, 9, 8, 10]);
+    moveBottomRight = new Animation(_resourceGetter, [5, 6, 5, 7]);
+    moveBottom = new Animation(_resourceGetter, [2, 3, 4, 3]);
+    moveLeft = new Animation(_resourceGetter, [11, 12]);
+    moveRight = new Animation(_resourceGetter, [13, 14]);
+    idle = new Animation(_resourceGetter, [0, 1]);
+  }
+
+  AnimationInstance newAnimationFromDirection(
+      Direction? dir, Vector2 pos, Vector2 size, num timeStep) {
+    switch (dir) {
+      case Direction.RIGHT:
+        return new AnimationInstance(moveRight, pos, size, timeStep);
+      case Direction.BOTTOMRIGHT:
+        return new AnimationInstance(moveBottomRight, pos, size, timeStep);
+      case Direction.BOTTOM:
+        return new AnimationInstance(moveBottom, pos, size, timeStep);
+      case Direction.BOTTOMLEFT:
+        return new AnimationInstance(moveBottomLeft, pos, size, timeStep);
+      case Direction.LEFT:
+        return new AnimationInstance(moveLeft, pos, size, timeStep);
+      case Direction.TOPLEFT:
+        return new AnimationInstance(moveBottomLeft, pos, size, timeStep);
+      case Direction.TOP:
+        return new AnimationInstance(moveBottom, pos, size, timeStep);
+      case Direction.TOPRIGHT:
+        return new AnimationInstance(moveBottomRight, pos, size, timeStep);
+      case null:
+        return new AnimationInstance(idle, pos, size, timeStep);
+    }
   }
 }

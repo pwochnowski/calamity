@@ -1,16 +1,11 @@
-
 import 'package:calamity/src/inputs/input_state.dart';
 import 'package:calamity/src/math/vector2.dart';
 import 'package:calamity/src/render/renderer.dart';
 import 'package:calamity/src/scene/game_arena.dart';
-import 'package:calamity/src/scene/game_object.dart';
-import 'package:calamity/src/scene/player.dart';
 
 import '../constants.dart';
-import '../math/aabb.dart';
-import '../math/collision_helper.dart';
 import '../math/segment.dart';
-import '../math/static.dart';
+import 'chick.dart';
 
 class ChickSpawner {
   late GameArena arena;
@@ -19,7 +14,6 @@ class ChickSpawner {
   void reset() => cooldown = Constants.CHICK_SPAWN_SECONDS * 1000;
 
   void update(PlayerInputState input, num deltaTime) {
-
     if (cooldown > 0) {
       cooldown -= deltaTime;
     } else {
@@ -30,15 +24,12 @@ class ChickSpawner {
 
   void spawnChicks() {
     for (int i = 0; i < Constants.NUM_CHICKS; i++) {
-      Chick chick = Chick(arena);
-
-      chick.path = new LineSeg(
-        new Vector2(400, 0),
-        new Vector2.random(800, 400),
-      );
-
-      chick._pos = chick.path!.start;
-
+      Chick chick = Chick(
+          arena,
+          new LineSeg(
+            new Vector2(400, 0),
+            new Vector2.random(800, 400),
+          ));
 
       arena.lostChicks.add(chick);
     }
@@ -49,66 +40,4 @@ class ChickSpawner {
     String text = "Next egg wave: ${(cooldown / 1000).toStringAsFixed(2)} s";
     r.renderText(text, pos, Justification.CENTER);
   }
-}
-
-class Chick extends GameObject {
-  final GameArena arena;
-
-  late Vector2 _pos;
-
-  num speed = Constants.CHICK_MOVE_SPEED;
-  num radius = Constants.CHICK_RADIUS;
-
-  LineSeg? path;
-
-  Chick(this.arena);
-
-  @override
-  // TODO: implement pos
-  Vector2 get pos => this._pos;
-
-
-  bool checkPlayerCollision() {
-    Player p = arena.player;
-
-    bool collides = CollisionHelper.collidesCircleAABB(pos, radius,
-      AABB.fromLocAndSize(p.pos, p.size)
-    );
-    print("Collides $collides");
-
-    if (collides) {
-      arena.lostChicks.remove(this);
-      arena.scoreWidget.add(Constants.CHICK_SCORE);
-    }
-
-    return collides;
-  }
-
-  @override
-  void render(Renderer r) {
-    r.setColor(200, 200, 140);
-    r.renderCircle(_pos);
-    r.clearColor();
-  }
-
-  @override
-  void update(PlayerInputState input, num deltaTime) {
-    bool collides = checkPlayerCollision();
-    if (collides) {
-      return;
-    }
-
-    if (path != null) {
-      Vector2 newPos = path!.dir() * speed * deltaTime * 0.001;
-      num ratio = path!.ratioOnSeg(pos);
-      if (ratio < 1.0) {
-        _pos += newPos;
-      } else {
-        _pos = path!.end;
-        path = null;
-      }
-      return;
-    }
-  }
-
 }

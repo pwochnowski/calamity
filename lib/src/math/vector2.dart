@@ -4,12 +4,15 @@ import 'package:calamity/src/math/static.dart';
 
 class Vector2 {
   final num x, y;
+  static final Vector2 ZERO = new Vector2(0, 0);
 
   Vector2(this.x, this.y);
 
-  Vector2.random(int width, int height) : this(
-    StaticData.random.nextInt(width), StaticData.random.nextInt(height),
-  );
+  Vector2.random(int width, int height)
+      : this(
+          StaticData.random.nextInt(width),
+          StaticData.random.nextInt(height),
+        );
 
   Vector2 setX(num newX) {
     return new Vector2(newX, y);
@@ -28,8 +31,7 @@ class Vector2 {
   }
 
   static Vector2 avg(List<Vector2> vs) {
-
-    Vector2 u = new Vector2(0,0);
+    Vector2 u = new Vector2(0, 0);
     for (Vector2 v in vs) {
       u = u + v;
     }
@@ -66,7 +68,7 @@ class Vector2 {
   }
 
   num length2() {
-    return x*x + y*y;
+    return x * x + y * y;
   }
 
   @override
@@ -77,12 +79,13 @@ class Vector2 {
   num distanceTo(Vector2 v) {
     return (this - v).length();
   }
+
   num distanceTo2(Vector2 v) {
     return (this - v).length2();
   }
 
   num dotProd(Vector2 v) {
-    return v.x*x + v.y*y;
+    return v.x * x + v.y * y;
   }
 
   Vector2 round() {

@@ -15,6 +15,7 @@ import '../render/renderer.dart';
 import '../resources/resources.dart';
 import 'bullet.dart';
 import 'bullet_spawner.dart';
+import 'chick.dart';
 import 'enemy.dart';
 import 'enemy_spawner.dart';
 
