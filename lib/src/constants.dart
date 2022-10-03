@@ -21,6 +21,9 @@ class Constants {
   // how much to push an enemy back if they are hit by bullet
   static final num BULLET_KNOCKBACK = 50.0;
 
+  // duration the bullet causes stun
+  static final num BULLET_STUN = 300.0;
+
   /// milliseconds to seconds
   static final num MsToS = 0.001;
 

@@ -26,6 +26,13 @@ class Enemy {
   Vector2? boredTarget;
   double boredTime = 0;
 
+  /// remaining ms the enemy is stunned for
+  num _stun = 0;
+
+  void setStun(num stun) {
+    this._stun = stun;
+  }
+
   Vector2 getTargetPos() => boredTarget ?? arena.player.pos;
   ImageResource getEnemyImage() =>
       _enemyImage ??= Resources.GameResources.getResource('enemy');
@@ -88,7 +95,11 @@ class Enemy {
         new LineSeg(pos, pos + (avoidDirection * Constants.ENEMY_SPEED));
 
     num moveDistance = Constants.ENEMY_SPEED * deltaTime * Constants.MsToS;
-    pos += finalDirection * moveDistance;
+
+    _stun -= deltaTime;
+    if (_stun <= 0) {
+      pos += finalDirection * moveDistance;
+    }
   }
 
   void render(Renderer r) {
