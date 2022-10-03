@@ -13,6 +13,7 @@ import 'game_arena.dart';
 class EnemySpawner extends System {
   late final GameArena arena;
   int numEnemies;
+  num _elapsed = 0;
 
   EnemySpawner(this.numEnemies);
 
@@ -24,22 +25,22 @@ class EnemySpawner extends System {
     double posOnEdge = StaticData.random.nextDouble();
     num x, y;
     switch (edge) {
-    case 0: // LEFT EDGE
-      x = 0;
-      y = arena.height * posOnEdge;
-      break;
-    case 1: // TOP EDGE
-      x = 0;
-      y = arena.height * posOnEdge;
-      break;
-    case 2: // RIGHT EDGE
-      x = arena.width;
-      y = arena.height * posOnEdge;
-      break;
-    default: // TOP EDGE
-      x = arena.width * posOnEdge;
-      y = arena.height;
-      break;
+      case 0: // LEFT EDGE
+        x = 0;
+        y = arena.height * posOnEdge;
+        break;
+      case 1: // TOP EDGE
+        x = 0;
+        y = arena.height * posOnEdge;
+        break;
+      case 2: // RIGHT EDGE
+        x = arena.width;
+        y = arena.height * posOnEdge;
+        break;
+      default: // TOP EDGE
+        x = arena.width * posOnEdge;
+        y = arena.height;
+        break;
     }
     Vector2 position = new Vector2(x, y);
     Enemy bullet = new Enemy(position, arena);
@@ -47,20 +48,24 @@ class EnemySpawner extends System {
   }
 
   @override
-  void reset() {}
+  void reset() {
+    _elapsed = 0;
+  }
 
   @override
   void update(PlayerInputState input, num deltaTime) {
     if (!arena.playing) {
       return;
     }
+    _elapsed + deltaTime;
     for (Enemy e in arena.enemies) {
       if (!e.isAlive) {
         arena.addChickScore(e.pos);
       }
     }
+    int addedEnemies = _elapsed ~/ Constants.ENEMY_COUNT_INCREASE_TIME;
     arena.enemies.retainWhere((Enemy enemy) => enemy.isAlive);
-    int numToSpawn = max(0, numEnemies - arena.enemies.length);
+    int numToSpawn = max(0, numEnemies + addedEnemies - arena.enemies.length);
     for (int i = 0; i < numToSpawn; ++i) {
       arena.enemies.add(spawnEnemyAtEdge());
     }
@@ -68,5 +73,4 @@ class EnemySpawner extends System {
 
   @override
   void render(Renderer r) {}
-
 }
