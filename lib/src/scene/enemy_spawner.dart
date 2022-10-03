@@ -57,7 +57,7 @@ class EnemySpawner extends System {
     if (!arena.playing) {
       return;
     }
-    _elapsed + deltaTime;
+    _elapsed += deltaTime;
     for (Enemy e in arena.enemies) {
       if (!e.isAlive) {
         arena.addChickScore(e.pos);

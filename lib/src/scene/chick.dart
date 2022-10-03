@@ -46,7 +46,6 @@ class Chick extends GameObject {
 
     bool collides = CollisionHelper.collidesCircleAABB(
         pos, radius, AABB.fromLocAndSize(p.pos, p.size));
-    print("Collides $collides");
 
     if (collides) {
       arena.lostChicks.remove(this);
