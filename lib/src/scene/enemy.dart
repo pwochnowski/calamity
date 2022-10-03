@@ -21,8 +21,7 @@ import 'player.dart';
 class Enemy {
   EnemyAnimationManifest animations =
       Resources.GameResources.enemyAnimationManifest;
-  static final Vector2 renderBounds =
-      new Vector2(49.45, 36) * 1.6;
+  static final Vector2 renderBounds = new Vector2(125, 125);
   GameArena arena;
 
   Vector2 pos;
@@ -48,6 +47,10 @@ class Enemy {
   num speedPercentage() {
     num damageTaken = 1 - health.clamp(0, 1);
     return 1 - damageTaken * damageTaken;
+  }
+
+  void heal(num deltaTime) {
+    health = min(1.0, health + deltaTime * Constants.ENEMY_HEAL_PER_MSEC);
   }
 
   Vector2 getTargetPos() => boredTarget ?? arena.player.pos;
@@ -82,6 +85,7 @@ class Enemy {
   }
 
   void update(PlayerInputState input, num deltaTime) {
+    heal(deltaTime);
     updateBoredom(deltaTime);
     // handles how much the enemies want to move apart from each other
     Iterable<Enemy> otherEnemies = arena.enemies.where((Enemy e) => e != this);
@@ -133,8 +137,8 @@ class Enemy {
   Direction? currentDirection;
 
   void render(Renderer r) {
-    r.renderLine(debugTargetPlayer, Color.RED);
-    r.renderLine(debugAvoidOtherEnemies, Color.BLUE);
+    // r.renderLine(debugTargetPlayer, Color.RED);
+    // r.renderLine(debugAvoidOtherEnemies, Color.BLUE);
 
     if (currentDirection != oldDirection) {
       currentAnimation = animations.newAnimationFromDirection(

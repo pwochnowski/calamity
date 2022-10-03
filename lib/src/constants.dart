@@ -17,12 +17,13 @@ class Constants {
   static final num PLAYER_BULLET_RADIUS = 5.0;
   static final num BULLET_SPEED = 240.0;
   static final num PLAYER_BULLET_SPEED_BASE = 600.0;
-  static final num BULLET_COUNT_INCREASE_TIME = 30 * SToMs;
-  static final num ENEMY_COUNT_INCREASE_TIME = 40 * SToMs;
+  static final num BULLET_COUNT_INCREASE_TIME = 20 * SToMs;
+  static final num ENEMY_COUNT_INCREASE_TIME = 30 * SToMs;
   static final num ENEMY_RADIUS = 25.0;
   static final num ENEMY_SPEED = 120.0;
   static final num ENEMY_MAX_BORED_TIME = 8 * SToMs;
   static final num ENEMY_BORED_P50_TIME = 15 * SToMs;
+  static final num ENEMY_HEAL_PER_MSEC = 1 / (20 * SToMs);
 
   // how much to push an enemy back if they are hit by bullet
   static final num BULLET_KNOCKBACK = 50.0;
