@@ -11,6 +11,7 @@ import 'package:calamity/src/scene/player.dart';
 
 import '../constants.dart';
 import '../math/aabb.dart';
+import '../math/color.dart';
 import '../math/vector2.dart';
 import '../resources/resources.dart';
 
@@ -19,14 +20,15 @@ class Bullet extends GameObject {
   Vector2 velocity;
   num angle;
   // AABB hitboxes
-  final num radius = Constants.BULLET_RADIUS;
+  final num radius;
   GameArena _enclosingArena;
   late AnimationInstance currentAnimation;
 
   final bool isFromPlayer;
 
   Bullet(this.pos, this.angle, this.velocity, this._enclosingArena,
-      {this.isFromPlayer: false}) {
+      {this.isFromPlayer: false}):
+        radius = isFromPlayer ? Constants.PLAYER_BULLET_RADIUS : Constants.BULLET_RADIUS {
     currentAnimation = new AnimationInstance(
       Resources.GameResources.bulletAnimationManifest.travelling,
       pos,
@@ -45,7 +47,11 @@ class Bullet extends GameObject {
 
   @override
   void render(Renderer r) {
-    r.renderAnimation(currentAnimation);
+    if (!isFromPlayer) {
+      r.renderAnimation(currentAnimation);
+    } else {
+      r.renderCircle(pos, radius, Color.LIGHTER_YELLOW);
+    }
   }
 
   void setArena(GameArena arena) => this._enclosingArena = arena;

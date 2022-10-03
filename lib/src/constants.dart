@@ -11,6 +11,7 @@ class Constants {
   static final int NUM_ENEMIES = 2;
 
   static final num BULLET_RADIUS = 10.0;
+  static final num PLAYER_BULLET_RADIUS = 5.0;
   static final num BULLET_SPEED = 240.0;
   static final num BULLET_COUNT_INCREASE_TIME = 10 * SToMs;
   static final num ENEMY_RADIUS = 25.0;

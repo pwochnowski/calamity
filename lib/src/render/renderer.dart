@@ -57,15 +57,23 @@ class Renderer {
     ctx.fillText(text, position.x, position.y);
   }
 
-  void renderCircle(Vector2 v) {
+  void setColorFromObject(Color color) {
+    ctx.setFillColorRgb(color.r, color.g, color.b, color.a);
+    ctx.setStrokeColorRgb(color.r, color.g, color.b, color.a);
+  }
+
+  void renderCircle(Vector2 v, num radius, Color color) {
+    setColorFromObject(color);
     ctx.beginPath();
-    ctx.arc(v.x, v.y, 10.0, 0.0, 2 * pi);
+    ctx.arc(v.x, v.y, radius, 0.0, 2 * pi);
     ctx.stroke();
+    ctx.fill();
+    clearColor();
   }
 
   void renderLine(LineSeg line, Color color) {
+    setColorFromObject(color);
     ctx.beginPath();
-    ctx.setStrokeColorRgb(color.r, color.g, color.b, color.a);
     ctx.moveTo(line.start.x, line.start.y);
     ctx.lineTo(line.end.x, line.end.y);
     ctx.stroke();
@@ -92,8 +100,7 @@ class Renderer {
 
   void renderRectangle(Vector2 pos, Vector2 size, Color color, { bool fill: false }) {
     Vector2 halfSize = size.halved();
-    ctx.setFillColorRgb(color.r, color.g, color.b, color.a);
-    ctx.setStrokeColorRgb(color.r, color.g, color.b, color.a);
+    setColorFromObject(color);
     if (fill) {
       ctx.fillRect(pos.x - halfSize.x, pos.y - halfSize.y, size.x, size.y);
     }
