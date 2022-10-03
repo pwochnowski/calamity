@@ -24,6 +24,8 @@ class Chick extends GameObject {
 
   late Vector2 _pos;
 
+  bool isSaved = false;
+
   num speed = Constants.CHICK_MOVE_SPEED;
   num radius = Constants.CHICK_RADIUS;
   final Vector2 size =
@@ -47,8 +49,8 @@ class Chick extends GameObject {
     bool collides = CollisionHelper.collidesCircleAABB(
         pos, radius, AABB.fromLocAndSize(p.pos, p.size));
 
-    if (collides && arena.lostChicks.contains(this)) {
-      arena.lostChicks.remove(this);
+    if (collides && !isSaved) {
+      isSaved = true;
       arena.scoreWidget.addSavedChick();
       arena.addChickScore(pos);
     }

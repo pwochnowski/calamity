@@ -76,6 +76,7 @@ class GameArena {
 
       if (!bullet.isFromPlayer && bullet.collidesWithPlayer()) {
         killPlayer();
+        break;
       }
 
       if (bullet.isFromPlayer) {
@@ -103,6 +104,7 @@ class GameArena {
 
       if (enemy.collidesWithPlayer()) {
         killPlayer();
+        break;
       }
     }
 
@@ -125,6 +127,7 @@ class GameArena {
     for (Chick chick in lostChicks) {
       chick.update(input, deltaTime);
     }
+    lostChicks.removeWhere((chick) => chick.isSaved);
 
     scoreWidget.update(input, deltaTime);
     for (AnimationInstance animation in standaloneAnimations) {
