@@ -171,8 +171,8 @@ class ShotgunAnimationManifest {
       [off + 5, off + 4, off, off + 1, off + 2, off + 3, off + 4, off + 5];
 
   ShotgunAnimationManifest(this._resourceGetter) {
-    fromLeft = new Animation(_resourceGetter, _framesFromOffset(0));
-    fromRight = new Animation(_resourceGetter, _framesFromOffset(6));
+    fromRight = new Animation(_resourceGetter, _framesFromOffset(0));
+    fromLeft = new Animation(_resourceGetter, _framesFromOffset(6));
     fromTop = new Animation(_resourceGetter, _framesFromOffset(12));
     fromBottom = new Animation(_resourceGetter, _framesFromOffset(18));
   }

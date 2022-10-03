@@ -10,6 +10,7 @@ import 'package:calamity/src/scene/chick_spawner.dart';
 import 'package:calamity/src/scene/feeder_spawner.dart';
 import 'package:calamity/src/scene/player.dart';
 import 'package:calamity/src/scene/score.dart';
+import 'package:calamity/src/scene/shotgun.dart';
 
 import '../constants.dart';
 import '../inputs/input_state.dart';
@@ -43,6 +44,7 @@ class GameArena {
   final List<Chick> lostChicks = [];
   final List<Enemy> enemies = [];
   final List<Feeder> feeders = [];
+  final List<Shotgun> shotguns = [];
   final List<AnimationInstance> standaloneAnimations = [];
 
   GameArena(this.width, this.height)
@@ -74,7 +76,6 @@ class GameArena {
 
       if (!bullet.isFromPlayer && bullet.collidesWithPlayer()) {
         killPlayer();
-        break;
       }
 
       if (bullet.isFromPlayer) {
@@ -92,12 +93,16 @@ class GameArena {
     }
 
     bullets.removeWhere(bulletsToRemove.contains);
+    for (Shotgun shotgun in shotguns) {
+      shotgun.update(input, deltaTime);
+    }
+    shotguns.removeWhere((Shotgun shotgun) => shotgun.hasFired);
+
     for (Enemy enemy in enemies) {
       enemy.update(input, deltaTime);
 
       if (enemy.collidesWithPlayer()) {
         killPlayer();
-        break;
       }
     }
 
@@ -152,6 +157,9 @@ class GameArena {
     for (Enemy enemy in enemies) {
       enemy.render(r);
     }
+    for (Shotgun shotgun in shotguns) {
+      shotgun.render(r);
+    }
     for (AnimationInstance animation in standaloneAnimations) {
       r.renderAnimation(animation);
     }
@@ -176,6 +184,7 @@ class GameArena {
     bulletSpawner.reset();
     enemySpawner.reset();
     enemies.clear();
+    shotguns.clear();
     lostChicks.clear();
     scoreWidget.reset();
     boulders.clear();
