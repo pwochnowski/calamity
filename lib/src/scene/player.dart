@@ -138,6 +138,12 @@ class Player extends GameObject {
       path = new LineSeg(pos, input.mouse.pos!);
       print("Set path ${path!.length()}");
     }
+    if (input.mouse.left) {
+      if (ammo > 0) {
+        ammo -= 1;
+        arena.bulletSpawner.firePlayerBullet(pos, input.mouse.pos!);
+      }
+    }
     move(input, deltaTime);
     addAmmoIfOnFeeder(deltaTime);
     currentAnimation.updateElapsed(

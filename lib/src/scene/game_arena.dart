@@ -66,14 +66,28 @@ class GameArena {
     bulletSpawner.update(input, deltaTime);
     enemySpawner.update(input, deltaTime);
 
+    Set<Bullet> bulletsToRemove = new Set();
     for (Bullet bullet in bullets) {
       bullet.update(input, deltaTime);
 
-      if (bullet.collidesWithPlayer()) {
+      if (!bullet.isFromPlayer && bullet.collidesWithPlayer()) {
         killPlayer();
         break;
       }
+
+      if (bullet.isFromPlayer) {
+        for (Enemy e in enemies) {
+          Vector2? enemyShiftVector = bullet.collideWithEnemy(e);
+          if (enemyShiftVector != null) {
+            e.pos += enemyShiftVector;
+            bulletsToRemove.add(bullet);
+            break;
+          }
+        }
+      }
     }
+
+    bullets.removeWhere(bulletsToRemove.contains);
     for (Enemy enemy in enemies) {
       enemy.update(input, deltaTime);
 
@@ -82,6 +96,7 @@ class GameArena {
         break;
       }
     }
+
     for (Boulder boulder in boulders) {
       Vector2? shiftVector = CollisionHelper.shiftVectorCircleCircle(
           player.pos, player.radius, boulder.pos, boulder.radius);

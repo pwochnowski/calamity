@@ -8,13 +8,12 @@ import 'package:calamity/src/scene/game_object.dart';
 class Feeder extends GameObject {
   final Vector2 pos;
   final Vector2 size;
-  final Vector2 halfSize;
 
-  Feeder(this.pos, this.size): this.halfSize = size.halved();
+  Feeder(this.pos, this.size);
 
   @override
   void render(Renderer r) {
-    r.renderRectangle(pos - halfSize, size, Color.YELLOW, fill: true);
+    r.renderRectangle(pos, size, Color.YELLOW, fill: true);
   }
 
   @override

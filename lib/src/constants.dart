@@ -3,6 +3,7 @@ import 'package:calamity/src/math/vector2.dart';
 /// Actually a bunch of defaults used for initialising values
 /// Speeds are in pixels/second
 class Constants {
+
   // Prevent class from being constructed
   Constants._();
 
@@ -16,6 +17,9 @@ class Constants {
   static final num ENEMY_SPEED = 120.0;
   static final num ENEMY_MAX_BORED_TIME = 8 * SToMs;
   static final num ENEMY_BORED_P50_TIME = 15 * SToMs;
+
+  // how much to push an enemy back if they are hit by bullet
+  static final num BULLET_KNOCKBACK = 50.0;
 
   /// milliseconds to seconds
   static final num MsToS = 0.001;

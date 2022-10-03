@@ -91,12 +91,13 @@ class Renderer {
   }
 
   void renderRectangle(Vector2 pos, Vector2 size, Color color, { bool fill: false }) {
+    Vector2 halfSize = size.halved();
     ctx.setFillColorRgb(color.r, color.g, color.b, color.a);
     ctx.setStrokeColorRgb(color.r, color.g, color.b, color.a);
     if (fill) {
-      ctx.fillRect(pos.x, pos.y, size.x, size.y);
+      ctx.fillRect(pos.x - halfSize.x, pos.y - halfSize.y, size.x, size.y);
     }
-    ctx.strokeRect(pos.x, pos.y, size.x, size.y);
+    ctx.strokeRect(pos.x - halfSize.x, pos.y - halfSize.y, size.x, size.y);
     clearColor();
   }
 }

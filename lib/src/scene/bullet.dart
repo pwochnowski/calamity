@@ -4,6 +4,7 @@ import 'package:calamity/src/inputs/input_state.dart';
 import 'package:calamity/src/math/collision_helper.dart';
 import 'package:calamity/src/render/renderer.dart';
 import 'package:calamity/src/resources/animation_frame.dart';
+import 'package:calamity/src/scene/enemy.dart';
 import 'package:calamity/src/scene/game_arena.dart';
 import 'package:calamity/src/scene/game_object.dart';
 import 'package:calamity/src/scene/player.dart';
@@ -22,7 +23,10 @@ class Bullet extends GameObject {
   GameArena _enclosingArena;
   late AnimationInstance currentAnimation;
 
-  Bullet(this.pos, this.angle, this.velocity, this._enclosingArena) {
+  final bool isFromPlayer;
+
+  Bullet(this.pos, this.angle, this.velocity, this._enclosingArena,
+      {this.isFromPlayer: false}) {
     currentAnimation = new AnimationInstance(
       Resources.GameResources.bulletAnimationManifest.travelling,
       pos,
@@ -56,5 +60,14 @@ class Bullet extends GameObject {
     Player p = _enclosingArena.player;
     return CollisionHelper.collidesCircleAABB(
         pos, radius, AABB.fromLocAndSize(p.pos, p.size));
+  }
+
+  /// returns the pushback vector if the bullet collides with the enemy
+  Vector2? collideWithEnemy(Enemy e) {
+    bool collides = CollisionHelper.collidesCircleCircle(e.pos, Constants.ENEMY_RADIUS, pos, radius);
+    if (!collides) {
+      return null;
+    }
+    return velocity.normalized() * Constants.BULLET_KNOCKBACK;
   }
 }

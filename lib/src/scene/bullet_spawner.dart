@@ -48,9 +48,20 @@ class BulletSpawner {
     Vector2 position = new Vector2(x, y);
     num angle =
         (0.5 * edge + 0.8 * (StaticData.random.nextDouble() - 0.5)) * pi;
+    return _createNewBullet(position, angle, isFromPlayer: false);
+  }
+
+  Bullet _createNewBullet(Vector2 position, num angle, {bool isFromPlayer: false}) {
     Vector2 vel = new Vector2(cos(angle), sin(angle)) * Constants.BULLET_SPEED;
-    Bullet bullet = new Bullet(position, angle, vel, arena);
-    return bullet;
+    return new Bullet(position, angle, vel, arena, isFromPlayer: isFromPlayer);
+  }
+
+  void firePlayerBullet(Vector2 position, Vector2 mousePosition) {
+    num dx = mousePosition.x - position.x;
+    num dy = mousePosition.y - position.y;
+    num angle = atan2(dy, dx);
+    Bullet bullet = _createNewBullet(position, angle, isFromPlayer: true);
+    arena.bullets.add(bullet);
   }
 
   num remainingCd = 0;
