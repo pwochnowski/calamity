@@ -53,7 +53,5 @@ class Model {
       }
     });
     music.play();
-    print("Playing");
-    music.audio.currentTime = 315;
   }
 }
