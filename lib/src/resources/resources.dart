@@ -18,6 +18,7 @@ class Resources {
   static final String BACKGROUND = 'background';
   static final String GRAINS = 'grains';
   static final String COVER = 'cover';
+  static final String GAME_OVER = 'game_over';
 
   static final String MUSIC = 'music';
   final Map<String, Resource> _resources;
@@ -71,5 +72,6 @@ class Resources {
     _resources[MUSIC] = await AudioResource.load('Repeat_mixdown 3_01.mp3');
     _resources[GRAINS] = await ImageResource.load('grains.png');
     _resources[COVER] = await ImageResource.load('cover.png');
+    _resources[GAME_OVER] = await ImageResource.load('game_over.png');
   }
 }

@@ -199,7 +199,6 @@ class GameArena {
 
   void addChickScore(Vector2 pos) {
     scoreWidget.add(Constants.CHICK_SCORE);
-    scoreWidget.addSavedChick();
     standaloneAnimations.add(new AnimationInstance(
         Resources.GameResources.chickScoreAnimation,
         pos,

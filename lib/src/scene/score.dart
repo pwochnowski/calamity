@@ -27,7 +27,7 @@ class ScoreWidget {
   void addSavedChick() => score.chicksSaved += 1;
 
   void render(Renderer r) {
-    r.renderText("Score: $score", pos, Justification.LEFT);
+    r.renderText("Score: ${score.score}", pos, Justification.LEFT);
   }
 
   void reset() {

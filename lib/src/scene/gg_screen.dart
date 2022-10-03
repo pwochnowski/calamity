@@ -2,10 +2,15 @@ import 'package:calamity/src/inputs/input_state.dart';
 import 'package:calamity/src/math/vector2.dart';
 import 'package:calamity/src/scene/score.dart';
 
+import '../constants.dart';
 import '../render/renderer.dart';
+import '../resources/resources.dart';
 import 'game_arena.dart';
 
 class GameOverScreen {
+  static final Vector2 pos = size / 2;
+  static final Vector2 size =
+      new Vector2(Constants.CANVAS_WIDTH, Constants.CANVAS_HEIGHT);
   PlayerScore score = new PlayerScore();
   late GameArena arena;
 
@@ -17,11 +22,15 @@ class GameOverScreen {
   }
 
   void render(Renderer r) {
-    String message1 = "GAME OVER. Your score was ${score.score}.";
-    String message2 = "Click or press spacebar to try again";
-    Vector2 pos = new Vector2(r.width / 2, r.height / 2);
-    r.renderText(message1, pos.addY(-30), Justification.CENTER);
-    r.renderText(message2, pos.addY(30), Justification.CENTER);
+    r.renderImage(
+        pos, size, Resources.GameResources.getResource(Resources.GAME_OVER));
+    r.renderText("Score: ${score.score}", pos.addY(-30), Justification.CENTER);
+    r.renderText("Chicks saved: ${score.chicksSaved}", pos.addY(30),
+        Justification.CENTER);
+    r.renderText("Foxes deterred: ${score.foxesKilled}", pos.addY(90),
+        Justification.CENTER);
+    r.renderText("Click or press spacebar to try again", pos.addY(150),
+        Justification.CENTER);
   }
 
   void setScore(PlayerScore newScore) => score = newScore;

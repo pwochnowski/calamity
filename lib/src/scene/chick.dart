@@ -47,7 +47,7 @@ class Chick extends GameObject {
     bool collides = CollisionHelper.collidesCircleAABB(
         pos, radius, AABB.fromLocAndSize(p.pos, p.size));
 
-    if (collides) {
+    if (collides && arena.lostChicks.contains(this)) {
       arena.lostChicks.remove(this);
       arena.scoreWidget.addSavedChick();
       arena.addChickScore(pos);
