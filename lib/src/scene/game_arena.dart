@@ -185,4 +185,13 @@ class GameArena {
     }
     feeders.add(new Feeder(new Vector2(250, height - 50), new Vector2(300, 50)));
   }
+
+  void addChickScore(Vector2 pos) {
+    scoreWidget.add(Constants.CHICK_SCORE);
+    standaloneAnimations.add(new AnimationInstance(
+        Resources.GameResources.chickScoreAnimation,
+        pos,
+        new Vector2(50, 50),
+        50));
+  }
 }

@@ -42,7 +42,7 @@ class ChickSpawner {
 
   void render(Renderer r) {
     Vector2 pos = new Vector2(arena.width / 2, 16);
-    String text = "Next egg wave: ${(cooldown / 1000).toStringAsFixed(2)} s";
+    String text = "Next chick wave: ${(cooldown / 1000).toStringAsFixed(2)} s";
     r.renderText(text, pos, Justification.CENTER);
   }
 }

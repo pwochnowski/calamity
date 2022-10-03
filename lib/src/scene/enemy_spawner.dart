@@ -49,6 +49,11 @@ class EnemySpawner {
     if (!arena.playing) {
       return;
     }
+    for (Enemy e in arena.enemies) {
+      if (!e.isAlive) {
+        arena.addChickScore(e.pos);
+      }
+    }
     arena.enemies.retainWhere((Enemy enemy) => enemy.isAlive);
     int numToSpawn = max(0, numEnemies - arena.enemies.length);
     for (int i = 0; i < numToSpawn; ++i) {
