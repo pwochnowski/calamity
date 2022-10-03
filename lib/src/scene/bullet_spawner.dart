@@ -52,7 +52,12 @@ class BulletSpawner {
   }
 
   Bullet _createNewBullet(Vector2 position, num angle, {bool isFromPlayer: false}) {
-    Vector2 vel = new Vector2(cos(angle), sin(angle)) * Constants.BULLET_SPEED;
+    Vector2 vel = new Vector2(cos(angle), sin(angle));
+    if (isFromPlayer) {
+      vel *= Constants.PLAYER_BULLET_SPEED_BASE;
+    } else {
+      vel *= Constants.BULLET_SPEED;
+    }
     return new Bullet(position, angle, vel, arena, isFromPlayer: isFromPlayer);
   }
 
