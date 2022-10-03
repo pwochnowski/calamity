@@ -22,15 +22,28 @@ class Enemy {
   GameArena arena;
 
   Vector2 pos;
-  bool isAlive = true;
   Vector2? boredTarget;
   double boredTime = 0;
 
   /// remaining ms the enemy is stunned for
   num _stun = 0;
 
+  /// remaining health from 1 to 0
+  num health = 1.0;
+  bool get isAlive => health > 0;
+
   void setStun(num stun) {
     this._stun = stun;
+  }
+
+  void takeDamage(num damage) {
+    health -= damage;
+  }
+
+  /// slows down based on damage taken
+  num speedPercentage() {
+    num damageTaken = 1 - health.clamp(0, 1);
+    return 1 - damageTaken * damageTaken;
   }
 
   Vector2 getTargetPos() => boredTarget ?? arena.player.pos;
@@ -95,6 +108,7 @@ class Enemy {
         new LineSeg(pos, pos + (avoidDirection * Constants.ENEMY_SPEED));
 
     num moveDistance = Constants.ENEMY_SPEED * deltaTime * Constants.MsToS;
+    moveDistance *= speedPercentage();
 
     _stun -= deltaTime;
     if (_stun <= 0) {

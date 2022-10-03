@@ -81,6 +81,7 @@ class GameArena {
           if (enemyShiftVector != null) {
             e.pos += enemyShiftVector;
             e.setStun(Constants.BULLET_STUN);
+            e.takeDamage(0.3);
             bulletsToRemove.add(bullet);
             break;
           }
