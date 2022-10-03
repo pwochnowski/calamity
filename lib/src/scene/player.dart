@@ -38,7 +38,6 @@ class Player extends GameObject {
   }
 
   num _firingStun = 0;
-  Direction? _firingStunDirection;
 
   void reset() {
     ammo = 0;
@@ -46,6 +45,7 @@ class Player extends GameObject {
         animations.idle, pos, size, Constants.PLAYER_ANIM_TIMESTEP);
     pos = Constants.PLAYER_SPAWN;
     path = null;
+    _firingStun = 0;
     resetCooldowns();
   }
 
@@ -147,8 +147,11 @@ class Player extends GameObject {
   }
 
   void _updateDirection(Vector2 dir) {
-    oldDirection = currentDirection;
-    currentDirection = directionFromVec(dir);
+    // HACK
+    if (_firingStun < 0) {
+      oldDirection = currentDirection;
+      currentDirection = directionFromVec(dir);
+    }
   }
 
   @override
@@ -173,8 +176,8 @@ class Player extends GameObject {
         arena.bulletSpawner.firePlayerBullet(pos, targetPos);
         Vector2 knockbackDir = (pos - targetPos).normalized();
         pos += knockbackDir * Constants.PLAYER_FIRE_KNOCKBACK;
+        _updateDirection(-knockbackDir);
         _firingStun = Constants.PLAYER_FIRE_STUN;
-        _firingStunDirection = directionFromVec(-knockbackDir);
       }
     }
     addAmmoIfOnFeeder(deltaTime);
@@ -185,20 +188,12 @@ class Player extends GameObject {
 
   @override
   void render(Renderer r) {
-    if (_firingStun > 0 && _firingStunDirection != null) {
-      // render the chicken after firing the bird seed
-      // HACK render one frame of the animation
-      AnimationInstance animation = animations.newAnimationFromDirection(
-          _firingStunDirection, pos, size, Constants.PLAYER_ANIM_TIMESTEP);
-      r.renderAnimation(animation);
-    } else {
-      if (currentDirection != oldDirection) {
-        currentAnimation = animations.newAnimationFromDirection(
-            currentDirection, pos, size, Constants.PLAYER_ANIM_TIMESTEP);
-      }
-      currentAnimation.pos = pos;
-      r.renderAnimation(currentAnimation);
+    if (currentDirection != oldDirection) {
+      currentAnimation = animations.newAnimationFromDirection(
+          currentDirection, pos, size, Constants.PLAYER_ANIM_TIMESTEP);
     }
+    currentAnimation.pos = pos;
+    r.renderAnimation(currentAnimation);
   }
 
   AABB getBounds() {
