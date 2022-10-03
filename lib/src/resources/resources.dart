@@ -13,6 +13,7 @@ class Resources {
   static final String CHICK_ANIMATION = 'chick_animation';
   static final String CHICK_SCORE_ANIMATION = 'chick_score_animation';
   static final String BULLET_ANIMATION = 'bullet_animation';
+  static final String SHOTGUN_ANIMATION = 'shotgun_animation';
   static final String BOULDER = 'boulder';
   static final String BACKGROUND = 'background';
   static final String GRAINS = 'grains';
@@ -22,6 +23,7 @@ class Resources {
   late PlayerAnimationManifest playerAnimationManifest;
   late ChickAnimationManifest chickAnimationManifest;
   late BulletAnimationManifest bulletAnimationManifest;
+  late ShotgunAnimationManifest shotgunAnimationManifest;
   late Animation chickScoreAnimation;
 
   Resources._() : this._resources = {} {
@@ -31,6 +33,8 @@ class Resources {
         new ChickAnimationManifest(() => getResource(CHICK_ANIMATION));
     bulletAnimationManifest =
         new BulletAnimationManifest(() => getResource(BULLET_ANIMATION));
+    shotgunAnimationManifest =
+        new ShotgunAnimationManifest(() => getResource(SHOTGUN_ANIMATION));
     chickScoreAnimation = new Animation(
         () => getResource(CHICK_SCORE_ANIMATION), [0, 1, 2, 3, 4, 5, 6, 7, 8]);
   }
@@ -55,6 +59,8 @@ class Resources {
         await AnimationResource.load('chick_score_animation.png', 50, 50, 9);
     _resources[BULLET_ANIMATION] =
         await AnimationResource.load('bullet_animation.png', 50, 50, 4);
+    _resources[SHOTGUN_ANIMATION] =
+        await AnimationResource.load('shotgun_animation.png', 100, 100, 24);
     _resources[BOULDER] = await ImageResource.load('boulder.png');
     _resources[BACKGROUND] = await ImageResource.load('background.png');
     _resources[MUSIC] = await AudioResource.load('Repeat_mixdown 3_01.mp3');

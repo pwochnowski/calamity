@@ -108,3 +108,21 @@ class BulletAnimationManifest {
     travelling = new Animation(_resourceGetter, [0, 1, 2, 3]);
   }
 }
+
+class ShotgunAnimationManifest {
+  final GetterT<AnimationResource> _resourceGetter;
+  late final Animation fromLeft;
+  late final Animation fromRight;
+  late final Animation fromTop;
+  late final Animation fromBottom;
+
+  List<int> _framesFromOffset(int off) =>
+      [off + 5, off + 4, off, off + 1, off + 2, off + 3, off + 4, off + 5];
+
+  ShotgunAnimationManifest(this._resourceGetter) {
+    fromLeft = new Animation(_resourceGetter, _framesFromOffset(0));
+    fromRight = new Animation(_resourceGetter, _framesFromOffset(6));
+    fromTop = new Animation(_resourceGetter, _framesFromOffset(12));
+    fromBottom = new Animation(_resourceGetter, _framesFromOffset(18));
+  }
+}
