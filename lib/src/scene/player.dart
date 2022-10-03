@@ -41,7 +41,7 @@ class Player extends GameObject {
   Direction? _firingStunDirection;
 
   void reset() {
-    ammo = 3;
+    ammo = 0;
     currentAnimation = new AnimationInstance(
         animations.idle, pos, size, Constants.PLAYER_ANIM_TIMESTEP);
     pos = Constants.PLAYER_SPAWN;
@@ -147,7 +147,7 @@ class Player extends GameObject {
   void update(PlayerInputState input, num deltaTime) {
     if (input.mouse.right) {
       path = new LineSeg(pos, input.mouse.pos!);
-      print("Set path ${path!.length()}");
+      // print("Set path ${path!.length()}");
     }
     fireCooldown -= deltaTime;
     _firingStun -= deltaTime;

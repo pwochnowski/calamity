@@ -81,8 +81,8 @@ class BulletSpawner extends System {
     }
 
     arena.bullets.retainWhere((Bullet bullet) => bullet.isInBounds());
-
-    if (arena.bullets.length <
+    int nonPlayerBulletsCount = arena.bullets.where((b) => !b.isFromPlayer).length;
+    if (nonPlayerBulletsCount <
         Constants.NUM_BULLETS +
             (_elapsed / Constants.BULLET_COUNT_INCREASE_TIME).floor()) {
       if (remainingCd > 0) {

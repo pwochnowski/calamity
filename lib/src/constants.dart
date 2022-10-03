@@ -9,6 +9,7 @@ class Constants {
 
   static final int NUM_BULLETS = 5;
   static final int NUM_ENEMIES = 2;
+  static final int NUM_FEEDERS = 2;
 
   static final num BULLET_RADIUS = 10.0;
   static final num PLAYER_BULLET_RADIUS = 5.0;

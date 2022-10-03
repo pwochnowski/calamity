@@ -7,6 +7,7 @@ import 'package:calamity/src/resources/animation_frame.dart';
 import 'package:calamity/src/scene/ammo.dart';
 import 'package:calamity/src/scene/boulder.dart';
 import 'package:calamity/src/scene/chick_spawner.dart';
+import 'package:calamity/src/scene/feeder_spawner.dart';
 import 'package:calamity/src/scene/player.dart';
 import 'package:calamity/src/scene/score.dart';
 
@@ -29,9 +30,10 @@ class GameArena {
   int lastScore = 0;
   final ImageSprite background;
 
-  final BulletSpawner bulletSpawner;
-  final EnemySpawner enemySpawner;
+  final BulletSpawner bulletSpawner = new BulletSpawner();
+  final EnemySpawner enemySpawner = new EnemySpawner(Constants.NUM_ENEMIES);
   final ChickSpawner chickSpawner = new ChickSpawner();
+  final FeederSpawner feederSpawner = new FeederSpawner(Constants.NUM_FEEDERS);
   final ScoreWidget scoreWidget = new ScoreWidget();
   final AmmoWidget ammoWidget = new AmmoWidget();
 
@@ -45,8 +47,6 @@ class GameArena {
 
   GameArena(this.width, this.height)
       : player = new Player(Constants.PLAYER_SPAWN),
-        bulletSpawner = new BulletSpawner(),
-        enemySpawner = new EnemySpawner(Constants.NUM_ENEMIES),
         background = new ImageSprite(
           new Vector2(width / 2, height / 2),
           new Vector2(width, height),
@@ -56,6 +56,7 @@ class GameArena {
     bulletSpawner.arena = this;
     enemySpawner.arena = this;
     chickSpawner.arena = this;
+    feederSpawner.arena = this;
     scoreWidget.arena = this;
     ammoWidget.arena = this;
     reset();
@@ -65,6 +66,7 @@ class GameArena {
     player.update(input, deltaTime);
     bulletSpawner.update(input, deltaTime);
     enemySpawner.update(input, deltaTime);
+    feederSpawner.update(input, deltaTime);
 
     Set<Bullet> bulletsToRemove = new Set();
     for (Bullet bullet in bullets) {
@@ -128,6 +130,7 @@ class GameArena {
 
   void render(Renderer r) {
     background.render(r);
+    feederSpawner.render(r);
     for (Feeder feeder in feeders) {
       feeder.render(r);
     }

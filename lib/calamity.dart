@@ -20,7 +20,6 @@ Future<void> clientMain() async {
 
   bool interacted = false;
   void onInteraction() {
-    print('interacted');
     if (interacted) {
       return;
     }
