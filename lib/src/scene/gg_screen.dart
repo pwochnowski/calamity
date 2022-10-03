@@ -24,12 +24,17 @@ class GameOverScreen {
   void render(Renderer r) {
     r.renderImage(
         pos, size, Resources.GameResources.getResource(Resources.GAME_OVER));
-    r.renderText("Score: ${score.score}", pos.addY(-30), Justification.CENTER);
+    r.renderText(
+        "Time survived: ${(score.timeSurvived / 1000).toStringAsFixed(2)}s",
+        pos.addY(-30),
+        Justification.CENTER);
     r.renderText("Chicks saved: ${score.chicksSaved}", pos.addY(30),
         Justification.CENTER);
     r.renderText("Foxes deterred: ${score.foxesKilled}", pos.addY(90),
         Justification.CENTER);
-    r.renderText("Click or press spacebar to try again", pos.addY(150),
+    r.renderText(
+        "Total Score: ${score.score}", pos.addY(150), Justification.CENTER);
+    r.renderText("Click or press spacebar to try again", pos.addY(210),
         Justification.CENTER);
   }
 
