@@ -10,6 +10,7 @@ abstract class Resource {}
 class Resources {
   static final String ENEMY = 'enemy';
   static final String PLAYER_ANIMATION = 'player_animation';
+  static final String ENEMY_ANIMATION = 'enemy_animation';
   static final String CHICK_ANIMATION = 'chick_animation';
   static final String CHICK_SCORE_ANIMATION = 'chick_score_animation';
   static final String BULLET_ANIMATION = 'bullet_animation';
@@ -21,6 +22,7 @@ class Resources {
   static final String MUSIC = 'music';
   final Map<String, Resource> _resources;
   late PlayerAnimationManifest playerAnimationManifest;
+  late EnemyAnimationManifest enemyAnimationManifest;
   late ChickAnimationManifest chickAnimationManifest;
   late BulletAnimationManifest bulletAnimationManifest;
   late ShotgunAnimationManifest shotgunAnimationManifest;
@@ -29,6 +31,8 @@ class Resources {
   Resources._() : this._resources = {} {
     playerAnimationManifest =
         new PlayerAnimationManifest(() => getResource(PLAYER_ANIMATION));
+    enemyAnimationManifest =
+        new EnemyAnimationManifest(() => getResource(ENEMY_ANIMATION));
     chickAnimationManifest =
         new ChickAnimationManifest(() => getResource(CHICK_ANIMATION));
     bulletAnimationManifest =
@@ -50,7 +54,8 @@ class Resources {
   Future<Null> loadAll() async {
     // TODO: Maybe request all of these in parallel? Would be trivial, would just require us to
     // await them all simultaneously
-    _resources[ENEMY] = await ImageResource.load('enemy.png');
+    _resources[ENEMY_ANIMATION] =
+        await AnimationResource.load('enemy_animation.png', 49, 33, 40);
     _resources[PLAYER_ANIMATION] =
         await AnimationResource.load('player_animation.png', 100, 100, 44);
     _resources[CHICK_ANIMATION] =

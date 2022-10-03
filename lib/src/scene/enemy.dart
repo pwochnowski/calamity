@@ -8,15 +8,19 @@ import '../inputs/input_state.dart';
 import '../math/aabb.dart';
 import '../math/collision_helper.dart';
 import '../math/color.dart';
+import '../math/direction.dart';
 import '../math/segment.dart';
 import '../render/renderer.dart';
+import '../resources/animation_frame.dart';
+import '../resources/animation_manifests.dart';
 import '../resources/image_resource.dart';
 import '../resources/resources.dart';
 import 'game_arena.dart';
 import 'player.dart';
 
 class Enemy {
-  ImageResource? _enemyImage;
+  EnemyAnimationManifest animations =
+      Resources.GameResources.enemyAnimationManifest;
   static final Vector2 bounds =
       new Vector2(2 * Constants.ENEMY_RADIUS, 2 * Constants.ENEMY_RADIUS);
   GameArena arena;
@@ -47,10 +51,11 @@ class Enemy {
   }
 
   Vector2 getTargetPos() => boredTarget ?? arena.player.pos;
-  ImageResource getEnemyImage() =>
-      _enemyImage ??= Resources.GameResources.getResource('enemy');
 
-  Enemy(this.pos, this.arena);
+  Enemy(this.pos, this.arena) {
+    currentAnimation = new AnimationInstance(
+        animations.moveLeft, pos, bounds, Constants.PLAYER_ANIM_TIMESTEP);
+  }
 
   /// debug segment for rendering the enemy's intent to target the players
   LineSeg debugTargetPlayer = LineSeg.ZERO;
@@ -113,13 +118,30 @@ class Enemy {
     _stun -= deltaTime;
     if (_stun <= 0) {
       pos += finalDirection * moveDistance;
+      _updateDirection(finalDirection);
+      currentAnimation.updateElapsed(deltaTime);
     }
   }
+
+  void _updateDirection(Vector2 dir) {
+    oldDirection = currentDirection;
+    currentDirection = directionFromVec(dir);
+  }
+
+  late AnimationInstance currentAnimation;
+  Direction? oldDirection;
+  Direction? currentDirection;
 
   void render(Renderer r) {
     r.renderLine(debugTargetPlayer, Color.RED);
     r.renderLine(debugAvoidOtherEnemies, Color.BLUE);
-    r.renderImage(pos, bounds, getEnemyImage());
+
+    if (currentDirection != oldDirection) {
+      currentAnimation = animations.newAnimationFromDirection(
+          currentDirection, pos, bounds, Constants.PLAYER_ANIM_TIMESTEP);
+    }
+    currentAnimation.pos = pos;
+    r.renderAnimation(currentAnimation);
   }
 
   bool collidesWithPlayer() {

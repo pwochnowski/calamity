@@ -57,6 +57,57 @@ class PlayerAnimationManifest {
   }
 }
 
+class EnemyAnimationManifest {
+  final GetterT<AnimationResource> _resourceGetter;
+  late final Animation moveTopLeft;
+  late final Animation moveTopRight;
+  late final Animation moveBottomLeft;
+  late final Animation moveBottomRight;
+  late final Animation moveBottom;
+  late final Animation moveTop;
+  late final Animation moveLeft;
+  late final Animation moveRight;
+
+  List<int> _makeOffsets(int start) {
+    return [start, start + 1, start + 2, start + 3, start + 4];
+  }
+
+  EnemyAnimationManifest(this._resourceGetter) {
+    moveLeft = new Animation(_resourceGetter, _makeOffsets(0));
+    moveRight = new Animation(_resourceGetter, _makeOffsets(5));
+    moveBottom = new Animation(_resourceGetter, _makeOffsets(10));
+    moveTop = new Animation(_resourceGetter, _makeOffsets(15));
+    moveBottomLeft = new Animation(_resourceGetter, _makeOffsets(20));
+    moveBottomRight = new Animation(_resourceGetter, _makeOffsets(25));
+    moveTopLeft = new Animation(_resourceGetter, _makeOffsets(30));
+    moveTopRight = new Animation(_resourceGetter, _makeOffsets(35));
+  }
+
+  AnimationInstance newAnimationFromDirection(
+      Direction? dir, Vector2 pos, Vector2 size, num timeStep) {
+    switch (dir) {
+      case Direction.RIGHT:
+        return new AnimationInstance(moveRight, pos, size, timeStep);
+      case Direction.BOTTOMRIGHT:
+        return new AnimationInstance(moveBottomRight, pos, size, timeStep);
+      case Direction.BOTTOM:
+        return new AnimationInstance(moveBottom, pos, size, timeStep);
+      case Direction.BOTTOMLEFT:
+        return new AnimationInstance(moveBottomLeft, pos, size, timeStep);
+      case Direction.LEFT:
+        return new AnimationInstance(moveLeft, pos, size, timeStep);
+      case Direction.TOPLEFT:
+        return new AnimationInstance(moveTopLeft, pos, size, timeStep);
+      case Direction.TOP:
+        return new AnimationInstance(moveTop, pos, size, timeStep);
+      case Direction.TOPRIGHT:
+        return new AnimationInstance(moveTopRight, pos, size, timeStep);
+      case null:
+        throw new FallThroughError();
+    }
+  }
+}
+
 class ChickAnimationManifest {
   final GetterT<AnimationResource> _resourceGetter;
   late final Animation moveBottomLeft;
