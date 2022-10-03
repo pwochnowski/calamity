@@ -21,8 +21,8 @@ import 'player.dart';
 class Enemy {
   EnemyAnimationManifest animations =
       Resources.GameResources.enemyAnimationManifest;
-  static final Vector2 bounds =
-      new Vector2(2 * Constants.ENEMY_RADIUS, 2 * Constants.ENEMY_RADIUS);
+  static final Vector2 renderBounds =
+      new Vector2(49.45, 36) * 1.6;
   GameArena arena;
 
   Vector2 pos;
@@ -54,7 +54,7 @@ class Enemy {
 
   Enemy(this.pos, this.arena) {
     currentAnimation = new AnimationInstance(
-        animations.moveLeft, pos, bounds, Constants.PLAYER_ANIM_TIMESTEP);
+        animations.moveLeft, pos, renderBounds, Constants.PLAYER_ANIM_TIMESTEP);
   }
 
   /// debug segment for rendering the enemy's intent to target the players
@@ -138,7 +138,7 @@ class Enemy {
 
     if (currentDirection != oldDirection) {
       currentAnimation = animations.newAnimationFromDirection(
-          currentDirection, pos, bounds, Constants.PLAYER_ANIM_TIMESTEP);
+          currentDirection, pos, renderBounds, Constants.PLAYER_ANIM_TIMESTEP);
     }
     currentAnimation.pos = pos;
     r.renderAnimation(currentAnimation);

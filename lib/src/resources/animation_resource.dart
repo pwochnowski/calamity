@@ -7,8 +7,8 @@ import 'package:calamity/src/resources/resources.dart';
 /// each frame is of a fixed size
 class AnimationResource implements Resource {
   final ImageElement image;
-  final int frameWidth;
-  final int frameHeight;
+  final num frameWidth;
+  final num frameHeight;
   final int frameRows;
   final int frameCols;
   final int frameCount;
@@ -16,8 +16,8 @@ class AnimationResource implements Resource {
   AnimationResource(this.image, this.frameWidth, this.frameHeight,
       this.frameRows, this.frameCols, this.frameCount);
 
-  static Future<AnimationResource> load(String resourcePath, int frameWidth,
-      int frameHeight, int frameCount) async {
+  static Future<AnimationResource> load(String resourcePath, num frameWidth,
+      num frameHeight, int frameCount) async {
     ImageElement image = new ImageElement(src: resourcePath);
     await image.decode();
     int frameRows = (image.height ?? 0) ~/ frameHeight;
@@ -33,8 +33,8 @@ class AnimationResource implements Resource {
       {num rotation: 0.0}) {
     int srcR = index ~/ frameCols;
     int srcC = index % frameCols;
-    int srcX = srcC * frameWidth;
-    int srcY = srcR * frameHeight;
+    int srcX = (srcC * frameWidth).round();
+    int srcY = (srcR * frameHeight).round();
     ctx.rotate(rotation);
     if (rotation != 0.0) {
       pos = pos.rotated(-rotation);

@@ -55,7 +55,7 @@ class Resources {
     // TODO: Maybe request all of these in parallel? Would be trivial, would just require us to
     // await them all simultaneously
     _resources[ENEMY_ANIMATION] =
-        await AnimationResource.load('enemy_animation.png', 49, 33, 40);
+        await AnimationResource.load('enemy_animation.png', 49.45, 36, 40);
     _resources[PLAYER_ANIMATION] =
         await AnimationResource.load('player_animation.png', 100, 100, 44);
     _resources[CHICK_ANIMATION] =
