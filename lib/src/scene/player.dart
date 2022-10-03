@@ -30,7 +30,7 @@ class Player extends GameObject {
   Vector2 size = new Vector2(50, 50);
   Direction? oldDirection;
   Direction? currentDirection;
-  int ammo = 0;
+  int ammo = 1;
 
   LineSeg? path;
   Player(this.pos) {
@@ -40,7 +40,7 @@ class Player extends GameObject {
   num _firingStun = 0;
 
   void reset() {
-    ammo = 0;
+    ammo = 1;
     currentAnimation = new AnimationInstance(
         animations.idle, pos, size, Constants.PLAYER_ANIM_TIMESTEP);
     pos = Constants.PLAYER_SPAWN;

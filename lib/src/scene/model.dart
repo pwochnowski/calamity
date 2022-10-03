@@ -7,21 +7,28 @@ import '../render/renderer.dart';
 import '../resources/resources.dart';
 import 'game_arena.dart';
 import 'gg_screen.dart';
+import 'launch_screen.dart';
 
 class Model {
   final GameArena arena;
   final GameOverScreen ggScreen;
+  final LaunchScreen launchScreen;
   final num width;
   final num height;
   num volumeModifier = 1.0;
 
   Model(this.width, this.height)
-      : arena = new GameArena(width, height),
+      : launchScreen = new LaunchScreen(),
+        arena = new GameArena(width, height),
         ggScreen = new GameOverScreen() {
     ggScreen.arena = arena;
   }
 
   void update(PlayerInputState input, num deltaTime) {
+    if (launchScreen.stillOpen) {
+      launchScreen.update(input, deltaTime);
+      return;
+    }
     // print("ARENA UPDATE: ${input.mouse?.event.button} ${arena.playing}");
     AudioResource music = Resources.GameResources.getResource(Resources.MUSIC);
     if (input.keys.contains(PlayerKey.MUTE)) {
@@ -40,6 +47,10 @@ class Model {
   }
 
   void render(Renderer r) {
+    if (launchScreen.stillOpen) {
+      launchScreen.render(r);
+      return;
+    }
     if (arena.playing) {
       arena.render(r);
     } else {

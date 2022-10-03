@@ -196,8 +196,6 @@ class GameArena {
       num y = r.nextDouble() * height;
       boulders.add(new Boulder(new Vector2(x, y), Constants.BOULDER_RADIUS));
     }
-    feeders
-        .add(new Feeder(new Vector2(250, height - 50), new Vector2(300, 50)));
   }
 
   void addChickScore(Vector2 pos) {

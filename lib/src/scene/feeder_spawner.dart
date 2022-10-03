@@ -21,9 +21,10 @@ class FeederSpawner extends System {
     Random r = StaticData.random;
     num centerX = (r.nextDouble() * (arena.width - 200)) + 100;
     num centerY = (r.nextDouble() * (arena.height - 200)) + 100;
-    num width = r.nextDouble() * 150 + 25;
+    num width = 50;
     num height = 50;
-    return new Feeder(new Vector2(centerX, centerY), new Vector2(width, height));
+    return new Feeder(
+        new Vector2(centerX, centerY), new Vector2(width, height));
   }
 
   @override
@@ -44,5 +45,4 @@ class FeederSpawner extends System {
 
   @override
   void render(Renderer r) {}
-
 }
