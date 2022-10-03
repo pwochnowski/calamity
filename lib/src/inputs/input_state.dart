@@ -20,24 +20,29 @@ class InputState {
     keysThisFrame.clear();
   }
 
+  static final List<int> _kc = [32, 37, 38, 39, 40];
   void registerListeners(CanvasElement canvas) {
     window.onKeyDown.listen((ev) {
       // track held keys
       heldDownKeys.add(ev.keyCode);
       keysThisFrame.add(ev.keyCode);
+      if (_kc.contains(ev.keyCode)) {
+        ev.preventDefault();
+      }
     });
 
     window.onKeyUp.listen((ev) {
       heldDownKeys.remove(ev.keyCode);
+      ev.preventDefault();
     });
 
     // FIXME: We should be updating whenever the hover position is changed.
     canvas.onMouseMove.listen((event) {});
     canvas.onMouseDown.listen((event) {
       mouse = new MouseState(event);
-      event.preventDefault();
     });
     window.onContextMenu.listen((event) {
+      print("context");
       event.preventDefault();
     });
   }

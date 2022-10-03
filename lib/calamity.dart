@@ -3,6 +3,7 @@
 /// More dartdocs go here.
 library calamity;
 
+import 'package:calamity/src/globals.dart';
 import 'package:calamity/src/inputs/input_state.dart';
 import 'package:calamity/src/main_ctx.dart';
 import 'package:calamity/src/math/direction.dart';
@@ -42,16 +43,17 @@ MainCtx setupMainCtx() {
     ..style.left = '50%'
     ..style.top = '50%'
     ..style.transform = 'translate(-50%, -50%)'
-    ..style.border = '1px solid black';
+    ..style.border = 'none';
   late MainCtx mainctx;
 
-  DivElement div = new DivElement()..append(canvas);
-  document.body?.nodes.add(div);
+  // Remove loading indicator
+  document.getElementById('loading-p1')!.remove();
+  document.body!.nodes.add(canvas);
+  canvas.focus();
 
   InputState inputs = new InputState();
   inputs.registerListeners(canvas);
   mainctx = new MainCtx(canvas, inputs);
 
-  // addNumberInput("Speed",
   return mainctx;
 }

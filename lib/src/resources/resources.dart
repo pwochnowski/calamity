@@ -53,25 +53,30 @@ class Resources {
 
   /// Monster function that loads all of the resources
   Future<Null> loadAll() async {
+    Map<String, Future<Resource>> _promises = {};
     // TODO: Maybe request all of these in parallel? Would be trivial, would just require us to
     // await them all simultaneously
-    _resources[ENEMY_ANIMATION] =
-        await AnimationResource.load('enemy_animation.png', 250, 250, 40);
-    _resources[PLAYER_ANIMATION] =
-        await AnimationResource.load('player_animation.png', 100, 100, 44);
-    _resources[CHICK_ANIMATION] =
-        await AnimationResource.load('chick_animation.png', 20, 20, 15);
-    _resources[CHICK_SCORE_ANIMATION] =
-        await AnimationResource.load('chick_score_animation.png', 50, 50, 9);
-    _resources[BULLET_ANIMATION] =
-        await AnimationResource.load('bullet_animation.png', 50, 50, 4);
-    _resources[SHOTGUN_ANIMATION] =
-        await AnimationResource.load('shotgun_animation.png', 100, 100, 24);
-    _resources[BOULDER] = await ImageResource.load('boulder.png');
-    _resources[BACKGROUND] = await ImageResource.load('background.png');
-    _resources[MUSIC] = await AudioResource.load('Repeat_mixdown 3_01.mp3');
-    _resources[GRAINS] = await ImageResource.load('grains.png');
-    _resources[COVER] = await ImageResource.load('cover.png');
-    _resources[GAME_OVER] = await ImageResource.load('game_over.png');
+    _promises[ENEMY_ANIMATION] =
+        AnimationResource.load('enemy_animation.png', 250, 250, 40);
+    _promises[PLAYER_ANIMATION] =
+        AnimationResource.load('player_animation.png', 100, 100, 44);
+    _promises[CHICK_ANIMATION] =
+        AnimationResource.load('chick_animation.png', 20, 20, 15);
+    _promises[CHICK_SCORE_ANIMATION] =
+        AnimationResource.load('chick_score_animation.png', 50, 50, 9);
+    _promises[BULLET_ANIMATION] =
+        AnimationResource.load('bullet_animation.png', 50, 50, 4);
+    _promises[SHOTGUN_ANIMATION] =
+        AnimationResource.load('shotgun_animation.png', 100, 100, 24);
+    _promises[BOULDER] = ImageResource.load('boulder.png');
+    _promises[BACKGROUND] = ImageResource.load('background.png');
+    _promises[MUSIC] = AudioResource.load('Repeat_mixdown 3_01.mp3');
+    _promises[GRAINS] = ImageResource.load('grains.png');
+    _promises[COVER] = ImageResource.load('cover.png');
+    _promises[GAME_OVER] = ImageResource.load('game_over.png');
+
+    for (String key in _promises.keys) {
+      _resources[key] = await _promises[key]!;
+    }
   }
 }
