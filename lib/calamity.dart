@@ -39,7 +39,9 @@ Future<void> clientMain() async {
 }
 
 MainCtx setupMainCtx() {
-  CanvasElement canvas;
+  CanvasElement canvas = new CanvasElement(width: 800, height: 600);
+  canvas.style.imageRendering = 'crisp-edges';
+  canvas.style.imageRendering = 'pixelated';
   late MainCtx mainctx;
 
   DivElement div = Div([
@@ -47,7 +49,7 @@ MainCtx setupMainCtx() {
     //   'Speed',
     //   IntInput('Speed',  () => mainctx.model.arena.player.movementSpeed, ((num x) => mainctx.model.arena.player.movementSpeed = x))
     // ]),
-    canvas = new CanvasElement(width: 800, height: 600)
+    canvas
   ])
     ..style.position = 'absolute'
     ..style.left = '50%'
