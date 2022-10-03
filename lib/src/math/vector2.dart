@@ -100,4 +100,8 @@ class Vector2 {
       y * c0 + x * s0,
     );
   }
+
+  Vector2 halved() {
+    return this * 0.5;
+  }
 }

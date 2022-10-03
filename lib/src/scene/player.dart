@@ -8,6 +8,7 @@ import 'package:calamity/src/scene/game_object.dart';
 
 import '../constants.dart';
 import '../inputs/input_state.dart';
+import '../math/aabb.dart';
 import '../math/direction.dart';
 import '../math/segment.dart';
 import '../math/vector2.dart';
@@ -28,6 +29,7 @@ class Player extends GameObject {
   Vector2 size = new Vector2(50, 50);
   Direction? oldDirection;
   Direction? currentDirection;
+  int ammo = 0;
 
   LineSeg? path;
   Player(this.pos) {
@@ -35,6 +37,7 @@ class Player extends GameObject {
   }
 
   void reset() {
+    ammo = 0;
     currentAnimation = new AnimationInstance(
         animations.idle, pos, size, Constants.PLAYER_ANIM_TIMESTEP);
     pos = Constants.PLAYER_SPAWN;
@@ -43,8 +46,22 @@ class Player extends GameObject {
   }
 
   num boostCooldown = 0;
+  num feedCooldown = 0;
+
   void resetCooldowns() {
     boostCooldown = 0;
+    feedCooldown = 0;
+  }
+
+  void addAmmoIfOnFeeder(num deltaTime) {
+    AABB bounds = getBounds();
+    if (arena.feeders.any((element) => element.getBounds().intersects(bounds))) {
+      if (feedCooldown < 0) {
+        feedCooldown = Constants.PLAYER_FEED_CD;
+        ammo += 1;
+      }
+    }
+    feedCooldown -= deltaTime;
   }
 
   void move(PlayerInputState input, num deltaTime) {
@@ -122,6 +139,7 @@ class Player extends GameObject {
       print("Set path ${path!.length()}");
     }
     move(input, deltaTime);
+    addAmmoIfOnFeeder(deltaTime);
     currentAnimation.updateElapsed(
         boostCooldown > Constants.PLAYER_BOOST_CD ? 2 * deltaTime : deltaTime);
     limit();
@@ -135,5 +153,9 @@ class Player extends GameObject {
     }
     currentAnimation.pos = pos;
     r.renderAnimation(currentAnimation);
+  }
+
+  AABB getBounds() {
+    return AABB.fromLocAndSize(pos, size);
   }
 }

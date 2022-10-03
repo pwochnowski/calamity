@@ -30,4 +30,13 @@ class AABB {
         (point.y <= max.y)
     );
   }
+
+  bool intersects(AABB other) {
+    return (
+      (other.min.x <= max.x) &&
+      (other.max.x >= min.x) &&
+      (other.min.y <= max.y) &&
+      (other.max.y >= min.y)
+    );
+  }
 }

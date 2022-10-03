@@ -5,7 +5,7 @@ import 'package:calamity/src/scene/game_arena.dart';
 import '../inputs/input_state.dart';
 
 class ScoreWidget {
-  final Vector2 pos = new Vector2(2, 10);
+  final Vector2 pos = new Vector2(2, 16);
   late GameArena arena;
   int score = 0;
 

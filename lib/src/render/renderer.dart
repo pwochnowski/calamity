@@ -52,7 +52,9 @@ class Renderer {
         ctx.textAlign = "right";
         break;
     }
+    ctx.font = '16px sans-serif';
     ctx.strokeText(text, position.x, position.y);
+    ctx.fillText(text, position.x, position.y);
   }
 
   void renderCircle(Vector2 v) {
@@ -67,6 +69,7 @@ class Renderer {
     ctx.moveTo(line.start.x, line.start.y);
     ctx.lineTo(line.end.x, line.end.y);
     ctx.stroke();
+    clearColor();
   }
 
   void renderImage(Vector2 pos, Vector2 size, ImageResource image) {
@@ -76,7 +79,6 @@ class Renderer {
 
   void renderAnimation(AnimationInstance animation) {
     AnimationResource resource = animation.animation.resourceGetter();
-    int currentFrame = animation.currentFrame();
     resource.renderFrame(
         ctx, animation.currentFrame(), animation.pos, animation.size,
         rotation: animation.rotation);
@@ -86,5 +88,15 @@ class Renderer {
       Vector2 pos, Vector2 size, AnimationResource resource, int index,
       {num rotation: 0.0}) {
     resource.renderFrame(ctx, index, pos, size, rotation: rotation);
+  }
+
+  void renderRectangle(Vector2 pos, Vector2 size, Color color, { bool fill: false }) {
+    ctx.setFillColorRgb(color.r, color.g, color.b, color.a);
+    ctx.setStrokeColorRgb(color.r, color.g, color.b, color.a);
+    if (fill) {
+      ctx.fillRect(pos.x, pos.y, size.x, size.y);
+    }
+    ctx.strokeRect(pos.x, pos.y, size.x, size.y);
+    clearColor();
   }
 }

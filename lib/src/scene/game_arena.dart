@@ -4,6 +4,7 @@ import 'package:calamity/src/math/collision_helper.dart';
 import 'package:calamity/src/math/static.dart';
 import 'package:calamity/src/render/sprite.dart';
 import 'package:calamity/src/resources/animation_frame.dart';
+import 'package:calamity/src/scene/ammo.dart';
 import 'package:calamity/src/scene/boulder.dart';
 import 'package:calamity/src/scene/chick_spawner.dart';
 import 'package:calamity/src/scene/player.dart';
@@ -19,6 +20,7 @@ import 'bullet_spawner.dart';
 import 'chick.dart';
 import 'enemy.dart';
 import 'enemy_spawner.dart';
+import 'feeder.dart';
 
 class GameArena {
   final num width;
@@ -31,12 +33,14 @@ class GameArena {
   final EnemySpawner enemySpawner;
   final ChickSpawner chickSpawner = new ChickSpawner();
   final ScoreWidget scoreWidget = new ScoreWidget();
+  final AmmoWidget ammoWidget = new AmmoWidget();
 
   // TODO: Generalize this
   final List<Bullet> bullets = [];
   final List<Boulder> boulders = [];
   final List<Chick> lostChicks = [];
   final List<Enemy> enemies = [];
+  final List<Feeder> feeders = [];
   final List<AnimationInstance> standaloneAnimations = [];
 
   GameArena(this.width, this.height)
@@ -53,6 +57,7 @@ class GameArena {
     enemySpawner.arena = this;
     chickSpawner.arena = this;
     scoreWidget.arena = this;
+    ammoWidget.arena = this;
     reset();
   }
 
@@ -106,6 +111,10 @@ class GameArena {
 
   void render(Renderer r) {
     background.render(r);
+    for (Feeder feeder in feeders) {
+      feeder.render(r);
+    }
+
     player.render(r);
     bulletSpawner.render(r);
     for (Bullet bullet in bullets) {
@@ -127,6 +136,7 @@ class GameArena {
       r.renderAnimation(animation);
     }
     scoreWidget.render(r);
+    ammoWidget.render(r);
   }
 
   // read by model
@@ -149,11 +159,13 @@ class GameArena {
     scoreWidget.reset();
     boulders.clear();
     standaloneAnimations.clear();
+    feeders.clear();
     Random r = StaticData.random;
     for (int i = 0; i < Constants.NUM_BOULDERS; i++) {
       num x = r.nextDouble() * width;
       num y = r.nextDouble() * height;
       boulders.add(new Boulder(new Vector2(x, y), Constants.BOULDER_RADIUS));
     }
+    feeders.add(new Feeder(new Vector2(250, height - 50), new Vector2(300, 50)));
   }
 }

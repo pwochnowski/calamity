@@ -4,6 +4,7 @@ class Color {
   static Color RED = Color.fromHex(0xFF0000);
   static Color GREEN = Color.fromHex(0x00FF00);
   static Color BLUE = Color.fromHex(0x0000FF);
+  static Color YELLOW = Color.fromHex(0xFFFF00);
 
   final int r;
   final int g;

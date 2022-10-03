@@ -27,6 +27,7 @@ class Constants {
   static final num PLAYER_MOVE_SPEED = 210;
   static final num PLAYER_BOOST_CD = 3 * 1000;
   static final num PLAYER_BOOST_FACTOR = 2;
+  static final num PLAYER_FEED_CD = 200;
   static final num PLAYER_DURATION = 500;
   static final num PLAYER_ANIM_TIMESTEP = 100;
   static final Vector2 PLAYER_SPAWN = new Vector2(400, 300);
