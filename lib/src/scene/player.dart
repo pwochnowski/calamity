@@ -62,7 +62,8 @@ class Player extends GameObject {
   void addAmmoIfOnFeeder(num deltaTime) {
     feedCooldown -= deltaTime;
     AABB bounds = getBounds();
-    Iterable<Feeder> intersectingFeeders = arena.feeders.where((element) => element.getBounds().intersects(bounds));
+    Iterable<Feeder> intersectingFeeders = arena.feeders
+        .where((element) => element.getBounds().intersects(bounds));
     if (feedCooldown < 0 && intersectingFeeders.isNotEmpty) {
       bool anyHasSeed = false;
       for (Feeder f in intersectingFeeders) {
@@ -74,6 +75,8 @@ class Player extends GameObject {
       }
     }
   }
+
+  Vector2 _lastMovementDir = new Vector2(1.0, 0.0);
 
   void move(PlayerInputState input, num deltaTime) {
     num speed = movementSpeed;
@@ -92,6 +95,7 @@ class Player extends GameObject {
     if (path != null) {
       Vector2 newPos = path!.dir() * speed * deltaTime * 0.001;
       _updateDirection(newPos);
+      _lastMovementDir = newPos.normalized();
       num ratio = path!.ratioOnSeg(pos);
       if (ratio < 1.0) {
         pos += newPos;
@@ -117,9 +121,13 @@ class Player extends GameObject {
     if (input.keys.contains(PlayerKey.DOWN)) {
       y += 1;
     }
-    Vector2 delta = new Vector2(x, y).normalized() * speed * deltaTime * 0.001;
+    Vector2 delta = new Vector2(x, y).normalized();
     _updateDirection(delta);
-    pos += delta;
+    if (delta.length2() > 0) {
+      _lastMovementDir = delta;
+      delta *= speed * deltaTime * 0.001;
+      pos += delta;
+    }
   }
 
   /// limit the player so they don't move outside the bounds
@@ -151,18 +159,24 @@ class Player extends GameObject {
     }
     fireCooldown -= deltaTime;
     _firingStun -= deltaTime;
-    if (input.mouse.left && fireCooldown < 0) {
-      if (ammo > 0) {
+    move(input, deltaTime);
+    if (ammo > 0 && fireCooldown < 0) {
+      Vector2? targetPos;
+      if (input.mouse.left) {
+        targetPos = input.mouse.pos;
+      } else if (input.keys.contains(PlayerKey.SHOOT)) {
+        targetPos = pos + _lastMovementDir;
+      }
+      if (targetPos != null) {
         fireCooldown = Constants.PLAYER_FIRE_CD;
         ammo -= 1;
-        arena.bulletSpawner.firePlayerBullet(pos, input.mouse.pos!);
-        Vector2 knockbackDir = (pos - input.mouse.pos!).normalized();
+        arena.bulletSpawner.firePlayerBullet(pos, targetPos);
+        Vector2 knockbackDir = (pos - targetPos).normalized();
         pos += knockbackDir * Constants.PLAYER_FIRE_KNOCKBACK;
         _firingStun = Constants.PLAYER_FIRE_STUN;
         _firingStunDirection = directionFromVec(-knockbackDir);
       }
     }
-    move(input, deltaTime);
     addAmmoIfOnFeeder(deltaTime);
     currentAnimation.updateElapsed(
         boostCooldown > Constants.PLAYER_BOOST_CD ? 2 * deltaTime : deltaTime);

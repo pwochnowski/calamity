@@ -62,7 +62,7 @@ class InputState {
     }
 
     if (keysThisFrame.contains(KeyCode.SPACE)) {
-      keys.add(PlayerKey.SPACE);
+      keys.add(PlayerKey.SHOOT);
     }
 
     PlayerInputState ps = new PlayerInputState(mouse ?? MouseState.NONE, keys);
@@ -80,7 +80,7 @@ enum PlayerKey {
   UP,
   DOWN,
   DASH,
-  SPACE,
+  SHOOT,
 }
 
 class PlayerInputState {
