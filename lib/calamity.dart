@@ -12,9 +12,7 @@ import 'package:calamity/src/resources/image_resource.dart';
 import 'package:calamity/src/resources/resources.dart';
 import 'package:calamity/src/ui.dart';
 
-
 Future<void> clientMain() async {
-
   await Resources.GameResources.loadAll();
   MainCtx mainctx = setupMainCtx();
 
@@ -26,6 +24,7 @@ Future<void> clientMain() async {
     mainctx.onFirstInteraction();
     interacted = true;
   }
+
   document.addEventListener('mousedown', (event) => onInteraction());
   document.addEventListener('keydown', (event) => onInteraction());
 
@@ -49,22 +48,19 @@ MainCtx setupMainCtx() {
     //   'Speed',
     //   IntInput('Speed',  () => mainctx.model.arena.player.movementSpeed, ((num x) => mainctx.model.arena.player.movementSpeed = x))
     // ]),
-    canvas
-  ])
-    ..style.position = 'absolute'
-    ..style.left = '50%'
-    ..style.top = '50%'
-    ..style.transform = 'translate(-50%, -50%)'
-    ..style.border = '1px solid black'
-    ;
+    canvas = new CanvasElement(width: 948, height: 533)
+      ..style.position = 'absolute'
+      ..style.left = '50%'
+      ..style.top = '50%'
+      ..style.transform = 'translate(-50%, -50%)'
+      ..style.border = '1px solid black'
+  ]);
   document.body?.nodes.add(div);
 
   InputState inputs = new InputState();
   inputs.registerListeners(canvas);
   mainctx = new MainCtx(canvas, inputs);
-  
+
   // addNumberInput("Speed",
   return mainctx;
 }
-
-

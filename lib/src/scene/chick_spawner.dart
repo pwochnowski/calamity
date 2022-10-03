@@ -34,8 +34,8 @@ class ChickSpawner extends System {
       Chick chick = Chick(
           arena,
           new LineSeg(
-            new Vector2(400, 0),
-            new Vector2.random(800, 400),
+            new Vector2(Constants.CANVAS_WIDTH ~/ 2, 0),
+            new Vector2.random(Constants.CANVAS_WIDTH, Constants.CANVAS_HEIGHT),
           ));
 
       arena.lostChicks.add(chick);

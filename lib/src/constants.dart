@@ -11,6 +11,9 @@ class Constants {
   static final int NUM_ENEMIES = 2;
   static final int NUM_FEEDERS = 2;
 
+  static final int CANVAS_WIDTH = 948;
+  static final int CANVAS_HEIGHT = 533;
+
   static final num BULLET_RADIUS = 10.0;
   static final num PLAYER_BULLET_RADIUS = 5.0;
   static final num BULLET_SPEED = 240.0;
@@ -43,7 +46,8 @@ class Constants {
   static final num PLAYER_FIRE_STUN = 100;
   static final num PLAYER_DURATION = 500;
   static final num PLAYER_ANIM_TIMESTEP = 100;
-  static final Vector2 PLAYER_SPAWN = new Vector2(400, 300);
+  static final Vector2 PLAYER_SPAWN =
+      new Vector2(CANVAS_WIDTH ~/ 2, CANVAS_HEIGHT ~/ 2);
 
   static final int NUM_CHICKS = 3;
   static final int CHICK_MOVE_SPEED = 60;
