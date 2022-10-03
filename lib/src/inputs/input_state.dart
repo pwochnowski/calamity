@@ -42,18 +42,20 @@ class InputState {
     });
   }
 
+  bool _hasHeldDownAny(List<int> keys) => keys.any(heldDownKeys.contains);
+
   PlayerInputState derivePlayerInputState(PlayerInputState old) {
     Set<PlayerKey> keys = new Set();
-    if (heldDownKeys.contains(KeyCode.LEFT)) {
+    if (_hasHeldDownAny([KeyCode.LEFT, KeyCode.A])) {
       keys.add(PlayerKey.LEFT);
     }
-    if (heldDownKeys.contains(KeyCode.RIGHT)) {
+    if (_hasHeldDownAny([KeyCode.RIGHT, KeyCode.D])) {
       keys.add(PlayerKey.RIGHT);
     }
-    if (heldDownKeys.contains(KeyCode.UP)) {
+    if (_hasHeldDownAny([KeyCode.UP, KeyCode.W])) {
       keys.add(PlayerKey.UP);
     }
-    if (heldDownKeys.contains(KeyCode.DOWN)) {
+    if (_hasHeldDownAny([KeyCode.DOWN, KeyCode.S])) {
       keys.add(PlayerKey.DOWN);
     }
 
@@ -63,6 +65,10 @@ class InputState {
 
     if (keysThisFrame.contains(KeyCode.SPACE)) {
       keys.add(PlayerKey.SHOOT);
+    }
+
+    if (keysThisFrame.contains(KeyCode.M)) {
+      keys.add(PlayerKey.MUTE);
     }
 
     PlayerInputState ps = new PlayerInputState(mouse ?? MouseState.NONE, keys);
@@ -81,6 +87,7 @@ enum PlayerKey {
   DOWN,
   DASH,
   SHOOT,
+  MUTE,
 }
 
 class PlayerInputState {
