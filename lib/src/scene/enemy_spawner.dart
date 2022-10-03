@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:calamity/src/scene/system.dart';
+
 import '../constants.dart';
 import '../inputs/input_state.dart';
 import '../math/static.dart';
@@ -8,10 +10,9 @@ import '../render/renderer.dart';
 import 'enemy.dart';
 import 'game_arena.dart';
 
-class EnemySpawner {
+class EnemySpawner extends System {
   late final GameArena arena;
   int numEnemies;
-
 
   EnemySpawner(this.numEnemies);
 
@@ -45,6 +46,10 @@ class EnemySpawner {
     return bullet;
   }
 
+  @override
+  void reset() {}
+
+  @override
   void update(PlayerInputState input, num deltaTime) {
     if (!arena.playing) {
       return;
@@ -61,6 +66,7 @@ class EnemySpawner {
     }
   }
 
+  @override
   void render(Renderer r) {}
 
 }

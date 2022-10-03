@@ -4,19 +4,21 @@ import 'package:calamity/src/constants.dart';
 import 'package:calamity/src/inputs/input_state.dart';
 import 'package:calamity/src/math/static.dart';
 import 'package:calamity/src/scene/game_arena.dart';
+import 'package:calamity/src/scene/system.dart';
 
 import '../globals.dart';
 import '../math/vector2.dart';
 import '../render/renderer.dart';
 import 'bullet.dart';
 
-class BulletSpawner {
+class BulletSpawner extends System {
   late final GameArena arena;
   static final Vector2 bulletHitbox = new Vector2(50, 50);
   num _elapsed = 0;
 
   BulletSpawner();
 
+  @override
   void reset() {
     _elapsed = 0;
   }
@@ -71,6 +73,7 @@ class BulletSpawner {
 
   num remainingCd = 0;
 
+  @override
   void update(PlayerInputState input, num deltaTime) async {
     _elapsed += deltaTime;
     if (!arena.playing) {
@@ -91,5 +94,6 @@ class BulletSpawner {
     }
   }
 
+  @override
   void render(Renderer r) {}
 }
