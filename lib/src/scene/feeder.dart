@@ -9,11 +9,30 @@ class Feeder extends GameObject {
   final Vector2 pos;
   final Vector2 size;
 
-  Feeder(this.pos, this.size);
+  int _originalSeeds = 0;
+  int _remainingSeeds = 0;
+
+  Feeder(this.pos, this.size) {
+    _originalSeeds = (size.x * size.y) ~/ (30*30);
+    _remainingSeeds = _originalSeeds;
+  }
+
+  bool hasRemainingSeeds() {
+    return _remainingSeeds > 0;
+  }
 
   @override
   void render(Renderer r) {
-    r.renderRectangle(pos, size, Color.YELLOW, fill: true);
+    num alpha = _remainingSeeds * 1.0 / _originalSeeds;
+    r.renderRectangle(pos, size, Color.YELLOW.withAlpha(alpha), fill: true);
+  }
+
+  bool tryTakeSeed() {
+    if (!hasRemainingSeeds()) {
+      return false;
+    }
+    _remainingSeeds -= 1;
+    return true;
   }
 
   @override

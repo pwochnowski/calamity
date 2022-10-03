@@ -3,6 +3,7 @@ import 'package:calamity/src/resources/animation_frame.dart';
 import 'package:calamity/src/resources/animation_manifests.dart';
 import 'package:calamity/src/resources/animation_resource.dart';
 import 'package:calamity/src/resources/image_resource.dart';
+import 'package:calamity/src/scene/feeder.dart';
 import 'package:calamity/src/scene/game_arena.dart';
 import 'package:calamity/src/scene/game_object.dart';
 
@@ -59,14 +60,19 @@ class Player extends GameObject {
   }
 
   void addAmmoIfOnFeeder(num deltaTime) {
+    feedCooldown -= deltaTime;
     AABB bounds = getBounds();
-    if (arena.feeders.any((element) => element.getBounds().intersects(bounds))) {
-      if (feedCooldown < 0) {
+    Iterable<Feeder> intersectingFeeders = arena.feeders.where((element) => element.getBounds().intersects(bounds));
+    if (feedCooldown < 0 && intersectingFeeders.isNotEmpty) {
+      bool anyHasSeed = false;
+      for (Feeder f in intersectingFeeders) {
+        anyHasSeed |= f.tryTakeSeed();
+      }
+      if (anyHasSeed) {
         feedCooldown = Constants.PLAYER_FEED_CD;
         ammo += 1;
       }
     }
-    feedCooldown -= deltaTime;
   }
 
   void move(PlayerInputState input, num deltaTime) {

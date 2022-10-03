@@ -14,6 +14,10 @@ class Color {
 
   Color(this.r, this.g, this.b, this.a);
 
+  Color withAlpha(num alpha) {
+    return new Color(r, g, b, alpha);
+  }
+
   /// returns a color with full opacity e.g. 0x006699
   static Color fromHex(int hex) {
     int b = hex & 0xFF;
