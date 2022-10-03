@@ -28,7 +28,7 @@ class GameArena {
   final num width;
   final num height;
   final Player player;
-  int lastScore = 0;
+  PlayerScore lastScore = new PlayerScore();
   final ImageSprite background;
 
   final BulletSpawner bulletSpawner = new BulletSpawner();
@@ -172,7 +172,6 @@ class GameArena {
   void killPlayer() {
     playing = false;
     reset();
-    print("Game over");
   }
 
   void reset() {
@@ -200,6 +199,7 @@ class GameArena {
 
   void addChickScore(Vector2 pos) {
     scoreWidget.add(Constants.CHICK_SCORE);
+    scoreWidget.addSavedChick();
     standaloneAnimations.add(new AnimationInstance(
         Resources.GameResources.chickScoreAnimation,
         pos,

@@ -49,6 +49,7 @@ class Chick extends GameObject {
 
     if (collides) {
       arena.lostChicks.remove(this);
+      arena.scoreWidget.addSavedChick();
       arena.addChickScore(pos);
     }
 

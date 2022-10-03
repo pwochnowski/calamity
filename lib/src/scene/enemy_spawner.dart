@@ -61,6 +61,7 @@ class EnemySpawner extends System {
     for (Enemy e in arena.enemies) {
       if (!e.isAlive) {
         arena.addChickScore(e.pos);
+        arena.scoreWidget.addKilledFox();
       }
     }
     int addedEnemies = _elapsed ~/ Constants.ENEMY_COUNT_INCREASE_TIME;

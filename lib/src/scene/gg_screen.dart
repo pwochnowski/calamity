@@ -1,11 +1,12 @@
 import 'package:calamity/src/inputs/input_state.dart';
 import 'package:calamity/src/math/vector2.dart';
+import 'package:calamity/src/scene/score.dart';
 
 import '../render/renderer.dart';
 import 'game_arena.dart';
 
 class GameOverScreen {
-  int score = 0;
+  PlayerScore score = new PlayerScore();
   late GameArena arena;
 
   GameOverScreen();
@@ -16,12 +17,12 @@ class GameOverScreen {
   }
 
   void render(Renderer r) {
-    String message1 = "GAME OVER. Your score was $score.";
+    String message1 = "GAME OVER. Your score was ${score.score}.";
     String message2 = "Click or press spacebar to try again";
     Vector2 pos = new Vector2(r.width / 2, r.height / 2);
     r.renderText(message1, pos.addY(-30), Justification.CENTER);
     r.renderText(message2, pos.addY(30), Justification.CENTER);
   }
 
-  void setScore(int newScore) => score = newScore;
+  void setScore(PlayerScore newScore) => score = newScore;
 }

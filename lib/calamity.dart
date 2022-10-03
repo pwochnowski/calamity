@@ -10,7 +10,6 @@ import 'dart:html';
 
 import 'package:calamity/src/resources/image_resource.dart';
 import 'package:calamity/src/resources/resources.dart';
-import 'package:calamity/src/ui.dart';
 
 Future<void> clientMain() async {
   await Resources.GameResources.loadAll();
@@ -38,23 +37,15 @@ Future<void> clientMain() async {
 }
 
 MainCtx setupMainCtx() {
-  CanvasElement canvas = new CanvasElement(width: 800, height: 600);
-  canvas.style.imageRendering = 'crisp-edges';
-  canvas.style.imageRendering = 'pixelated';
+  CanvasElement canvas = new CanvasElement(width: 948, height: 533)
+    ..style.position = 'absolute'
+    ..style.left = '50%'
+    ..style.top = '50%'
+    ..style.transform = 'translate(-50%, -50%)'
+    ..style.border = '1px solid black';
   late MainCtx mainctx;
 
-  DivElement div = Div([
-    // Div([
-    //   'Speed',
-    //   IntInput('Speed',  () => mainctx.model.arena.player.movementSpeed, ((num x) => mainctx.model.arena.player.movementSpeed = x))
-    // ]),
-    canvas = new CanvasElement(width: 948, height: 533)
-      ..style.position = 'absolute'
-      ..style.left = '50%'
-      ..style.top = '50%'
-      ..style.transform = 'translate(-50%, -50%)'
-      ..style.border = '1px solid black'
-  ]);
+  DivElement div = new DivElement()..append(canvas);
   document.body?.nodes.add(div);
 
   InputState inputs = new InputState();

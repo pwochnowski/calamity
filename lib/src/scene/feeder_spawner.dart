@@ -38,7 +38,6 @@ class FeederSpawner extends System {
     arena.feeders.retainWhere((Feeder f) => f.hasRemainingSeeds());
     int numToSpawn = max(0, numFeeders - arena.feeders.length);
     for (int i = 0; i < numToSpawn; ++i) {
-      print('spawning feeder');
       arena.feeders.add(_spawnFeederAtRandomLocation());
     }
   }
