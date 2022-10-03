@@ -37,6 +37,10 @@ Node _node(Object? o) {
 
 InputElementBase IntInput(String title, Getter<num> getter, Function setter) {
   NumberInputElement elem = new NumberInputElement();
+
+  elem..style.textAlign = 'right'
+  ..setAttribute('inputmode', 'numeric')
+  ..setAttribute('pattern', "[0-9]*");
   elem.title = title;
 
   // elem.value = getter().toStringAsFixed(2);

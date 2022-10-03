@@ -69,19 +69,26 @@ class GameArena {
         break;
       }
     }
-    for (Boulder boulder in boulders) {
-      Vector2? shiftVector = CollisionHelper.shiftVectorCircleCircle(
-          player.pos, player.radius, boulder.pos, boulder.radius);
-      if (shiftVector != null) {
-        player.pos += shiftVector;
-      }
-    }
     for (Enemy enemy in enemies) {
       enemy.update(input, deltaTime);
 
       if (enemy.collidesWithPlayer()) {
         killPlayer();
         break;
+      }
+    }
+    for (Boulder boulder in boulders) {
+      Vector2? shiftVector = CollisionHelper.shiftVectorCircleCircle(
+          player.pos, player.radius, boulder.pos, boulder.radius);
+      if (shiftVector != null) {
+        player.pos += shiftVector;
+      }
+      for (Enemy enemy in enemies) {
+        Vector2? shiftVector = CollisionHelper.shiftVectorCircleCircle(
+            enemy.pos, Constants.ENEMY_RADIUS, boulder.pos, boulder.radius);
+        if (shiftVector != null) {
+          enemy.pos += shiftVector;
+        }
       }
     }
 
